@@ -1,2 +1,3 @@
-# Scambio
-Scambio libreria universitaria
+# ScambioUniversitario
+
+Sistema compravendita libri/appunti tra studenti universitari
