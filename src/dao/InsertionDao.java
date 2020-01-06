@@ -114,6 +114,7 @@ public class InsertionDao {
     	// STEP 1: dichiarazioni
         Statement stmt = null;
         Connection conn = null;
+        ResultSet rs = null;
         try {
             // STEP 2: loading dinamico del driver mysql
             Class.forName("org.mariadb.jdbc.Driver");
@@ -125,7 +126,7 @@ public class InsertionDao {
             stmt = conn.createStatement();
             
             String sql = "SELECT title, descr, price, date, image1, image2, image3, seller FROM insertions where id = '"+ id +"');";
-            ResultSet rs = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql);
 
             if (!rs.first()) // rs not empty
                 return null;  //Should never happen
@@ -160,6 +161,12 @@ public class InsertionDao {
             // Errore nel loading del driver
             e.printStackTrace();
         } finally {
+        	try {
+        		if(rs!=null)
+        		rs.close();
+        	}
+        	catch(Exception e) {		
+        	}
             try {
                 if (stmt != null)
                     stmt.close();

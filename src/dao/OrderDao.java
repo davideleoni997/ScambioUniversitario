@@ -31,7 +31,7 @@ public class OrderDao {
 		Order order[]= new Order[100];
 	    Statement stmt = null;
 	    Connection conn = null;
-	    
+	    ResultSet rs = null;
 	    try {
 	    
 	    Class.forName("org.mariadb.jdbc.Driver");
@@ -44,13 +44,13 @@ public class OrderDao {
         
         String sql = "SELECT id FROM utenti where username = '"
                 + user + "';";
-        ResultSet rs = stmt.executeQuery(sql);
+        rs = stmt.executeQuery(sql);
         
         if(!rs.first()) {
         	return null;
         }
         int id = rs.getInt("id");
-        
+        rs.close();
         
         sql = "SELECT idOrder, oggetto, prezzo FROM orders where buyer = '"
                 + id + "' OR SELLER = '"+ id +"';";
@@ -101,6 +101,12 @@ public class OrderDao {
         // Errore nel loading del driver
         e.printStackTrace();
     } finally {
+    	try {
+    		if(rs!=null)
+    		rs.close();
+    	}
+    	catch(Exception e) {		
+    	}
         try {
             if (stmt != null)
                 stmt.close();
@@ -124,7 +130,7 @@ public class OrderDao {
 			
 	    Statement stmt = null;
 	    Connection conn = null;
-	    
+	    ResultSet rs = null;
 	    try {
 	    
 	    Class.forName("org.mariadb.jdbc.Driver");
@@ -136,7 +142,7 @@ public class OrderDao {
         stmt = conn.createStatement();
         String sql = "SELECT idOrder, oggetto, prezzo, data, seller, buyer FROM orders where idOrder = '"
                 + id + "';";
-        ResultSet rs = stmt.executeQuery(sql);
+        rs = stmt.executeQuery(sql);
 
         if (!rs.first()) // rs not empty
             return order;
@@ -156,6 +162,7 @@ public class OrderDao {
         order.setId(id);
         order.setItem(item);
         order.setData(data);
+        rs.close();
         sql = "SELECT nome FROM utenti where id = '"
                 + buyer + "';";
         rs = stmt.executeQuery(sql);
@@ -165,7 +172,7 @@ public class OrderDao {
         }
         
         order.setBuyer(rs.getString("nome"));
-        
+        rs.close();
         sql = "SELECT nome FROM utenti where id = '"
                 + seller + "';";
         rs = stmt.executeQuery(sql);
@@ -187,6 +194,12 @@ public class OrderDao {
         // Errore nel loading del driver
         e.printStackTrace();
     } finally {
+    	try {
+    		if(rs!=null)
+    		rs.close();
+    	}
+    	catch(Exception e) {		
+    	}
         try {
             if (stmt != null)
                 stmt.close();
@@ -208,6 +221,7 @@ public class OrderDao {
 	public static boolean newOrder(int buyer,int seller, String oggetto, int prezzo) {
 		Statement stmt = null;
         Connection conn = null;
+        PreparedStatement pst = null;
         try {
             // STEP 2: loading dinamico del driver mysql
             Class.forName("org.mariadb.jdbc.Driver");
@@ -217,7 +231,7 @@ public class OrderDao {
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
-            PreparedStatement pst = conn.prepareStatement("INSERT into orders(buyer,seller,data,oggetto,prezzo) values(?,?,?,?,?)");
+            pst = conn.prepareStatement("INSERT into orders(buyer,seller,data,oggetto,prezzo) values(?,?,?,?,?)");
             
          
             
@@ -228,13 +242,19 @@ public class OrderDao {
             pst.setInt(5, prezzo);
             
             pst.executeUpdate();
-                
+            pst.close();
             
         } catch (Exception e) {
             // Errore nel loading del driver
             e.printStackTrace();
             return false;
         } finally {
+        	try {
+        		if(pst!=null)
+        		pst.close();
+        	}
+        	catch(Exception e) {		
+        	}
             try {
                 if (stmt != null)
                     stmt.close();

@@ -24,6 +24,7 @@ public class MessageDao {
     	// STEP 1: dichiarazioni
         Statement stmt = null;
         Connection conn = null;
+        ResultSet rs = null;
         try {
             // STEP 2: loading dinamico del driver mysql
             Class.forName("org.mariadb.jdbc.Driver");
@@ -35,7 +36,7 @@ public class MessageDao {
             stmt = conn.createStatement();
             
             String sql = "SELECT sender, to, desc, date FROM messages where sender = '"+ user +"' OR to ='"+ user +"' GROUP BY sender ORDER BY date DESC;";
-            ResultSet rs = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql);
 
             if (!rs.first()) // rs not empty
                 return null;
@@ -80,6 +81,12 @@ public class MessageDao {
             // Errore nel loading del driver
             e.printStackTrace();
         } finally {
+        	try {
+        		if(rs!=null)
+        		rs.close();
+        	}
+        	catch(Exception e) {		
+        	}
             try {
                 if (stmt != null)
                     stmt.close();
@@ -103,6 +110,7 @@ public class MessageDao {
     	// STEP 1: dichiarazioni
         Statement stmt = null;
         Connection conn = null;
+        ResultSet rs = null;
         try {
             // STEP 2: loading dinamico del driver mysql
             Class.forName("org.mariadb.jdbc.Driver");
@@ -114,7 +122,7 @@ public class MessageDao {
             stmt = conn.createStatement();
             
             String sql = "SELECT sender, to, desc, date FROM messages where sender = '"+ sender +"' OR to ='"+ sender +"' ORDER BY date ASC;";
-            ResultSet rs = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql);
 
             if (!rs.first()) // rs not empty
                 return null;
@@ -159,6 +167,12 @@ public class MessageDao {
             // Errore nel loading del driver
             e.printStackTrace();
         } finally {
+        	try {
+        		if(rs!=null)
+        		rs.close();
+        	}
+        	catch(Exception e) {		
+        	}
             try {
                 if (stmt != null)
                     stmt.close();
@@ -179,6 +193,7 @@ public Boolean newMessage(Integer sender, Integer to, String desc) {
     	
     	Statement stmt = null;
         Connection conn = null;
+        PreparedStatement pst= null;
         try {
             // STEP 2: loading dinamico del driver mysql
             Class.forName("org.mariadb.jdbc.Driver");
@@ -188,7 +203,7 @@ public Boolean newMessage(Integer sender, Integer to, String desc) {
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
-            PreparedStatement pst = conn.prepareStatement("INSERT into messages(sender,to,desc,data) values(?,?,?,?)");
+            pst = conn.prepareStatement("INSERT into messages(sender,to,desc,data) values(?,?,?,?)");
             
          
             
@@ -199,12 +214,18 @@ public Boolean newMessage(Integer sender, Integer to, String desc) {
             
             pst.executeUpdate();
                 
-            
+            pst.close();
         } catch (Exception e) {
             // Errore nel loading del driver
             e.printStackTrace();
             return false;
         } finally {
+        	try {
+        		if(pst!=null)
+        		pst.close();
+        	}
+        	catch(Exception e) {		
+        	}
             try {
                 if (stmt != null)
                     stmt.close();

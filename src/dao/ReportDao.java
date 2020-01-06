@@ -20,7 +20,7 @@ public class ReportDao {
 		
 		Statement stmt = null;
 	    Connection conn = null;
-	    
+	    ResultSet rs = null;
 	    try {
 	    
 	    Class.forName("org.mariadb.jdbc.Driver");
@@ -32,7 +32,7 @@ public class ReportDao {
         stmt = conn.createStatement();
         String sql = "SELECT id, userId, desc FROM reports;";
                  
-        ResultSet rs = stmt.executeQuery(sql);
+        rs = stmt.executeQuery(sql);
 
         if (!rs.first()) // rs not empty
             return null;
@@ -68,6 +68,12 @@ public class ReportDao {
         // Errore nel loading del driver
         e.printStackTrace();
     } finally {
+    	try {
+    		if(rs!=null)
+    		rs.close();
+    	}
+    	catch(Exception e) {		
+    	}
         try {
             if (stmt != null)
                 stmt.close();
@@ -101,6 +107,7 @@ public class ReportDao {
 
     	Statement stmt = null;
         Connection conn = null;
+        PreparedStatement pst = null;
         try {
             // STEP 2: loading dinamico del driver mysql
             Class.forName("org.mariadb.jdbc.Driver");
@@ -110,7 +117,7 @@ public class ReportDao {
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
-            PreparedStatement pst = conn.prepareStatement("INSERT into Report(id,userId,desc) values(?,?)");
+            pst = conn.prepareStatement("INSERT into Report(id,userId,desc) values(?,?)");
             
            
             
@@ -118,7 +125,7 @@ public class ReportDao {
             pst.setString(3, desc);
             
             pst.executeUpdate();
-            
+            pst.close();
             
             
             
@@ -127,6 +134,12 @@ public class ReportDao {
             e.printStackTrace();
             return false;
         } finally {
+        	try {
+        		if(pst!=null)
+        		pst.close();
+        	}
+        	catch(Exception e) {		
+        	}
             try {
                 if (stmt != null)
                     stmt.close();
