@@ -219,7 +219,7 @@ public class OrderDao {
 	}
 	
 	public static boolean newOrder(int buyer,int seller, String oggetto, int prezzo) {
-		Statement stmt = null;
+		
         Connection conn = null;
         PreparedStatement pst = null;
         try {
@@ -255,11 +255,6 @@ public class OrderDao {
         	}
         	catch(Exception e) {		
         	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            }
             try {
                 if (conn != null)
                     conn.close();

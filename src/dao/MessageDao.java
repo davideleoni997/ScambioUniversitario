@@ -191,7 +191,7 @@ public class MessageDao {
     
 public Boolean newMessage(Integer sender, Integer to, String desc) {
     	
-    	Statement stmt = null;
+    	
         Connection conn = null;
         PreparedStatement pst= null;
         try {
@@ -226,11 +226,7 @@ public Boolean newMessage(Integer sender, Integer to, String desc) {
         	}
         	catch(Exception e) {		
         	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            }
+            
             try {
                 if (conn != null)
                     conn.close();

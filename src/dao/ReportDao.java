@@ -105,7 +105,7 @@ public class ReportDao {
 	public static boolean newReport(Integer userReported,String desc) {
 		
 
-    	Statement stmt = null;
+    	
         Connection conn = null;
         PreparedStatement pst = null;
         try {
@@ -121,8 +121,8 @@ public class ReportDao {
             
            
             
-            pst.setInt(2, userReported);
-            pst.setString(3, desc);
+            pst.setInt(1, userReported);
+            pst.setString(2, desc);
             
             pst.executeUpdate();
             pst.close();
@@ -140,11 +140,7 @@ public class ReportDao {
         	}
         	catch(Exception e) {		
         	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            }
+            
             try {
                 if (conn != null)
                     conn.close();

@@ -185,7 +185,7 @@ public class InsertionDao {
     
     public static Boolean newInsertion(String title, String desc, String price, File pics[],Integer seller) {
     	
-    	Statement stmt = null;
+    	
         Connection conn = null;
         PreparedStatement pst = null;
         try {
@@ -235,11 +235,7 @@ public class InsertionDao {
         	}
         	catch(Exception e) {		
         	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            }
+            
             try {
                 if (conn != null)
                     conn.close();
