@@ -187,6 +187,7 @@ public class InsertionDao {
     	
     	Statement stmt = null;
         Connection conn = null;
+        PreparedStatement pst = null;
         try {
             // STEP 2: loading dinamico del driver mysql
             Class.forName("org.mariadb.jdbc.Driver");
@@ -196,7 +197,7 @@ public class InsertionDao {
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
-            PreparedStatement pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller) values(?,?,?,?,?,?,?,?)");
+            pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller) values(?,?,?,?,?,?,?,?)");
             
             FileInputStream images[] = new FileInputStream[3];
             
@@ -216,7 +217,7 @@ public class InsertionDao {
             }
             pst.setInt(8, seller);
             pst.executeUpdate();
-            
+            pst.close();
             if(pics!=null)
             for(int i=0;i<3;i++)
             	images[i].close();
@@ -228,6 +229,12 @@ public class InsertionDao {
             e.printStackTrace();
             return false;
         } finally {
+        	try {
+        		if(pst!=null)
+        		pst.close();
+        	}
+        	catch(Exception e) {		
+        	}
             try {
                 if (stmt != null)
                     stmt.close();
