@@ -24,7 +24,7 @@ public class UtendeDao {
 
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
-            String sql = "SELECT nome, username, password, cognome, company FROM utenti where username = '"
+            String sql = "SELECT nome, username, password, cognome, company,id FROM utenti where username = '"
                     + username + "' AND password = '" + password + "';";
             rs = stmt.executeQuery(sql);
 
@@ -45,10 +45,11 @@ public class UtendeDao {
             String usernameLoaded = rs.getString("username");
             String passwordLoaded = rs.getString("password");
             Boolean company = rs.getBoolean("company");
-            
+            Integer id = rs.getInt("id");
             
             u = new Utente(usernameLoaded, passwordLoaded, nome, cognome);
             u.setCompany(company);
+            u.setId(id);
             
             
             // STEP 6: Clean-up dell'ambiente
@@ -146,5 +147,54 @@ public class UtendeDao {
         if ("myusername".equals(username) && "mypassword".equals(password))
             return new Utente("myusername", "", "Tizio","Caio");
         else return null;
+    }
+    
+    public static boolean update(Integer id,String nome, String cognome, String username, String password) {
+    	 Connection conn = null;
+         PreparedStatement pst = null;
+         try {
+             // STEP 2: loading dinamico del driver mysql
+             Class.forName("org.mariadb.jdbc.Driver");
+
+             // STEP 3: apertura connessione
+             conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             // STEP 4: creazione ed esecuzione della query
+             //!!!RICORDA ID AUTOINCREMENT!!!
+             pst = conn.prepareStatement("UPDATE utenti set nome = ?,cognome = ?,username = ?,password = ? where id = ?");
+             
+            
+             
+             pst.setString(1, nome);
+             pst.setString(2, cognome);
+             pst.setString(3, username);
+             pst.setString(4, password);
+             pst.setInt(5, id);
+             
+             pst.executeUpdate();
+             pst.close();
+             
+             return true;
+             
+         } catch (Exception e) {
+             // Errore nel loading del driver
+             e.printStackTrace();
+             return false;
+         } finally {
+         	try {
+         		if(pst!=null)
+         		pst.close();
+         	}
+         	catch(Exception e) {		
+         	}
+             
+             try {
+                 if (conn != null)
+                     conn.close();
+             } catch (SQLException se) {
+                 se.printStackTrace();
+             }
+         }
+     	
+     	
     }
 }

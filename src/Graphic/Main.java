@@ -1,4 +1,4 @@
-package Graphic;
+package graphic;
 	
 import controller.ViewController;
 import javafx.application.Application;

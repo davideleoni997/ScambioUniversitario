@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Instant;
+import java.time.LocalDate;
 
 import logic.Message;
 
@@ -18,7 +18,7 @@ public class MessageDao {
     private static String USER = "root";
     private static String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
 	
-    public static Message[] messageList(String user) {
+    public static Message[] messageList(Integer user) {
     	Message messages[] = new Message[100];
     	
     	// STEP 1: dichiarazioni
@@ -35,7 +35,7 @@ public class MessageDao {
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
             
-            String sql = "SELECT sender, to, desc, date FROM messages where sender = '"+ user +"' OR to ='"+ user +"' GROUP BY sender ORDER BY date DESC;";
+            String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender = '"+ user +"' OR `to` ='"+ user +"' GROUP BY sender ORDER BY `date` DESC;";
             rs = stmt.executeQuery(sql);
 
             if (!rs.first()) // rs not empty
@@ -121,7 +121,7 @@ public class MessageDao {
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
             
-            String sql = "SELECT sender, to, desc, date FROM messages where sender = '"+ sender +"' OR to ='"+ sender +"' ORDER BY date ASC;";
+            String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender = '"+ sender +"' OR `to` ='"+ sender +"' ORDER BY `date` ASC;";
             rs = stmt.executeQuery(sql);
 
             if (!rs.first()) // rs not empty
@@ -146,7 +146,7 @@ public class MessageDao {
             i++;
             
             while(rs.next()) {
-            	sender= rs.getInt("title");
+            	sender= rs.getInt("sender");
                 desc = rs.getString("desc");
                 to = rs.getInt("to");
                 date = rs.getDate("date");
@@ -189,7 +189,7 @@ public class MessageDao {
         return messages;
     }
     
-public Boolean newMessage(Integer sender, Integer to, String desc) {
+    public static Boolean newMessage(Integer sender, Integer to, String desc) {
     	
     	
         Connection conn = null;
@@ -203,14 +203,14 @@ public Boolean newMessage(Integer sender, Integer to, String desc) {
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
-            pst = conn.prepareStatement("INSERT into messages(sender,to,desc,data) values(?,?,?,?)");
+            pst = conn.prepareStatement("INSERT into messages(sender,`to`,`desc`,`date`) values(?,?,?,?)");
             
          
             
             pst.setInt(1, sender);
             pst.setInt(2, to);
             pst.setString(3, desc);
-            pst.setDate(4, (Date) Date.from(Instant.now()));
+            pst.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
             
             pst.executeUpdate();
                 

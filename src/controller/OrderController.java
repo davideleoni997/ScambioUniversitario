@@ -34,7 +34,6 @@ public class OrderController {
 		Length = length;
 	}
 	
-	//Prendere info da un DAO
 		public Order[] getOrdersInfo(String user) {
 			
 			
@@ -49,7 +48,7 @@ public class OrderController {
 			
 		}
 		
-		//Ok
+
 		public Order[] getOrderList(String user) {
 			getOrderList(user);
 			return this.list;

@@ -7,6 +7,7 @@ public class Utente {
     private String nome;
     private String cognome;
     private boolean company;
+    private Integer id;
 
     public Utente(String username, String password, String nome, String cognome) {
         this.nome = nome;
@@ -53,5 +54,17 @@ public class Utente {
 
 	public void setCompany(boolean company) {
 		this.company = company;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public boolean update() {
+		return dao.UtendeDao.update(this.id,this.nome,this.cognome,this.username,this.password);
 	}
 }

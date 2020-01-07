@@ -77,7 +77,7 @@ public class OrderDao {
         while (rs.next())
         {
         	 
-             nome = rs.getString("nome");
+             nome = rs.getString("oggetto");
              prezzo = rs.getInt("prezzo");
              item = new Item(nome,prezzo);
              

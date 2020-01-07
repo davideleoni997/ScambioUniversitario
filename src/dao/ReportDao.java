@@ -30,7 +30,7 @@ public class ReportDao {
 
         // STEP 4: creazione ed esecuzione della query
         stmt = conn.createStatement();
-        String sql = "SELECT id, userId, desc FROM reports;";
+        String sql = "SELECT id, insId, desc, reportFrom FROM reports;";
                  
         rs = stmt.executeQuery(sql);
 
@@ -42,18 +42,21 @@ public class ReportDao {
 
         // lettura delle colonne "by name"
         Integer id = rs.getInt("id");
-        Integer id_user = rs.getInt("userId");
+        Integer id_insertion = rs.getInt("insId");
         String desc = rs.getString("desc");
+        Integer repId = rs.getInt("reportFrom");
+        
         int i=0;
-        reports[i] = new Report(id,id_user,desc);
+        reports[i] = new Report(id,id_insertion,desc,repId);
         i++;
         
         while(rs.next()) {
         	id = rs.getInt("id");
-            id_user = rs.getInt("userId");
+            id_insertion = rs.getInt("insId");
             desc = rs.getString("desc");
+            repId = rs.getInt("reportFrom");
             
-            reports[i] = new Report(id,id_user,desc);
+            reports[i] = new Report(id,id_insertion,desc,repId);
             i++;
         	
         }
@@ -95,14 +98,14 @@ public class ReportDao {
 	public static Report[] mockupReports() {
 		Report reports[] = new Report[100];
 		
-		reports[0]=new Report(0,123,"Quack");
-		reports[1]=new Report(1,122,"Lorem");
-		reports[2]=new Report(2,124,"Ipsum");
+		reports[0]=new Report(0,2,"Quack",1);
+		reports[1]=new Report(1,2,"Lorem",3);
+		reports[2]=new Report(2,2,"Ipsum",4);
 		
 		return reports;
 	}
 	
-	public static boolean newReport(Integer userReported,String desc) {
+	public static boolean newReport(Integer insReported,String desc,Integer reporter) {
 		
 
     	
@@ -117,12 +120,13 @@ public class ReportDao {
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
-            pst = conn.prepareStatement("INSERT into Report(userId,desc) values(?,?)");
+            pst = conn.prepareStatement("INSERT into Report(insId,desc,reportFrom) values(?,?,?)");
             
            
             
-            pst.setInt(1, userReported);
+            pst.setInt(1, insReported);
             pst.setString(2, desc);
+            pst.setInt(3, reporter);
             
             pst.executeUpdate();
             pst.close();

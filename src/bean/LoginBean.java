@@ -9,6 +9,15 @@ public class LoginBean {
 	private String nome;
 	private String cognome;
 	private Boolean company;
+	private Integer id;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public LoginBean() {
 		this.username = "";
@@ -67,8 +76,16 @@ public class LoginBean {
 		if(found!= null) {
 		this.nome = found.getNome();
 		this.cognome = found.getCognome();
-		this.company = found.isCompany();}
+		this.company = found.isCompany();
+		this.id = found.getId();}
 		return  (found != null);
+	}
+	
+	public boolean updateInfo() {
+		Utente u = new Utente(this.username,this.password,this.nome,this.cognome);
+		u.setId(id);
+		u.update();
+		return true;
 	}
 
 }

@@ -62,7 +62,7 @@
         <antcall target="build"/>
     </target>
     <target name="Main">
-        <java classname="Graphic.Main" failonerror="true" fork="yes">
+        <java classname="graphic.Main" failonerror="true" fork="yes">
             <classpath refid="OrderFX.classpath"/>
         </java>
     </target>
