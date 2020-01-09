@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.Utente;
 
@@ -58,10 +60,10 @@ public class UtendeDao {
             conn.close();
         } catch (SQLException se) {
             // Errore durante l'apertura della connessione
-            se.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
         } catch (Exception e) {
             // Errore nel loading del driver
-            e.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
         } finally {
         	try {
         		if(rs!=null)
@@ -78,7 +80,7 @@ public class UtendeDao {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
             }
         }
 
@@ -116,10 +118,10 @@ public class UtendeDao {
             
         } catch (SQLException se) {
             // Errore durante l'apertura della connessione
-            se.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
         } catch (Exception e) {
             // Errore nel loading del driver
-            e.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
         } finally {
         	try {
         		if(rs!=null)
@@ -136,7 +138,7 @@ public class UtendeDao {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
             }
         }
 
@@ -177,7 +179,7 @@ public class UtendeDao {
              
          } catch (Exception e) {
              // Errore nel loading del driver
-             e.printStackTrace();
+        	 Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
              return false;
          } finally {
          	try {
@@ -191,7 +193,7 @@ public class UtendeDao {
                  if (conn != null)
                      conn.close();
              } catch (SQLException se) {
-                 se.printStackTrace();
+            	 Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
              }
          }
      	

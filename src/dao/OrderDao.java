@@ -2,6 +2,8 @@ package dao;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.Item;
 import logic.Order;
@@ -82,10 +84,10 @@ public class OrderDao {
         conn.close();
     } catch (SQLException se) {
         // Errore durante l'apertura della connessione
-        se.printStackTrace();
+    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
     } catch (Exception e) {
         // Errore nel loading del driver
-        e.printStackTrace();
+    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
     } finally {
     	try {
     		if(rs!=null)
@@ -102,7 +104,7 @@ public class OrderDao {
             if (conn != null)
                 conn.close();
         } catch (SQLException se) {
-            se.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
         }
     }
 		
@@ -175,10 +177,10 @@ public class OrderDao {
         conn.close();
     } catch (SQLException se) {
         // Errore durante l'apertura della connessione
-        se.printStackTrace();
+    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
     } catch (Exception e) {
         // Errore nel loading del driver
-        e.printStackTrace();
+    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
     } finally {
     	try {
     		if(rs!=null)
@@ -195,7 +197,7 @@ public class OrderDao {
             if (conn != null)
                 conn.close();
         } catch (SQLException se) {
-            se.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
         }
     }
 		
@@ -232,7 +234,7 @@ public class OrderDao {
             
         } catch (Exception e) {
             // Errore nel loading del driver
-            e.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
             return false;
         } finally {
         	try {
@@ -245,7 +247,7 @@ public class OrderDao {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
             }
         }
     	
@@ -287,7 +289,7 @@ public class OrderDao {
             
         } catch (Exception e) {
             // Errore nel loading del driver
-            e.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
             return false;
         } finally {
         	try {
@@ -300,7 +302,7 @@ public class OrderDao {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
             }
         }
     	

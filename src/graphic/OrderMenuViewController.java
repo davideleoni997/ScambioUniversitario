@@ -2,6 +2,10 @@ package graphic;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import bean.OrderBean;
 import controller.OrderController;
 import javafx.fxml.FXML;
@@ -62,7 +66,7 @@ public class OrderMenuViewController {
 		}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			Logger.getGlobal().log(Level.WARNING,"ViewController:Login",e);
 		}
 	}
 	

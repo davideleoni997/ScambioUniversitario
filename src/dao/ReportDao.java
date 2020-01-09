@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.Report;
 
@@ -66,10 +68,10 @@ public class ReportDao {
         conn.close();
     } catch (SQLException se) {
         // Errore durante l'apertura della connessione
-        se.printStackTrace();
+    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
     } catch (Exception e) {
         // Errore nel loading del driver
-        e.printStackTrace();
+    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
     } finally {
     	try {
     		if(rs!=null)
@@ -86,7 +88,7 @@ public class ReportDao {
             if (conn != null)
                 conn.close();
         } catch (SQLException se) {
-            se.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
         }
     }
 		
@@ -135,7 +137,7 @@ public class ReportDao {
             
         } catch (Exception e) {
             // Errore nel loading del driver
-            e.printStackTrace();
+        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
             return false;
         } finally {
         	try {
@@ -149,7 +151,7 @@ public class ReportDao {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
             }
         }
     	
