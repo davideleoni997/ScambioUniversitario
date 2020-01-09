@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphic.LoginViewController">
+   <children>
+      <Label id="lbluser" fx:id="lbluser" layoutX="179.0" layoutY="35.0" text="Username" />
+      <TextField id="tfuser" fx:id="tfuser" layoutX="234.0" layoutY="31.0" />
+      <Label layoutX="217.0" layoutY="6.0" text="WELCOME TO THE LOGIN SCREEN" />
+      <Label id="lblpsw" fx:id="lblpsw" layoutX="181.0" layoutY="70.0" text="Password" />
+      <TextField id="tfpsw" fx:id="tfpsw" layoutX="234.0" layoutY="66.0" />
+      <Button id="btnsub" fx:id="btnsub" layoutX="274.0" layoutY="103.0" mnemonicParsing="false" onAction="#Login" text="Login" />
+      <Label fx:id="lblerrormsg" layoutX="283.0" layoutY="149.0" text="" visible="false" />
+   </children>
+</Pane>
