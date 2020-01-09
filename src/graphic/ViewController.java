@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bean.UserBean;
-import controller.LoginController;
 import controller.MessageController;
 import controller.OrderController;
 import javafx.event.ActionEvent;
@@ -103,29 +102,22 @@ public class ViewController {
 	public void createOrderDetailMenu(Integer id) {
 	try {
 			
-	
-		VBox root = new VBox();
-		
-		Scene scene = new Scene(root,primaryStage.getWidth(),primaryStage.getHeight());
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
-		Order order = OrderController.getOrderDetail(id);
-		
-		String out= "Nome: "+order.getItem().getNome()+" Compratore: "+order.getBuyer();
-		
-		TextField tfOrderInfo = new TextField(out);
-		tfOrderInfo.setEditable(false);
-		
-		Button btnBack = new Button("back");
-		btnBack.setOnAction(new EventHandler<ActionEvent>() {
+		 
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
 			
-			public void handle(ActionEvent event) {
-				vc.goBack();	
-			}
-		});
-		
-		root.getChildren().addAll(tfOrderInfo,btnBack);
-		primaryStage.setScene(scene);
+			fl.setLocation(getClass().getResource("OrderDetail.fxml"));
+			Pane root = (Pane) fl.load(); //Carico fxml scena
+			OrderDetailController odc = fl.getController(); //Prendo controller scena
+			
+			Order order = OrderController.getOrderDetail(id);
+			odc.setOrder(order);
+			odc.update();
+			
+			//Aggiorno ordine
+			Scene scene = new Scene(root); //nuova scena
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		 
+			primaryStage.setScene(scene);
 		
 		}
 		
@@ -216,54 +208,17 @@ public class ViewController {
 	public void createModifyMenu(UserBean lb) {
 		try {
 			
-			LoginController lc = LoginController.getInstance();
-			VBox root = new VBox();
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
 			
-			Scene scene = new Scene(root,primaryStage.getWidth(),primaryStage.getHeight());
+			fl.setLocation(getClass().getResource("ModifyProfile.fxml"));
+			Pane root = (Pane) fl.load(); //Carico fxml scena
+			
+			ModifyProfileViewController mpvc = fl.getController();
+			mpvc.setLb(lb);
+			
+			Scene scene = new Scene(root); //nuova scena
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
-			Label lblName = new Label("Name:");
-			TextField tfName = new TextField(lb.getNome());
-			Label lblCognome = new Label("Surname:");
-			TextField tfCognome = new TextField(lb.getCognome());
-			Label lblUsername = new Label("Username:");
-			TextField tfUsername = new TextField(lb.getUsername());
-			Label lblOldPassword = new Label("Insert Old psw");
-			TextField tfOldPassword = new TextField("");
-			Label lblNewPassword = new Label("Insert New psw");
-			TextField tfNewPassword = new TextField("");
-			
-			Button btnSubmit = new Button("Submit");
-			btnSubmit.setOnAction(new EventHandler<ActionEvent>() {
-				
-				public void handle(ActionEvent event) {
-				
-					//if(lb.getPassword() == tfOldPassword.getText()) {
-					lb.setNome(tfName.getText());
-					lb.setCognome(tfCognome.getText());
-					lb.setUsername(tfUsername.getText());
-					lb.setPassword(tfNewPassword.getText());
-					if(lc.updateInfo(lb)) {
-						scenes.pop();
-						vc.createProfileMenu(lb);
-					}
-					else System.out.println("Error");
-					
-					}
-					
-				//}
-			});
-			
-			
-			Button btnBack = new Button("Back");
-			btnBack.setOnAction(new EventHandler<ActionEvent>() {
-				
-				public void handle(ActionEvent event) {
-					vc.goBack();	
-				}
-			});
-			
-			root.getChildren().addAll(lblName,tfName,lblCognome,tfCognome,lblUsername,tfUsername,lblOldPassword,tfOldPassword,lblNewPassword,tfNewPassword,btnSubmit,btnBack);
+		 
 			primaryStage.setScene(scene);
 			}
 			

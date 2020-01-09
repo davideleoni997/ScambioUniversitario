@@ -11,6 +11,5 @@
       <ListView fx:id="listOrders" layoutY="39.0" prefHeight="360.0" prefWidth="600.0" />
       <Label fx:id="lblOrders" layoutX="14.0" layoutY="14.0" text="Your orders:" />
       <Button fx:id="btnBack" layoutX="538.0" layoutY="10.0" mnemonicParsing="false" onAction="#back" text="Back" />
-       <!--  <Label fx:id="lblorders" layoutX="14.0" layoutY="14.0" text="Your Orders:" />-->
    </children>
 </Pane>

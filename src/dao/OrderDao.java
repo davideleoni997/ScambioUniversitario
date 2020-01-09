@@ -269,7 +269,7 @@ public class OrderDao {
             //!!!RICORDA ID AUTOINCREMENT!!!
             pst = conn.prepareCall("call compra(?,?,?,?,?)");
             
-            Integer res =0;
+            Integer res = 0;
             
             pst.setInt(1, buyer);
             pst.setInt(2, seller);
