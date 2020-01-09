@@ -58,16 +58,16 @@ public class ViewController {
 	public void createLoginMenu() { //Metodo creazione schermata login
 		try {
 			
-			FXMLLoader fl = new FXMLLoader();
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
 		
 			fl.setLocation(getClass().getResource("LoginMenu.fxml"));
-			Pane root = (Pane) fl.load();
+			Pane root = (Pane) fl.load();    //Carico fxml della scena
 			Scene scene = new Scene(root); //nuova scena
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		 
 			
 			primaryStage.setTitle("Scambio");
-			primaryStage.setScene(scene);
+			primaryStage.setScene(scene);  //Setto stage
 			
 			
 			primaryStage.show();  //Mostro schermata
@@ -82,12 +82,12 @@ public class ViewController {
 	public void createOrderMenu(String user) {
 		try {
 			
-			FXMLLoader fl = new FXMLLoader();
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
 			
 			fl.setLocation(getClass().getResource("OrderMenu.fxml"));
-			Pane root = (Pane) fl.load();
-			OrderMenuViewController omvc = fl.getController();
-			omvc.updateOrders(user);
+			Pane root = (Pane) fl.load(); //Carico fxml scena
+			OrderMenuViewController omvc = fl.getController(); //Prendo controller scena
+			omvc.updateOrders(user); //Aggiorno i miei ordini
 			Scene scene = new Scene(root); //nuova scena
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		 
