@@ -70,7 +70,6 @@
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
-            <test name="test.TestOrderBean" todir="${junit.output.dir}"/>
             <test name="test.TestUtente" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="OrderFX.classpath"/>
