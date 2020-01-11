@@ -6,10 +6,22 @@ import java.util.logging.Logger;
 
 import logic.Utente;
 
-public class UtendeDao {
-    private static String PASS = "root";
-    private static String USER = "root";
-    private static String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
+public class UtenteDao {
+    private static final String ERROR_CLASS = "UtenteDao";
+	private static final String COLUMN_ID = "id";
+	private static final String COLUMN_COMPANY = "company";
+	private static final String COLUMN_PASSWORD = "password";
+	private static final String COLUMN_USERNAME = "username";
+	private static final String COLUMN_COGNOME = "cognome";
+	private static final String COLUMN_NOME = "nome";
+	private static final String CONNECTOR = "org.mariadb.jdbc.Driver";
+	private static final String PASS = "root";
+    private static final String USER = "root";
+    private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
+    
+    private UtenteDao() {
+        throw new IllegalStateException("Utility class");
+      }
 
     public static Utente findByNameAndPassword(String username, String password) {
         // STEP 1: dichiarazioni
@@ -19,7 +31,7 @@ public class UtendeDao {
         Utente u = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -42,12 +54,12 @@ public class UtendeDao {
             rs.first();
 
             // lettura delle colonne "by name"
-            String nome = rs.getString("nome");
-            String cognome = rs.getString("cognome");
-            String usernameLoaded = rs.getString("username");
-            String passwordLoaded = rs.getString("password");
-            Boolean company = rs.getBoolean("company");
-            Integer id = rs.getInt("id");
+            String nome = rs.getString(COLUMN_NOME);
+            String cognome = rs.getString(COLUMN_COGNOME);
+            String usernameLoaded = rs.getString(COLUMN_USERNAME);
+            String passwordLoaded = rs.getString(COLUMN_PASSWORD);
+            Boolean company = rs.getBoolean(COLUMN_COMPANY);
+            Integer id = rs.getInt(COLUMN_ID);
             
             u = new Utente(usernameLoaded, passwordLoaded, nome, cognome);
             u.setCompany(company);
@@ -60,27 +72,29 @@ public class UtendeDao {
             conn.close();
         } catch (SQLException se) {
             // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         } finally {
         	try {
         		if(rs!=null)
-        		rs.close();
+        			rs.close();
         	}
         	catch(Exception e) {		
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             try {
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
             }
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
 
@@ -94,7 +108,7 @@ public class UtendeDao {
         int id = -1;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -109,7 +123,7 @@ public class UtendeDao {
                 return -1;
 
             // lettura delle colonne "by name"
-            id = rs.getInt("id");           
+            id = rs.getInt(COLUMN_ID);           
             
             // STEP 6: Clean-up dell'ambiente
             rs.close();
@@ -118,27 +132,29 @@ public class UtendeDao {
             
         } catch (SQLException se) {
             // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         } finally {
         	try {
         		if(rs!=null)
-        		rs.close();
+        			rs.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {	
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             try {
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
             }
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
 
@@ -156,7 +172,7 @@ public class UtendeDao {
          PreparedStatement pst = null;
          try {
              // STEP 2: loading dinamico del driver mysql
-             Class.forName("org.mariadb.jdbc.Driver");
+             Class.forName(CONNECTOR);
 
              // STEP 3: apertura connessione
              conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -179,21 +195,22 @@ public class UtendeDao {
              
          } catch (Exception e) {
              // Errore nel loading del driver
-        	 Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
              return false;
          } finally {
          	try {
          		if(pst!=null)
-         		pst.close();
+         			pst.close();
          	}
-         	catch(Exception e) {		
+         	catch(Exception e) {	
+         		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
          	}
              
              try {
                  if (conn != null)
                      conn.close();
              } catch (SQLException se) {
-            	 Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
              }
          }
      	
