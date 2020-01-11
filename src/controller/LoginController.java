@@ -1,7 +1,7 @@
 package controller;
 
 import bean.UserBean;
-import dao.UtendeDao;
+import dao.UtenteDao;
 import logic.Utente;
 
 /*
@@ -50,7 +50,7 @@ public class LoginController {
     }
     
     public boolean validate(String tipoLogin,UserBean lb) {
-		System.out.println("Tipo login: " + tipoLogin);
+		
 		// Controllo sintattico
 		if (lb.getUsername().equals("") || lb.getPassword().equals("")) {
 			return false;
@@ -68,11 +68,7 @@ public class LoginController {
 	
     
     public boolean updateInfo(UserBean lb) {
-    	if(dao.UtendeDao.update(lb.getId(), lb.getNome(), lb.getCognome(), lb.getUsername(), lb.getPassword()))
-    	return true;
-    	 
-    	else return false;
-    	
+    	return dao.UtenteDao.update(lb.getId(), lb.getNome(), lb.getCognome(), lb.getUsername(), lb.getPassword());
     }
     
     /**
@@ -83,8 +79,8 @@ public class LoginController {
      * @return l'utente loggato oppure null se nessun utente corrisponde alla coppia username/password
      */
     public Utente login(String username, String password) {
-        Utente u = UtendeDao.findByNameAndPassword(username, password);
-        //Utente u = UtendeDao.findByNameAndPasswordMockup(username, password);
-        return u;
+        return UtenteDao.findByNameAndPassword(username, password);
+       
+        
     }
 }

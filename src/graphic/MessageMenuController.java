@@ -36,7 +36,7 @@ public class MessageMenuController {
 	
 	public void update(UserBean lb) {
 		try {
-		Message list[] = null;
+		Message[] list = null;
 		
 		
 		
@@ -44,20 +44,20 @@ public class MessageMenuController {
 		
 		list = 	mc.getMessageList(lb);	
 		if(list != null)
-		for(int i=0; i<list.length;i++)
-		{
+			for(int i=0; i<list.length;i++)
+			{
 			if(list[i]!=null) {
 				
-			FXMLLoader fl = new FXMLLoader();
+				FXMLLoader fl = new FXMLLoader();
 				
-			fl.setLocation(getClass().getResource("ConversationAdapter.fxml"));
-			Pane root = (Pane) fl.load();
-			ConversationListAdapter ca =fl.getController();	
-			ca.setAdapter(lb, list[i]);
+				fl.setLocation(getClass().getResource("ConversationAdapter.fxml"));
+				Pane root = (Pane) fl.load();
+				ConversationListAdapter ca =fl.getController();	
+				ca.setAdapter(lb, list[i]);
 			
 			
-			listMessages.getItems().add(root);
-		}
+				listMessages.getItems().add(root);
+			}
 		}
 		
 		else {

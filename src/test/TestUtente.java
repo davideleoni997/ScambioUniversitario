@@ -52,6 +52,6 @@ public class TestUtente {
 		Utente x = new Utente("a","b","c","d");
 		
 		x.setId(5);
-		assertEquals(new Integer(5),x.getId());
+		assertEquals(Integer.valueOf(5),x.getId());
 	}
 }	

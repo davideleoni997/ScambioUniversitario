@@ -31,7 +31,7 @@ public class ConversationListAdapter {
 	
 	@FXML
 	public void messageDetail() {
-		vc.getScenes().add(btndetail.getScene());
+		vc.getScenes().push(btndetail.getScene());
 		vc.createMessageDetailMenu(lb, msg.getFrom());
 	}
 	

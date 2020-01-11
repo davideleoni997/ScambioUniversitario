@@ -15,13 +15,24 @@ import logic.Message;
 import java.sql.Date;
 
 public class MessageDao {
+	
+	private static final String ERROR_CLASS = "UtenteDao";
+	private static final String COLUMN_DATE = "date";
+	private static final String COLUMN_DESC = "desc";
+	private static final String COLUMN_TO = "to";
+	private static final String COLUMN_SENDER = "sender";
+	private static final String CONNECTOR = "org.mariadb.jdbc.Driver";
 
-	private static String PASS = "root";
-    private static String USER = "root";
-    private static String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
+	private MessageDao() {
+        throw new IllegalStateException("Utility class");
+      }
+
+	private static final String PASS = "root";
+    private static final String USER = "root";
+    private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
 	
     public static Message[] messageList(Integer user) {
-    	Message messages[] = new Message[100];
+    	Message[] messages = new Message[100];
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
@@ -29,7 +40,7 @@ public class MessageDao {
         ResultSet rs = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -41,17 +52,17 @@ public class MessageDao {
             rs = stmt.executeQuery(sql);
 
             if (!rs.first()) // rs not empty
-                return null;
+                return new Message[0];
 
    
             // riposizionamento del cursore
             rs.first();
 
             // lettura delle colonne "by name"
-            Integer sender = rs.getInt("sender");
-            Integer to = rs.getInt("to");
-            String desc = rs.getString("desc");
-            Date date = rs.getDate("date");
+            Integer sender = rs.getInt(COLUMN_SENDER);
+            Integer to = rs.getInt(COLUMN_TO);
+            String desc = rs.getString(COLUMN_DESC);
+            Date date = rs.getDate(COLUMN_DATE);
             
 
             int i=0;
@@ -63,9 +74,9 @@ public class MessageDao {
             
             while(rs.next()) {
             	sender= rs.getInt("title");
-                desc = rs.getString("desc");
-                to = rs.getInt("to");
-                date = rs.getDate("date");
+                desc = rs.getString(COLUMN_DESC);
+                to = rs.getInt(COLUMN_TO);
+                date = rs.getDate(COLUMN_DATE);
             	
                 msg = new Message(sender,to,desc,date);
                 messages[i] = msg;
@@ -78,27 +89,29 @@ public class MessageDao {
             conn.close();
         } catch (SQLException se) {
             // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         } finally {
         	try {
         		if(rs!=null)
-        		rs.close();
+        			rs.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {	
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             try {
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
             }
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
     	
@@ -107,7 +120,7 @@ public class MessageDao {
 	
     
     public static Message[] conversation(Integer sender) {
-    	Message messages[] = new Message[100];
+    	Message[] messages = new Message[100];
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
@@ -115,7 +128,7 @@ public class MessageDao {
         ResultSet rs = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -127,17 +140,17 @@ public class MessageDao {
             rs = stmt.executeQuery(sql);
 
             if (!rs.first()) // rs not empty
-                return null;
+                return new Message[0];
 
    
             // riposizionamento del cursore
             rs.first();
 
             // lettura delle colonne "by name"
-            sender = rs.getInt("sender");
-            Integer to = rs.getInt("to");
-            String desc = rs.getString("desc");
-            Date date = rs.getDate("date");
+            sender = rs.getInt(COLUMN_SENDER);
+            Integer to = rs.getInt(COLUMN_TO);
+            String desc = rs.getString(COLUMN_DESC);
+            Date date = rs.getDate(COLUMN_DATE);
             
 
             int i=0;
@@ -148,10 +161,10 @@ public class MessageDao {
             i++;
             
             while(rs.next()) {
-            	sender= rs.getInt("sender");
-                desc = rs.getString("desc");
-                to = rs.getInt("to");
-                date = rs.getDate("date");
+            	sender= rs.getInt(COLUMN_SENDER);
+                desc = rs.getString(COLUMN_DESC);
+                to = rs.getInt(COLUMN_TO);
+                date = rs.getDate(COLUMN_DATE);
             	
                 msg = new Message(sender,to,desc,date);
                 messages[i] = msg;
@@ -164,27 +177,29 @@ public class MessageDao {
             conn.close();
         } catch (SQLException se) {
             // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         } finally {
         	try {
         		if(rs!=null)
-        		rs.close();
+        			rs.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             try {
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
             }
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
     	
@@ -198,7 +213,7 @@ public class MessageDao {
         PreparedStatement pst= null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -219,21 +234,22 @@ public class MessageDao {
             pst.close();
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
             return false;
         } finally {
         	try {
         		if(pst!=null)
-        		pst.close();
+        			pst.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {	
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
     	

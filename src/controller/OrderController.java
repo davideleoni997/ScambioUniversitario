@@ -4,8 +4,8 @@ import dao.OrderDao;
 import logic.Order;
 
 public class OrderController {
-	private Integer Length;
-	private Order list[];
+	private Integer length;
+	private Order[] list;
 	
 	public Order[] getList() {
 		return list;
@@ -17,21 +17,21 @@ public class OrderController {
 
 	public OrderController(Order[] list) {
 		super();
-		Length = list.length;
+		length = list.length;
 		this.list = list;
 	}
 
 	public OrderController(String user) {
-		this.Length = 0;
+		this.length = 0;
 		this.getOrdersInfo(user);
 	}
 	
 	public Integer getLength() {
-		return Length;
+		return length;
 	}
 
 	public void setLength(Integer length) {
-		Length = length;
+		this.length = length;
 	}
 	
 	
@@ -39,12 +39,12 @@ public class OrderController {
 	public Order[] getOrdersInfo(String user) {
 			
 			
-			this.setList(OrderDao.OrderListFromDB(user));
+			this.setList(OrderDao.orderListFromDB(user));
 			
 			if(list!=null)
-			this.setLength(this.list.length);
+				this.setLength(this.list.length);
 			else
-			this.setLength(0);
+				this.setLength(0);
 			
 			return this.list;
 			

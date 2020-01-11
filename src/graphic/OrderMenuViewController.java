@@ -35,31 +35,31 @@ public class OrderMenuViewController {
 	
 	public void updateOrders(String user) {
 		try{
-			Order list[] = null;
+			Order[] list = null;
 		
 	
 		OrderController oc = new OrderController(user);
 		list = oc.getOrdersInfo(user);
 		
 		if(list != null)
-		for(int i=0; i<list.length;i++)
-		{
+			for(int i=0; i<list.length;i++)
+			{
 			
 			
-			if(list[i]!=null) {
-			FXMLLoader fl = new FXMLLoader();
+				if(list[i]!=null) {
+					FXMLLoader fl = new FXMLLoader();
 				
-			fl.setLocation(getClass().getResource("TextButtonAdapter.fxml"));
-			VBox root = (VBox) fl.load();
-			TextButtonListAdapter tbla =fl.getController();
-			OrderBean ob = new OrderBean();
-			ob.setId(list[i].getId());
-			ob.setUser(list[i].getSeller());
-			tbla.setOrder(ob);
+					fl.setLocation(getClass().getResource("TextButtonAdapter.fxml"));
+					VBox root = (VBox) fl.load();
+					TextButtonListAdapter tbla =fl.getController();
+					OrderBean ob = new OrderBean();
+					ob.setId(list[i].getId());
+					ob.setUser(list[i].getSeller());
+					tbla.setOrder(ob);
 			
-			listOrders.getItems().add(root);		
+					listOrders.getItems().add(root);		
 		
-		}
+				}
 		}
 		else {
 			//No orders

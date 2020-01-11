@@ -9,7 +9,7 @@ public class Insertion {
 	private Date date;
 	private Integer price;
 	private Integer id;
-	private Blob images[];
+	private Blob[] images;
 	private Integer seller;
 	private Boolean sold;
 
@@ -34,7 +34,7 @@ public class Insertion {
 		this.price = price;
 	}
 	
-	public Insertion(Integer id, String title, String desc, Date date, Integer price,Blob images[], Integer seller) {
+	public Insertion(Integer id, String title, String desc, Date date, Integer price,Blob[] images, Integer seller) {
 		super();
 		this.id  = id;
 		this.title = title;

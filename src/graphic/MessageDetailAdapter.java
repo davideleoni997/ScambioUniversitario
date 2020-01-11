@@ -7,7 +7,7 @@ import logic.Message;
 
 public class MessageDetailAdapter {
 	
-	private Message msg;
+	
 	@FXML
 	private Label lblsender;
 	
@@ -16,13 +16,13 @@ public class MessageDetailAdapter {
 	
 	
 	public MessageDetailAdapter() {
-		
+		//Costruttore necessario a javafx
 	}
 	
 	public void setAdapter(Message msg) {
-		this.msg=msg;
-		lblsender.setText(String.valueOf(this.msg.getFrom()));
+		
+		lblsender.setText(String.valueOf(msg.getFrom()));
 	
-		lblmsg.setText(this.msg.getDesc());
+		lblmsg.setText(msg.getDesc());
 	}
 }

@@ -8,7 +8,7 @@ public class Filters {
 	private String position;
 	
 	public Filters() {
-		
+		//TO_DO
 	}
 
 	public String getDate() {

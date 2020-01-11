@@ -24,7 +24,7 @@ public class TextButtonListAdapter {
 	
 	@FXML
 	public void showDetail(ActionEvent event) {
-		vc.getScenes().add(btndetail.getScene());
+		vc.getScenes().push(btndetail.getScene());
 		vc.createOrderDetailMenu(orderId);	
 	}
 	

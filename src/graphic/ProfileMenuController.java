@@ -33,19 +33,19 @@ public class ProfileMenuController {
 	
 	@FXML
 	public void viewOrders() {
-		vc.getScenes().add(lblname.getScene());
+		vc.getScenes().push(lblname.getScene());
 		vc.createOrderMenu(ub.getUsername());
 	}
 	
 	@FXML
 	public void modifyProfile() {
-		vc.getScenes().add(lblname.getScene());
+		vc.getScenes().push(lblname.getScene());
 		vc.createModifyMenu(ub);
 	}
 	
 	@FXML
 	public void viewMessages() {
-		vc.getScenes().add(lblname.getScene());
+		vc.getScenes().push(lblname.getScene());
 		vc.createMessageMenu(ub);
 	}
 	

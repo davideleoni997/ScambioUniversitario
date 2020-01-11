@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import dao.InsertionDao;
 import logic.Filters;
 import logic.Insertion;
@@ -7,7 +10,7 @@ import logic.Insertion;
 public class InsertionController {
 
 	public InsertionController() {
-		
+		//Costruttore
 	}
 	
 	public boolean newInsertionMockup() {
@@ -27,20 +30,20 @@ public class InsertionController {
 	
 	public String[] getResearchResults(String research, Filters filters) {
 		
-		String out[]= new String[100];
+		String[] out= new String[100];
 		try {
 			
-			Insertion ins[]= new Insertion[100];
+			Insertion[] ins;
 			ins=InsertionDao.getReserach(research, filters);
 			for(int i=0;i<ins.length;i++) {
 				if(ins[i]!=null)
-				out[i]=new String(ins[i].getTitle());
+					out[i]=ins[i].getTitle();
 			}
 			
 		}
 		
 		catch(Exception e) {
-			return null;
+			Logger.getGlobal().log(Level.WARNING,"InsController",e);
 		}
 		return out;
 	}

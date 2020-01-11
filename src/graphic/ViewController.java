@@ -1,6 +1,7 @@
 package graphic;
 
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,18 +18,20 @@ import javafx.stage.Stage;
 import logic.Order;
 
 public class ViewController {
+	private static final String ERROR_CLASS = "ViewController:";
+	private static final String CSSPATH = "application.css";
 	private static ViewController vc = null;
-	private Stack<Scene> scenes;
-	public Stack<Scene> getScenes() {
+	private Deque<Scene> scenes;
+	public Deque<Scene> getScenes() {
 		return scenes;
 	}
 
 	private Stage primaryStage;
 	
 	protected ViewController() {
-		ViewController.vc = this;
+		vc = this;
 		this.primaryStage = null;
-		scenes = new Stack<Scene>();
+		scenes = new LinkedList<Scene>();
 	}
 	
 	public static ViewController getInstance() {
@@ -47,7 +50,7 @@ public class ViewController {
 	}
 	
 	public void createMainMenu() {
-		
+		//Da fare
 	}
 
 	public void createLoginMenu() { //Metodo creazione schermata login
@@ -58,7 +61,7 @@ public class ViewController {
 			fl.setLocation(getClass().getResource("LoginMenu.fxml"));
 			Pane root = (Pane) fl.load();    //Carico fxml della scena
 			Scene scene = new Scene(root); //nuova scena
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 		 
 			
 			primaryStage.setTitle("Scambio");
@@ -69,7 +72,7 @@ public class ViewController {
 		}
 		
 		catch(Exception e) {
-			Logger.getGlobal().log(Level.WARNING,"ViewController:Login",e);
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
 		}
 		
 	}
@@ -84,14 +87,14 @@ public class ViewController {
 			OrderMenuViewController omvc = fl.getController(); //Prendo controller scena
 			omvc.updateOrders(user); //Aggiorno i miei ordini
 			Scene scene = new Scene(root); //nuova scena
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 		 
 			primaryStage.setScene(scene);
 			
 		}
 		
 		catch(Exception e) {
-			Logger.getGlobal().log(Level.WARNING,"ViewController:CreateOrder",e);
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
 		}
 	}
 	
@@ -111,14 +114,14 @@ public class ViewController {
 			
 			//Aggiorno ordine
 			Scene scene = new Scene(root); //nuova scena
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 		 
 			primaryStage.setScene(scene);
 		
 		}
 		
 		catch(Exception e) {
-			Logger.getGlobal().log(Level.WARNING,"ViewController:",e);
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
 		}
 		
 	}
@@ -134,14 +137,14 @@ public class ViewController {
 			pmc.setUser(lb);
 			//Aggiorno ordine
 			Scene scene = new Scene(root); //nuova scena
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 			 
 			primaryStage.setScene(scene);
 			
 			}
 			
 			catch(Exception e) {
-				Logger.getGlobal().log(Level.WARNING,"ViewController:",e);
+				Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
 			}
 	}
 	
@@ -157,13 +160,13 @@ public class ViewController {
 			mpvc.setLb(lb);
 			
 			Scene scene = new Scene(root); //nuova scena
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 		 
 			primaryStage.setScene(scene);
 			}
 			
 			catch(Exception e) {
-				Logger.getGlobal().log(Level.WARNING,"ViewController:",e);
+				Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
 			}
 			
 	}
@@ -180,14 +183,14 @@ public class ViewController {
 			mmc.update(lb);
 			
 			Scene scene = new Scene(root); //nuova scena
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 			
 			primaryStage.setScene(scene);
 			
 		}
 		
 		catch(Exception e) {
-			Logger.getGlobal().log(Level.WARNING,"ViewController:",e);
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
 		}
 	}
 		
@@ -202,12 +205,12 @@ public class ViewController {
 		mmc.update(lb,id);
 		
 		Scene scene = new Scene(root); //nuova scena
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 		primaryStage.setScene(scene);
 		
 	}
 	catch(Exception e) {
-		Logger.getGlobal().log(Level.WARNING,"ViewController:MessageDetail",e);
+		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
 	}
 	}
 	

@@ -20,12 +20,22 @@ import java.sql.Date;
 
 public class InsertionDao {
 
-	private static String PASS = "root";
-    private static String USER = "root";
-    private static String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
+	private static final String ERROR_CLASS = "UtenteDao";
+	private static final String COLUMN_DATA = "data";
+	private static final String COLUMN_DESCR = "descr";
+	private static final String COLUMN_PRICE = "price";
+	private static final String COLUMN_TITLE = "title";
+	private static String pass = "root";
+    private static String user = "root";
+    private static String db_url = "jdbc:mariadb://localhost:3306/scambio";
+    private static String connector = "org.mariadb.jdbc.Driver";
 	
+    private InsertionDao() {
+        throw new IllegalStateException("Utility class");
+      }
+    
     public static Insertion[] getReserach(String research, Filters filters) {
-    	Insertion ins[] = new Insertion[100];
+    	Insertion[] ins = new Insertion[100];
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
@@ -33,10 +43,10 @@ public class InsertionDao {
         ResultSet rs = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(connector);
 
             // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(db_url, user, pass);
 
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
@@ -47,17 +57,17 @@ public class InsertionDao {
            
      
             if (!rs.first()) // rs not empty
-                return null;
+                return new Insertion[0];
 
    
             // riposizionamento del cursore
             rs.first();
 
             // lettura delle colonne "by name"
-            String title = rs.getString("title");
-            String desc = rs.getString("descr");
-            String price = rs.getString("price");
-            Date date = rs.getDate("data");
+            String title = rs.getString(COLUMN_TITLE);
+            String desc = rs.getString(COLUMN_DESCR);
+            String price = rs.getString(COLUMN_PRICE);
+            Date date = rs.getDate(COLUMN_DATA);
             int i=0;
 
             Insertion insert = new Insertion(title,desc,date,Integer.parseInt(price));
@@ -66,10 +76,10 @@ public class InsertionDao {
             i++;
             
             while(rs.next()) {
-            	title = rs.getString("title");
-                desc = rs.getString("descr");
-                price = rs.getString("price");
-                date = rs.getDate("data");
+            	title = rs.getString(COLUMN_TITLE);
+                desc = rs.getString(COLUMN_DESCR);
+                price = rs.getString(COLUMN_PRICE);
+                date = rs.getDate(COLUMN_DATA);
             	
                 insert = new Insertion(title,desc,date,Integer.parseInt(price));
                 ins[i] = insert;
@@ -82,28 +92,30 @@ public class InsertionDao {
             conn.close();
         } catch (SQLException se) {
             // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         } finally {
         	try {
         		if(rs!=null)
-        		rs.close();
+        			rs.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {	
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             try {
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
             	
             }
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
             
         }
@@ -120,10 +132,10 @@ public class InsertionDao {
         ResultSet rs = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(connector);
 
             // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(db_url, user, pass);
 
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
@@ -139,11 +151,11 @@ public class InsertionDao {
             rs.first();
 
             // lettura delle colonne "by name"
-            String title = rs.getString("title");
+            String title = rs.getString(COLUMN_TITLE);
             String desc = rs.getString("desc");
-            String price = rs.getString("price");
+            String price = rs.getString(COLUMN_PRICE);
             Date date = rs.getDate("date");
-            Blob images[] = new Blob[3];
+            Blob[] images = new Blob[3];
             images[0] = rs.getBlob("image1");
             images[1] = rs.getBlob("image2");
             images[2] = rs.getBlob("image3");
@@ -159,59 +171,61 @@ public class InsertionDao {
             conn.close();
         } catch (SQLException se) {
             // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         } finally {
         	try {
         		if(rs!=null)
-        		rs.close();
+        			rs.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {	
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             try {
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
             }
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
     	
         return ins;
-    };
+    }
     
-    public static Boolean newInsertion(String title, String desc, String price, File pics[],Integer seller) {
+    public static Boolean newInsertion(String title, String desc, String price, File[] pics,Integer seller) {
     	
     	
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(connector);
 
             // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(db_url, user, pass);
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
             pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller) values(?,?,?,?,?,?,?,?)");
             
-            FileInputStream images[] = new FileInputStream[3];
+            FileInputStream[] images = new FileInputStream[3];
             
             pst.setString(1, title);
             pst.setString(2, desc);
             pst.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
             pst.setString(4, price);
             if(pics!=null)
-            for(int i=4; i< pics.length+4;i++) {
-            images[i-4]=new FileInputStream(pics[i-4]);
-            pst.setBinaryStream(i, images[i-4],images[i-4].available());
+            	for(int i=4; i< pics.length+4;i++) {
+            		images[i-4]=new FileInputStream(pics[i-4]);
+            		pst.setBinaryStream(i, images[i-4],images[i-4].available());
             }
             else {
             	pst.setNull(5,java.sql.Types.BLOB);
@@ -222,28 +236,29 @@ public class InsertionDao {
             pst.executeUpdate();
             pst.close();
             if(pics!=null)
-            for(int i=0;i<3;i++)
-            	images[i].close();
+            	for(int i=0;i<3;i++)
+            		images[i].close();
             
             
             
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
             return false;
         } finally {
         	try {
         		if(pst!=null)
-        		pst.close();
+        			pst.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
     	

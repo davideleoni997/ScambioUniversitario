@@ -10,19 +10,29 @@ import logic.Order;
 
 public class OrderDao {
 	
-	private static String PASS = "root";
-    private static String USER = "root";
-    private static String DB_URL = "jdbc:mariadb://localhost:3306/scambio";	
+	private static final String ERROR_CLASS = "UtenteDao";
+	private static final String COLUMN_PREZZO = "prezzo";
+	private static final String COLUMN_OGGETTO = "oggetto";
+	private static final String COLUMN_IDORDER = "idOrder";
+	private static final String CONNECTOR = "org.mariadb.jdbc.Driver";
+
+	private OrderDao() {
+        throw new IllegalStateException("Utility class");
+      }
 	
-	public static Order[] OrderListFromDB(String user) {
+	private static final String PASS = "root";
+    private static final String USER = "root";
+    private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";	
+	
+	public static Order[] orderListFromDB(String user) {
 		
-		Order order[]= new Order[100];
+		Order[] order= new Order[100];
 	    Statement stmt = null;
 	    Connection conn = null;
 	    ResultSet rs = null;
 	    try {
 	    
-	    Class.forName("org.mariadb.jdbc.Driver");
+	    Class.forName(CONNECTOR);
 		
 	    // STEP 3: apertura connessione
         conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -35,7 +45,7 @@ public class OrderDao {
         rs = stmt.executeQuery(sql);
         
         if(!rs.first()) {
-        	return null;
+        	return new Order[0];
         }
         int id = rs.getInt("id");
         rs.close();
@@ -51,9 +61,9 @@ public class OrderDao {
         rs.first();
 
         // lettura delle colonne "by name"
-        id = rs.getInt("idOrder");
-        String nome = rs.getString("oggetto");
-        int prezzo = rs.getInt("prezzo");
+        id = rs.getInt(COLUMN_IDORDER);
+        String nome = rs.getString(COLUMN_OGGETTO);
+        int prezzo = rs.getInt(COLUMN_PREZZO);
         int i=0;
         
         
@@ -65,11 +75,11 @@ public class OrderDao {
         while (rs.next())
         {
         	 
-             nome = rs.getString("oggetto");
-             prezzo = rs.getInt("prezzo");
+             nome = rs.getString(COLUMN_OGGETTO);
+             prezzo = rs.getInt(COLUMN_PREZZO);
              item = new Item(nome,prezzo);
              
-             id = rs.getInt("idOrder");
+             id = rs.getInt(COLUMN_IDORDER);
              order[i]=new Order(item);
              order[i].setId(id);
              i++;
@@ -84,27 +94,29 @@ public class OrderDao {
         conn.close();
     } catch (SQLException se) {
         // Errore durante l'apertura della connessione
-    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
     } catch (Exception e) {
         // Errore nel loading del driver
-    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
     } finally {
     	try {
     		if(rs!=null)
-    		rs.close();
+    			rs.close();
     	}
-    	catch(Exception e) {		
+    	catch(Exception e) {	
+    		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
     	}
         try {
             if (stmt != null)
                 stmt.close();
         } catch (SQLException se2) {
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
         }
         try {
             if (conn != null)
                 conn.close();
         } catch (SQLException se) {
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
         }
     }
 		
@@ -121,7 +133,7 @@ public class OrderDao {
 	    ResultSet rs = null;
 	    try {
 	    
-	    Class.forName("org.mariadb.jdbc.Driver");
+	    Class.forName(CONNECTOR);
 		
 	    // STEP 3: apertura connessione
         conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -141,8 +153,8 @@ public class OrderDao {
         // lettura delle colonne "by name"
         order = new Order();
         
-        String nome = rs.getString("oggetto");
-        int prezzo = rs.getInt("prezzo");
+        String nome = rs.getString(COLUMN_OGGETTO);
+        int prezzo = rs.getInt(COLUMN_PREZZO);
         int seller = rs.getInt("seller");
         int buyer = rs.getInt("buyer");
         Date data = rs.getDate("data");
@@ -177,27 +189,29 @@ public class OrderDao {
         conn.close();
     } catch (SQLException se) {
         // Errore durante l'apertura della connessione
-    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
     } catch (Exception e) {
         // Errore nel loading del driver
-    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
     } finally {
     	try {
     		if(rs!=null)
-    		rs.close();
+    			rs.close();
     	}
-    	catch(Exception e) {		
+    	catch(Exception e) {	
+    		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
     	}
         try {
             if (stmt != null)
                 stmt.close();
         } catch (SQLException se2) {
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
         }
         try {
             if (conn != null)
                 conn.close();
         } catch (SQLException se) {
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
         }
     }
 		
@@ -212,7 +226,7 @@ public class OrderDao {
         PreparedStatement pst = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -234,20 +248,21 @@ public class OrderDao {
             
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
             return false;
         } finally {
         	try {
         		if(pst!=null)
-        		pst.close();
+        			pst.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {	
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
     	
@@ -260,7 +275,7 @@ public class OrderDao {
         CallableStatement pst = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -289,20 +304,21 @@ public class OrderDao {
             
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
             return false;
         } finally {
         	try {
         		if(pst!=null)
-        		pst.close();
+        			pst.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
     	

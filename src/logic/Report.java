@@ -2,14 +2,14 @@ package logic;
 
 public class Report {
 	private Integer id;
-	private Integer ins_id;
+	private Integer insId;
 	private String desc;
 	private Integer reporter;
 	
-	public Report(Integer id, Integer user_id, String desc,Integer reporter) {
+	public Report(Integer id, Integer userId, String desc,Integer reporter) {
 		super();
 		this.id = id;
-		this.ins_id = user_id;
+		this.insId = userId;
 		this.desc = desc;
 		this.reporter = reporter;
 	}
@@ -22,12 +22,12 @@ public class Report {
 		this.id = id;
 	}
 
-	public Integer getUser_id() {
-		return ins_id;
+	public Integer getUserId() {
+		return insId;
 	}
 
-	public void setUser_id(Integer user_id) {
-		this.ins_id = user_id;
+	public void setUserId(Integer user_id) {
+		this.insId = user_id;
 	}
 
 	public String getDesc() {

@@ -6,8 +6,8 @@ import logic.Order;
 
 //Rivedere per singolo ordine, non lista
 public class OrderBean {
-	private Integer Length;
-	private Order list[];
+	private Integer length;
+	private Order[] list;
 	private String user;
 	private Integer id;
 	
@@ -19,23 +19,23 @@ public class OrderBean {
 		this.list = list;
 		if(list!=null)
 			this.setLength(this.getList().length);
-			else
+		else
 			this.setLength(0);
 	}
 
 
 	public OrderBean() {
-		this.Length = 0;
+		this.length = 0;
 		this.list = null;
 		
 	}
 
 	public Integer getLength() {
-		return Length;
+		return length;
 	}
 	
 	private void setLength(Integer length) {
-		this.Length= length;
+		this.length= length;
 	}
 
 	public String getUser() {

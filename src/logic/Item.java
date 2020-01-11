@@ -2,8 +2,8 @@ package logic;
 
 public class Item {
 	
-	private String Nome;
-	private Integer Prezzo;
+	private String nome;
+	private Integer prezzo;
 	private Integer quantita;
 	
 	public Integer getQuantita() {
@@ -16,23 +16,23 @@ public class Item {
 
 	public Item(String nome,Integer prezzo) {
 		super();
-		Nome = nome;
-		Prezzo = prezzo;
+		this.nome = nome;
+		this.prezzo = prezzo;
 	}
 
 	public Integer getPrezzo() {
-		return Prezzo;
+		return prezzo;
 	}
 
 	public void setPrezzo(Integer prezzo) {
-		Prezzo = prezzo;
+		this.prezzo = prezzo;
 	}
 
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 
 	public void setNome(String nome) {
-		Nome = nome;
+		this.nome = nome;
 	}
 }

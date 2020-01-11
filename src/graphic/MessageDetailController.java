@@ -15,7 +15,7 @@ import logic.Message;
 
 public class MessageDetailController {
 	private UserBean lb;
-	private Message[] conv;
+	
 	private Integer id;
 	@FXML
 	private TextField txtNewMessage;
@@ -41,7 +41,7 @@ public class MessageDetailController {
 		this.lb=lb;
 		
 		MessageController mc = new MessageController();
-		conv = mc.getConversation(id);
+		Message[] conv = mc.getConversation(id);
 		if(conv!=null)
 			for(int i=0;i<conv.length;i++) {
 				if(conv[i]!=null) {

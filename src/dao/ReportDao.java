@@ -13,9 +13,15 @@ import logic.Report;
 
 public class ReportDao {
 
-	private static String PASS = "root";
-    private static String USER = "root";
-    private static String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
+	private static final String ERROR_CLASS = "UtenteDao";
+	private static final String CONNECTOR = "org.mariadb.jdbc.Driver";
+	private static final String PASS = "root";
+    private static final String USER = "root";
+    private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
+    
+    private ReportDao() {
+        throw new IllegalStateException("Utility class");
+      }
 	
 	public static Report[] getReports() {
 		Report[] reports = new Report[100];
@@ -25,7 +31,7 @@ public class ReportDao {
 	    ResultSet rs = null;
 	    try {
 	    
-	    Class.forName("org.mariadb.jdbc.Driver");
+	    Class.forName(CONNECTOR);
 		
 	    // STEP 3: apertura connessione
         conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -37,28 +43,28 @@ public class ReportDao {
         rs = stmt.executeQuery(sql);
 
         if (!rs.first()) // rs not empty
-            return null;
+            return new Report[0];
 
         // riposizionamento del cursore
         rs.first();
 
         // lettura delle colonne "by name"
         Integer id = rs.getInt("id");
-        Integer id_insertion = rs.getInt("insId");
+        Integer idInsertion = rs.getInt("insId");
         String desc = rs.getString("desc");
         Integer repId = rs.getInt("reportFrom");
         
         int i=0;
-        reports[i] = new Report(id,id_insertion,desc,repId);
+        reports[i] = new Report(id,idInsertion,desc,repId);
         i++;
         
         while(rs.next()) {
         	id = rs.getInt("id");
-            id_insertion = rs.getInt("insId");
+            idInsertion = rs.getInt("insId");
             desc = rs.getString("desc");
             repId = rs.getInt("reportFrom");
             
-            reports[i] = new Report(id,id_insertion,desc,repId);
+            reports[i] = new Report(id,idInsertion,desc,repId);
             i++;
         	
         }
@@ -68,27 +74,29 @@ public class ReportDao {
         conn.close();
     } catch (SQLException se) {
         // Errore durante l'apertura della connessione
-    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
     } catch (Exception e) {
         // Errore nel loading del driver
-    	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
     } finally {
     	try {
     		if(rs!=null)
-    		rs.close();
+    			rs.close();
     	}
-    	catch(Exception e) {		
+    	catch(Exception e) {	
+    		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
     	}
         try {
             if (stmt != null)
                 stmt.close();
         } catch (SQLException se2) {
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
         }
         try {
             if (conn != null)
                 conn.close();
         } catch (SQLException se) {
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
         }
     }
 		
@@ -98,7 +106,7 @@ public class ReportDao {
 	}
 	
 	public static Report[] mockupReports() {
-		Report reports[] = new Report[100];
+		Report[] reports = new Report[100];
 		
 		reports[0]=new Report(0,2,"Quack",1);
 		reports[1]=new Report(1,2,"Lorem",3);
@@ -115,7 +123,7 @@ public class ReportDao {
         PreparedStatement pst = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -137,21 +145,22 @@ public class ReportDao {
             
         } catch (Exception e) {
             // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,"UtenteDao",e);
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
             return false;
         } finally {
         	try {
         		if(pst!=null)
-        		pst.close();
+        			pst.close();
         	}
-        	catch(Exception e) {		
+        	catch(Exception e) {
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
         	}
             
             try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,"UtenteDao",se);
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
         }
     	

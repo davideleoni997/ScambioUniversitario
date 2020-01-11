@@ -32,21 +32,22 @@ public class LoginViewController{
 	}
 	
 	@FXML
-	public void Login(ActionEvent event) {
+	public void login(ActionEvent event) {
 		UserBean lb = new UserBean();
 		lb.setUsername(tfuser.getText());
 		lb.setPassword(tfpsw.getText());
 		LoginController lc = LoginController.getInstance();
 		if(lc.validate("user",lb)) {
 		
-		vc.getScenes().add(btnsub.getScene());
+		vc.getScenes().push(btnsub.getScene());
 		vc.createProfileMenu(lb);
 		
 		
 		}
-		else
+		else {
 			lblerrormsg.setText("Dati Errati");
 			lblerrormsg.setVisible(true);
+		}
 	}
 }
 

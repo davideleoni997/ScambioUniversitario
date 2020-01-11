@@ -8,8 +8,8 @@ public class MessageController {
 
 	
 	public MessageController() {
-		
-	};
+		//Costruttore vuoto
+	}
 	
 	public Message[] getMessageList(UserBean ub) {
 		return MessageDao.messageList(ub.getId());	

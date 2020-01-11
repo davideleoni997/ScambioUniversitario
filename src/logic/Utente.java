@@ -65,6 +65,6 @@ public class Utente {
 	}
 
 	public boolean update() {
-		return dao.UtendeDao.update(this.id,this.nome,this.cognome,this.username,this.password);
+		return dao.UtenteDao.update(this.id,this.nome,this.cognome,this.username,this.password);
 	}
 }
