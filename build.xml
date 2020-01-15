@@ -9,24 +9,23 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-    <path id="JavaFX SDK.libraryclasspath">
-        <pathelement location="../../../../../../.p2/pool/plugins/org.eclipse.fx.ide.css.jfx8_3.5.0.201907240300.jar"/>
-    </path>
     <path id="JUnit 4.libraryclasspath">
         <pathelement location="../../../../../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
         <pathelement location="../../../../../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
     </path>
     <path id="Scambio.classpath">
         <pathelement location="bin"/>
-        <path refid="JavaFX SDK.libraryclasspath"/>
-        <pathelement location="E:/JUnit/junit-4.13.jar"/>
+        <pathelement location="junit-4.13.jar"/>
         <path refid="JUnit 4.libraryclasspath"/>
-        <pathelement location="../Dyamic/mariadb-java-client-2.5.2.jar"/>
+        <pathelement location="mariadb-java-client-2.5.2.jar"/>
+        <pathelement location="jfxrt.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.xtend"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
