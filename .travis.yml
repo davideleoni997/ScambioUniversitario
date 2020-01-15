@@ -3,14 +3,11 @@ jdk:
     -openjdk8
     
 
-  
 addons:
  sonarcloud:
   organization: davideleoni997
   token:
    secure: f6b8305934ca6e1cd5caab142c4aa4d4d291f90b
-   
-   
    
 script: 
  - ant build
