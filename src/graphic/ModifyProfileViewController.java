@@ -1,17 +1,34 @@
 package graphic;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import bean.UserBean;
 import controller.LoginController;
+import factory.LanguageFactory;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class ModifyProfileViewController {
-
+public class ModifyProfileViewController implements Initializable{
+	private LanguageFactory lg;
 	private ViewController vc;
 	
 	private UserBean lb;
+	
+	@FXML
+	private Label lblName;
+	
+	@FXML
+	private Label lblSurname;
+	
+	@FXML
+	private Label lblOldPsw;
+	
+	@FXML
+	private Label lblNewPsw;
 	
 	@FXML
 	private TextField txtname;
@@ -39,7 +56,10 @@ public class ModifyProfileViewController {
 	
 	public ModifyProfileViewController() {
 		vc = ViewController.getInstance();
-		
+		if(System.getProperty("user.language").equalsIgnoreCase("en"))
+			lg = LanguageFactory.getfactory(0);
+		else
+			lg = LanguageFactory.getfactory(1);
 	}
 	
 	@FXML
@@ -54,11 +74,11 @@ public class ModifyProfileViewController {
 			vc.getScenes().pop();
 			vc.createProfileMenu(lb);
 		}
-		else lblerror.setText("Error");
+		else lblerror.setText(lg.getErrorString());
 		
 		}
 		else
-			lblerror.setText("Wrong Old password");
+			lblerror.setText(lg.getWrongOldPsw());
 	}
 	
 	
@@ -73,5 +93,17 @@ public class ModifyProfileViewController {
 		txtname.setText(lb.getNome());
 		txtsurname.setText(lb.getCognome());
 		txtuser.setText(lb.getUsername());
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		lblName.setText(lg.getNameString()+":");
+		lblSurname.setText(lg.getSurnameString()+":");
+		lblOldPsw.setText(lg.getOldPasswordString()+":");
+		lblNewPsw.setText(lg.getNewPasswordString()+":");
+		btnsubmit.setText(lg.getSubmitString());
+		txtname.setEditable(false);
+		txtsurname.setEditable(false);
+		
 	}
 }

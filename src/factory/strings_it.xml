@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scambio>
+<Welcome>Benevenuto nella schermata di login</Welcome>
+<Name>Nome</Name>
+<Surname>Cognome</Surname>
+<ViewOrders>Vedi Ordini</ViewOrders>
+<ModifyProfile>Modifica profilo</ModifyProfile>
+<Messages>Messaggi</Messages>
+<YourOrders>I tuoi ordini</YourOrders>
+<Details>Dettagli</Details>
+<Back>Indietro</Back>
+<OldPassword>Inserisci Vecchia Password</OldPassword>
+<NewPassword>Inserisci Nuova Password</NewPassword>
+<Submit>Invia</Submit>
+<From>Da</From>
+<Message>Messaggio</Message>
+<NewMessage>Nuovo messaggio</NewMessage>
+<Buyer>Compratore</Buyer>
+<Seller>Venditore</Seller>
+<Price>Prezzo</Price>
+<Item>Oggetto</Item>
+<Date>Data</Date>
+<WrongData>Dati Errati</WrongData>
+<Error>Errore</Error>
+<WrongOldPsw>Vecchia Password errata</WrongOldPsw>
+<Register>Registrati</Register>
+<SearchText>Inizia cercando un libro!</SearchText>
+<Search>Cerca</Search>
+</Scambio>

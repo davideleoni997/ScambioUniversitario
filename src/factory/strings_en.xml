@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scambio>
+<Welcome>Welcome to the login screen</Welcome>
+<Name>Name</Name>
+<Surname>Surname</Surname>
+<ViewOrders>View orders</ViewOrders>
+<ModifyProfile>Modify Profile</ModifyProfile>
+<Messages>Messages</Messages>
+<YourOrders>Your orders</YourOrders>
+<Details>Details</Details>
+<Back>Back</Back>
+<OldPassword>Insert Old password</OldPassword>
+<NewPassword>Insert new Password</NewPassword>
+<Submit>Submit</Submit>
+<From>From</From>
+<Message>Message</Message>
+<NewMessage>New message</NewMessage>
+<Buyer>Buyer</Buyer>
+<Seller>Seller</Seller>
+<Price>Price</Price>
+<Item>Item</Item>
+<Date>Date</Date>
+<WrongData>Wrong Data</WrongData>
+<Error>Error</Error>
+<WrongOldPsw>Wrong Old password</WrongOldPsw>
+<Register>Register</Register>
+<SearchText>Start by searching for a book!</SearchText>
+<Search>Search</Search>
+</Scambio>

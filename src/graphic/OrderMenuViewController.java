@@ -3,19 +3,23 @@ package graphic;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bean.OrderBean;
 import controller.OrderController;
+import factory.LanguageFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import logic.Order;
 
-public class OrderMenuViewController {
-
+public class OrderMenuViewController implements Initializable{
+	private LanguageFactory lg;
 	private ViewController vc;
 	
 	@FXML
@@ -29,7 +33,10 @@ public class OrderMenuViewController {
 	
 	public OrderMenuViewController() {
 		vc = ViewController.getInstance();
-		
+		if(System.getProperty("user.language").equalsIgnoreCase("en"))
+			lg = LanguageFactory.getfactory(0);
+		else
+			lg = LanguageFactory.getfactory(1);
 	}
 	
 	
@@ -73,5 +80,12 @@ public class OrderMenuViewController {
 	@FXML
 	public void back() {
 		vc.goBack();
+	}
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		lblOrders.setText(lg.getYourOrdersString());
+		
 	}
 }

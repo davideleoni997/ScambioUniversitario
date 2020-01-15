@@ -2,13 +2,13 @@ package graphic;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bean.UserBean;
 
 import controller.OrderController;
-
 import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Scene;
@@ -41,6 +41,18 @@ public class ViewController {
 			return vc;
 	}
 	
+	public void changeLanguage(int lang) { //Metodo cambio lingua
+		if(lang ==0) {
+			Locale.setDefault(new Locale("en"));
+			System.setProperty("user.language", "en");
+		}
+		else
+		{
+			Locale.setDefault(new Locale("it"));
+			System.setProperty("user.language", "it");
+		}
+	}
+	
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
@@ -49,8 +61,44 @@ public class ViewController {
 		this.primaryStage = primaryStage;
 	}
 	
-	public void createMainMenu() {
-		//Da fare
+	public void createMainMenu() { //metodo caricamento main menu
+		try {
+			
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
+			
+			fl.setLocation(getClass().getResource("MainMenu.fxml"));
+			Pane root = (Pane) fl.load(); //Carico fxml scena
+			
+			Scene scene = new Scene(root); //nuova scena
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
+		 
+			primaryStage.setScene(scene);
+			
+		}
+		
+		catch(Exception e) {
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+		}
+	}
+	
+	public void createRegisterMenu() { //Metodo caricamento registrazione
+		try {
+			
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
+			
+			fl.setLocation(getClass().getResource("RegisterMenu.fxml")); //TODO
+			Pane root = (Pane) fl.load(); //Carico fxml scena
+			
+			Scene scene = new Scene(root); //nuova scena
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
+		 
+			primaryStage.setScene(scene);
+			
+		}
+		
+		catch(Exception e) {
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+		}
 	}
 
 	public void createLoginMenu() { //Metodo creazione schermata login
@@ -63,12 +111,9 @@ public class ViewController {
 			Scene scene = new Scene(root); //nuova scena
 			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 		 
-			
-			primaryStage.setTitle("Scambio");
+
 			primaryStage.setScene(scene);  //Setto stage
 			
-			
-			primaryStage.show();  //Mostro schermata
 		}
 		
 		catch(Exception e) {
@@ -77,7 +122,28 @@ public class ViewController {
 		
 	}
 	
-	public void createOrderMenu(String user) {
+	public void createResearchMenu(String text) {
+		try {
+			
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
+		
+			fl.setLocation(getClass().getResource("ResearchMenu.fxml")); //TODO
+			Pane root = (Pane) fl.load();    //Carico fxml della scena
+			Scene scene = new Scene(root); //nuova scena
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
+		 
+
+			primaryStage.setScene(scene);  //Setto stage
+			
+		}
+		
+		catch(Exception e) {
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+		}
+		
+	}
+	
+	public void createOrderMenu(String user) { //Metodo caricamento schermata lista ordini
 		try {
 			
 			FXMLLoader fl = new FXMLLoader(); //Creo loader
@@ -217,5 +283,7 @@ public class ViewController {
 	public void goBack() {
 		this.primaryStage.setScene(scenes.pop());
 	}
+
+	
 	
 }

@@ -1,13 +1,25 @@
 package graphic;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import bean.UserBean;
+import factory.LanguageFactory;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class ProfileMenuController {
+public class ProfileMenuController implements Initializable{
+	private LanguageFactory lg;
 	private ViewController vc;
 	private UserBean ub;
+	
+	@FXML
+	private Label lblName;
+	
+	@FXML
+	private Label lblSurname;
 	
 	@FXML
 	private Label lblname;
@@ -29,6 +41,10 @@ public class ProfileMenuController {
 	
 	public ProfileMenuController() {
 		vc = ViewController.getInstance();
+		if(System.getProperty("user.language").equalsIgnoreCase("en"))
+			lg = LanguageFactory.getfactory(0);
+		else
+			lg = LanguageFactory.getfactory(1);
 	}
 	
 	@FXML
@@ -58,5 +74,15 @@ public class ProfileMenuController {
 		this.ub = ub;
 		lblname.setText(ub.getNome());
 		lblsurname.setText(ub.getCognome());
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		lblName.setText(lg.getNameString()+":");
+		lblSurname.setText(lg.getSurnameString()+":");
+		btnOrders.setText(lg.getViewOrders());
+		btnMod.setText(lg.getModifyProfile());
+		btnMsg.setText(lg.getMessagesString());
+		
 	}
 }
