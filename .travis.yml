@@ -10,11 +10,6 @@ addons:
   token:
    secure: f6b8305934ca6e1cd5caab142c4aa4d4d291f90b
    
- before_install:
-  - sudo apt update
-  - sudo apt install openjfx
-  
- install: true
    
    
 script: 
