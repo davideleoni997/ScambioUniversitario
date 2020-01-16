@@ -2,7 +2,7 @@ The system shall provide the following filters :
 -University
 -City
 -Subject
--Type of book.
+-Type of item : book or notes.
 
 The system shall be able to order search results by distance (closest to furthest) or by date (newest to oldest).
 
