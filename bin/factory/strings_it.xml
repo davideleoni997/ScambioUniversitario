@@ -26,4 +26,25 @@
 <Register>Registrati</Register>
 <SearchText>Inizia cercando un libro!</SearchText>
 <Search>Cerca</Search>
+<StudQuestion>Sei uno studente o una società?</StudQuestion>
+<Enroll>Numero di matricola</Enroll>
+<Check>Inserisci nuovamente password</Check>
+<Logo>Logo società</Logo>
+<Upload>Upload</Upload>
+<CheckError>Le password non corrispondono</CheckError>
+<Student>Studente</Student>
+<Company>Società</Company>
+<Filters>Filtri</Filters>
+<University>Università</University>
+<City>Città</City>
+<Subject>Materia</Subject>
+<Books>Libri</Books>
+<Notes>Appunti</Notes>
+<Clear>Ripristina</Clear>
+<Apply>Applica</Apply>
+<Order>Ordine</Order>
+<Newer>Più nuovo</Newer>
+<Older>Più vecchio</Older>
+<Nearest>Più vicino</Nearest>
+<Farthest>Più lontano</Farthest>
 </Scambio>

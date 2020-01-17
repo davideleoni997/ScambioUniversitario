@@ -1,5 +1,6 @@
 package bean;
 
+import javafx.scene.image.Image;
 
 public class UserBean {
 	private String username;
@@ -8,6 +9,7 @@ public class UserBean {
 	private String cognome;
 	private Boolean company;
 	private Integer id;
+	private Image logo;
 
 	public Integer getId() {
 		return id;
@@ -60,6 +62,14 @@ public class UserBean {
 
 	public void setCompany(Boolean company) {
 		this.company = company;
+	}
+
+	public Image getLogo() {
+		return logo;
+	}
+
+	public void setLogo(Image logo) {
+		this.logo = logo;
 	}
 
 	

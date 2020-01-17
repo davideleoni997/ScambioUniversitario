@@ -1,9 +1,14 @@
 package dao;
 
+import java.io.File;
+import java.io.FileInputStream;
+
+import java.io.InputStream;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.scene.image.Image;
 import logic.Utente;
 
 public class UtenteDao {
@@ -18,6 +23,7 @@ public class UtenteDao {
 	private static final String PASS = "root";
     private static final String USER = "root";
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
+	private static final String COLUMN_LOGO = "logo";
     
     private UtenteDao() {
         throw new IllegalStateException("Utility class");
@@ -38,7 +44,7 @@ public class UtenteDao {
 
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
-            String sql = "SELECT nome, username, password, cognome, company,id FROM utenti where username = '"
+            String sql = "SELECT nome, username, password, cognome, company, logo, id FROM utenti where username = '"
                     + username + "' AND password = '" + password + "';";
             rs = stmt.executeQuery(sql);
 
@@ -60,10 +66,16 @@ public class UtenteDao {
             String passwordLoaded = rs.getString(COLUMN_PASSWORD);
             Boolean company = rs.getBoolean(COLUMN_COMPANY);
             Integer id = rs.getInt(COLUMN_ID);
-            
+           
+            Image imgLogo = null;
+            if(company)
+            {	 Blob logo =rs.getBlob(COLUMN_LOGO);
+            	 InputStream out = logo.getBinaryStream();
+            	 imgLogo = new Image(out);}
             u = new Utente(usernameLoaded, passwordLoaded, nome, cognome);
             u.setCompany(company);
             u.setId(id);
+            u.setLogo(imgLogo);
             
             
             // STEP 6: Clean-up dell'ambiente
@@ -216,4 +228,114 @@ public class UtenteDao {
      	
      	
     }
+    
+    
+    public static boolean newCompany(String nome, String username, String password, Boolean company,File logo) {
+   	 Connection conn = null;
+        PreparedStatement pst = null;
+        try {
+            // STEP 2: loading dinamico del driver mysql
+            Class.forName(CONNECTOR);
+
+            // STEP 3: apertura connessione
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            // STEP 4: creazione ed esecuzione della query
+            //!!!RICORDA ID AUTOINCREMENT!!!
+            pst = conn.prepareStatement("INSERT into utenti(nome,username,password,company,logo,matricola) VALUES(?,?,?,?,?,?)");
+            FileInputStream logoStream = null;
+            try {
+            logoStream = new FileInputStream(logo);
+            }
+            catch(Exception e) {
+            	Logger.getGlobal().log(Level.WARNING,"Error with file",e);
+            }
+            
+            pst.setString(1, nome);
+            pst.setString(2, username);
+            pst.setString(3, password);
+            pst.setBoolean(4, company);
+            pst.setBinaryStream(5, logoStream,logoStream.available());
+            pst.setString(6, "");
+            
+            pst.executeUpdate();
+            pst.close();
+            
+            return true;
+            
+        } catch (Exception e) {
+            // Errore nel loading del driver
+       	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+            return false;
+        } finally {
+        	try {
+        		if(pst!=null)
+        			pst.close();
+        	}
+        	catch(Exception e) {	
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+        	}
+            
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+           	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+            }
+        }
+    	
+    	
+   }
+    
+    
+    public static boolean newStudent(String nome, String cognome, String username, String password, Boolean company,String matricola) {
+      	 Connection conn = null;
+           PreparedStatement pst = null;
+           try {
+               // STEP 2: loading dinamico del driver mysql
+               Class.forName(CONNECTOR);
+
+               // STEP 3: apertura connessione
+               conn = DriverManager.getConnection(DB_URL, USER, PASS);
+               // STEP 4: creazione ed esecuzione della query
+               //!!!RICORDA ID AUTOINCREMENT!!!
+               pst = conn.prepareStatement("INSERT into utenti(nome,cognome,username,password,company,logo,matricola) VALUES(?,?,?,?,?,?,?)");
+               
+        
+              
+               pst.setString(1, nome);
+               pst.setString(2, cognome);
+               pst.setString(3, username);
+               pst.setString(4, password);
+               pst.setBoolean(5, company);
+               pst.setNull(6, java.sql.Types.BLOB);
+               pst.setString(7, matricola);
+               
+               pst.executeUpdate();
+               pst.close();
+               
+               return true;
+               
+           } catch (Exception e) {
+               // Errore nel loading del driver
+          	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+               return false;
+           } finally {
+           	try {
+           		if(pst!=null)
+           			pst.close();
+           	}
+           	catch(Exception e) {	
+           		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+           	}
+               
+               try {
+                   if (conn != null)
+                       conn.close();
+               } catch (SQLException se) {
+              	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+               }
+           }
+       	
+       	
+      }
 }

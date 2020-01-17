@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,17 +26,18 @@ public class InsertionDao {
 	private static final String COLUMN_DESCR = "descr";
 	private static final String COLUMN_PRICE = "price";
 	private static final String COLUMN_TITLE = "title";
-	private static String pass = "root";
-    private static String user = "root";
-    private static String db_url = "jdbc:mariadb://localhost:3306/scambio";
-    private static String connector = "org.mariadb.jdbc.Driver";
+	private static final String pass = "root";
+    private static final String user = "root";
+    private static final String db_url = "jdbc:mariadb://localhost:3306/scambio";
+    private static final String connector = "org.mariadb.jdbc.Driver";
 	
     private InsertionDao() {
         throw new IllegalStateException("Utility class");
       }
     
-    public static Insertion[] getReserach(String research, Filters filters) {
-    	Insertion[] ins = new Insertion[100];
+    public static Vector<Insertion> getReserach(String research, Filters filters) {
+    	Vector<Insertion> ins = new Vector<>();
+    	//Insertion[] ins = new Insertion[100];
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
@@ -57,7 +59,7 @@ public class InsertionDao {
            
      
             if (!rs.first()) // rs not empty
-                return new Insertion[0];
+                return ins;
 
    
             // riposizionamento del cursore
@@ -68,12 +70,11 @@ public class InsertionDao {
             String desc = rs.getString(COLUMN_DESCR);
             String price = rs.getString(COLUMN_PRICE);
             Date date = rs.getDate(COLUMN_DATA);
-            int i=0;
+           
 
             Insertion insert = new Insertion(title,desc,date,Integer.parseInt(price));
             
-            ins[i] = insert;
-            i++;
+            ins.add(insert);
             
             while(rs.next()) {
             	title = rs.getString(COLUMN_TITLE);
@@ -82,8 +83,7 @@ public class InsertionDao {
                 date = rs.getDate(COLUMN_DATA);
             	
                 insert = new Insertion(title,desc,date,Integer.parseInt(price));
-                ins[i] = insert;
-                i++;
+                ins.add(insert);
             }
 
             // STEP 6: Clean-up dell'ambiente
@@ -224,8 +224,13 @@ public class InsertionDao {
             pst.setString(4, price);
             if(pics!=null)
             	for(int i=4; i< pics.length+4;i++) {
+            		try {
             		images[i-4]=new FileInputStream(pics[i-4]);
             		pst.setBinaryStream(i, images[i-4],images[i-4].available());
+            		}
+            		catch(Exception e) {
+            			Logger.getGlobal().log(Level.WARNING,"File Opening Image",e);
+            		}
             }
             else {
             	pst.setNull(5,java.sql.Types.BLOB);

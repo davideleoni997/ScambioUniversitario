@@ -63,6 +63,7 @@ public class LoginController {
 		lb.setCognome(found.getCognome());
 		lb.setCompany(found.isCompany());
 		lb.setId(found.getId());}
+		lb.setLogo(found.getLogo());
 		return  (found != null);
 	}
 	

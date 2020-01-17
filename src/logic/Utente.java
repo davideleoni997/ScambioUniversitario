@@ -1,5 +1,7 @@
 package logic;
 
+import javafx.scene.image.Image;
+
 public class Utente {
 
     private String username;
@@ -8,6 +10,7 @@ public class Utente {
     private String cognome;
     private boolean company;
     private Integer id;
+    private Image logo;
 
     public Utente(String username, String password, String nome, String cognome) {
         this.nome = nome;
@@ -62,6 +65,14 @@ public class Utente {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Image getLogo() {
+		return logo;
+	}
+
+	public void setLogo(Image logo) {
+		this.logo = logo;
 	}
 
 	public boolean update() {

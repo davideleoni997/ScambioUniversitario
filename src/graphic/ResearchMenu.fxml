@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CustomMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphic.ResearchMenuController">
+   <children>
+      <ListView fx:id="listSearch" layoutY="45.0" prefHeight="355.0" prefWidth="600.0" />
+      <TextField fx:id="txtSearch" layoutX="75.0" layoutY="20.0" />
+      <Label fx:id="lblSearch" layoutX="14.0" layoutY="24.0" text="Search:" />
+      <Button fx:id="btnSearch" layoutX="230.0" layoutY="20.0" mnemonicParsing="false" onAction="#newSearch" text="Search" />
+      <MenuButton fx:id="menuFilters" layoutX="300.0" layoutY="20.0" mnemonicParsing="false" text="Filters">
+        <items>
+            <CustomMenuItem fx:id="filterLblUni" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <Label fx:id="lblUni" text="University :" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="filterUni" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <TextField fx:id="txtUni" />
+               </content>   
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="filterLblCity" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <Label fx:id="lblCity" text="City" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="filterCity" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <TextField fx:id="txtCity" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="filterLblSubj" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <Label fx:id="lblSubject" text="Subject" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="filterSubject" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <TextField fx:id="txtSubject" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="filterBook" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <RadioButton fx:id="radioBook" mnemonicParsing="false" selected="true" text="Books" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="filterNotes" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <RadioButton fx:id="radioNotes" mnemonicParsing="false" selected="true" text="Notes" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="filterApply" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <Button fx:id="btnApply" mnemonicParsing="false" onAction="#applyFilter" text="Apply" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="filterClear" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <Button fx:id="btnClear" mnemonicParsing="false" onAction="#clearFilters" text="Clear" />
+               </content>
+            </CustomMenuItem>
+        </items>
+      </MenuButton>
+      <Button fx:id="btnBack" layoutX="534.0" layoutY="20.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+      <MenuButton fx:id="menuOrder" layoutX="370.0" layoutY="20.0" mnemonicParsing="false" text="Order">
+         <items>
+            <CustomMenuItem fx:id="orderTimeNew" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <RadioButton fx:id="radioOrderNew" mnemonicParsing="false" selected="true" text="Newer">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="orderTime" />
+                     </toggleGroup>
+                  </RadioButton>
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="orderTimeOld" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <RadioButton fx:id="radioOrderOld" mnemonicParsing="false" text="Older" toggleGroup="$orderTime" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="orderDistanceNear" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <RadioButton fx:id="radioOrderNear" mnemonicParsing="false" selected="true" text="Nearest">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="toggleDistance" />
+                     </toggleGroup>
+                  </RadioButton>
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="orderDistanceFar" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <RadioButton fx:id="radioOrderFar" mnemonicParsing="false" text="Furthest" toggleGroup="$toggleDistance" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="orderApply" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <Button fx:id="btnApplyOrder" mnemonicParsing="false" onAction="#applyOrder" text="Apply" />
+               </content>
+            </CustomMenuItem>
+            <CustomMenuItem fx:id="orderClear" mnemonicParsing="false" text="Unspecified Action">
+               <content>
+                  <Button fx:id="btnClearOrder" mnemonicParsing="false" onAction="#clearOrder" text="Clear" />
+               </content>
+            </CustomMenuItem>
+         </items>
+      </MenuButton>
+   </children>
+</Pane>

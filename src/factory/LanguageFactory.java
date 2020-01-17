@@ -59,4 +59,46 @@ public interface LanguageFactory {
 	public abstract String getSearchText();
 	
 	public abstract String getSearchString();
+	
+	public abstract String getStudQuestion();
+	
+	public abstract String getEnrollString();
+	
+	public abstract String getCheckString();
+	
+	public abstract String getLogoString();
+	
+	public abstract String getUploadString();
+	
+	public abstract String getCheckError();
+	
+	public abstract String getStudString();
+	
+	public abstract String getCompanyString();
+	
+	public abstract String getFiltersString();
+	
+	public abstract String getUniversityString();
+	
+	public abstract String getCityString();
+	
+	public abstract String getSubjectString();
+	
+	public abstract String getBooksString();
+	
+	public abstract String getNotesString();
+	
+	public abstract String getApplyString();
+	
+	public abstract String getClearString();
+	
+	public abstract String getOrderString();
+	
+	public abstract String getNewerString();
+	
+	public abstract String getOlderString();
+	
+	public abstract String getNearestString();
+	
+	public abstract String getFarthestString();
 }

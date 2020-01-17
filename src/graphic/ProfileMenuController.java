@@ -5,10 +5,12 @@ import java.util.ResourceBundle;
 
 import bean.UserBean;
 import factory.LanguageFactory;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 public class ProfileMenuController implements Initializable{
 	private LanguageFactory lg;
@@ -38,6 +40,9 @@ public class ProfileMenuController implements Initializable{
 	
 	@FXML
 	private Button btnBack;
+	
+	@FXML
+	private ImageView imgLogo;
 	
 	public ProfileMenuController() {
 		vc = ViewController.getInstance();
@@ -71,9 +76,20 @@ public class ProfileMenuController implements Initializable{
 	}
 	
 	public void setUser(UserBean ub) {
+		
 		this.ub = ub;
 		lblname.setText(ub.getNome());
 		lblsurname.setText(ub.getCognome());
+		Platform.runLater(new Runnable() {
+			@Override public void run() {
+				if(ub.getCompany()) {
+					imgLogo.setImage(ub.getLogo());
+					imgLogo.setVisible(true);
+					lblSurname.setVisible(false);
+				}
+			}
+		});
+		
 	}
 
 	@Override
@@ -83,6 +99,9 @@ public class ProfileMenuController implements Initializable{
 		btnOrders.setText(lg.getViewOrders());
 		btnMod.setText(lg.getModifyProfile());
 		btnMsg.setText(lg.getMessagesString());
+	
+		
+			
 		
 	}
 }

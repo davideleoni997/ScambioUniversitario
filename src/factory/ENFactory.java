@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -16,6 +17,8 @@ public class ENFactory implements LanguageFactory{
 			
 			File fXmlFile = new File("src/factory/strings_en.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			dbFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+			dbFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXmlFile);
 			doc.getDocumentElement().normalize();
@@ -157,5 +160,111 @@ public class ENFactory implements LanguageFactory{
 	@Override
 	public String getSearchString() {
 		return doc.getElementsByTagName("Search").item(0).getTextContent();
+	}
+
+	@Override
+	public String getStudQuestion() {
+		return doc.getElementsByTagName("StudQuestion").item(0).getTextContent();
+	}
+
+	@Override
+	public String getEnrollString() {
+		return doc.getElementsByTagName("Enroll").item(0).getTextContent();
+	}
+
+	@Override
+	public String getCheckString() {
+		return doc.getElementsByTagName("Check").item(0).getTextContent();
+	}
+
+	@Override
+	public String getLogoString() {
+		return doc.getElementsByTagName("Logo").item(0).getTextContent();
+	}
+
+	@Override
+	public String getUploadString() {
+		return doc.getElementsByTagName("Upload").item(0).getTextContent();
+	}
+	
+	@Override
+	public String getCheckError() {
+		return doc.getElementsByTagName("CheckError").item(0).getTextContent();
+	}
+	
+	@Override
+	public String getStudString() {
+		return doc.getElementsByTagName("Student").item(0).getTextContent();
+	}
+
+	@Override
+	public String getCompanyString() {
+		return doc.getElementsByTagName("Company").item(0).getTextContent();
+	}
+
+	@Override
+	public String getFiltersString() {
+		return doc.getElementsByTagName("Filters").item(0).getTextContent();
+	
+	}
+
+	@Override
+	public String getUniversityString() {
+		return doc.getElementsByTagName("University").item(0).getTextContent();
+	}
+
+	@Override
+	public String getCityString() {
+		return doc.getElementsByTagName("City").item(0).getTextContent();
+	}
+
+	@Override
+	public String getSubjectString() {
+		return doc.getElementsByTagName("Subject").item(0).getTextContent();
+	}
+
+	@Override
+	public String getBooksString() {
+		return doc.getElementsByTagName("Books").item(0).getTextContent();
+	}
+
+	@Override
+	public String getNotesString() {
+		return doc.getElementsByTagName("Notes").item(0).getTextContent();
+	}
+
+	@Override
+	public String getClearString() {
+		return doc.getElementsByTagName("Clear").item(0).getTextContent();
+	}
+
+	@Override
+	public String getApplyString() {
+		return doc.getElementsByTagName("Apply").item(0).getTextContent();
+	}
+
+	@Override
+	public String getOrderString() {
+		return doc.getElementsByTagName("Order").item(0).getTextContent();
+	}
+
+	@Override
+	public String getNewerString() {
+		return doc.getElementsByTagName("Newer").item(0).getTextContent();
+	}
+
+	@Override
+	public String getOlderString() {
+		return doc.getElementsByTagName("Older").item(0).getTextContent();
+	}
+
+	@Override
+	public String getNearestString() {
+		return doc.getElementsByTagName("Nearest").item(0).getTextContent();
+	}
+
+	@Override
+	public String getFarthestString() {
+		return doc.getElementsByTagName("Farthest").item(0).getTextContent();
 	}
 }

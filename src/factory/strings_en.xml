@@ -26,4 +26,25 @@
 <Register>Register</Register>
 <SearchText>Start by searching for a book!</SearchText>
 <Search>Search</Search>
+<StudQuestion>Are you a student or a company?</StudQuestion>
+<Enroll>Enrollment number</Enroll>
+<Check>Insert password again</Check>
+<Logo>Company logo</Logo>
+<Upload>Upload</Upload>
+<CheckError>The passwords don't match</CheckError>
+<Student>Student</Student>
+<Company>Company</Company>
+<Filters>Filters</Filters>
+<University>University</University>
+<City>City</City>
+<Subject>Subject</Subject>
+<Books>Books</Books>
+<Notes>Notes</Notes>
+<Clear>Clear</Clear>
+<Apply>Apply</Apply>
+<Order>Order</Order>
+<Newer>Newer</Newer>
+<Older>Older</Older>
+<Nearest>Nearest</Nearest>
+<Farthest>Farthest</Farthest>
 </Scambio>

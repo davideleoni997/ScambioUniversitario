@@ -29,9 +29,8 @@ public class ViewController {
 	private Stage primaryStage;
 	
 	protected ViewController() {
-		vc = this;
 		this.primaryStage = null;
-		scenes = new LinkedList<Scene>();
+		scenes = new LinkedList<>();
 	}
 	
 	public static ViewController getInstance() {
@@ -129,6 +128,8 @@ public class ViewController {
 		
 			fl.setLocation(getClass().getResource("ResearchMenu.fxml")); //TODO
 			Pane root = (Pane) fl.load();    //Carico fxml della scena
+			ResearchMenuController rmc = fl.getController();
+			rmc.setResearch(text);
 			Scene scene = new Scene(root); //nuova scena
 			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 		 

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,16 +29,14 @@ public class InsertionController {
 		return true;
 	}
 	
-	public String[] getResearchResults(String research, Filters filters) {
+	public Vector<String> getResearchResults(String research, Filters filters) {
 		
-		String[] out= new String[100];
+		Vector<String> out = new Vector<>();
 		try {
-			
-			Insertion[] ins;
+			Vector<Insertion> ins;
 			ins=InsertionDao.getReserach(research, filters);
-			for(int i=0;i<ins.length;i++) {
-				if(ins[i]!=null)
-					out[i]=ins[i].getTitle();
+			for(Insertion inserzione : ins) {
+					out.add(inserzione.getTitle());		
 			}
 			
 		}

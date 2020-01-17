@@ -26,8 +26,8 @@ public class Report {
 		return insId;
 	}
 
-	public void setUserId(Integer user_id) {
-		this.insId = user_id;
+	public void setUserId(Integer userId) {
+		this.insId = userId;
 	}
 
 	public String getDesc() {
