@@ -108,7 +108,7 @@ public class InsertionDetailController implements Initializable{
 		img3.setImage(ib.getImage3());
 		txtTitle.setText(ib.getTitle());
 		txtSeller.setText(ib.getSeller());
-		txtPrice.setText(ib.getPrice()+"€");
+		txtPrice.setText(ib.getPrice()+" Euro");
 		txtDate.setText(ib.getDate().toString());
 		txtDescription.setText(ib.getDesc());
 	}
