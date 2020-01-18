@@ -57,7 +57,7 @@ public class OrderController {
 			return order;
 		}
 		
-		public static boolean newOrder(int buyer,int seller,String oggetto,Integer ordine, int prezzo) {
-			return OrderDao.buyBook(buyer, seller,ordine, oggetto, prezzo);
+		public static boolean newOrder(int buyer,int seller,String oggetto,Integer inserzione, int prezzo) {
+			return OrderDao.buyBook(buyer, seller,inserzione, oggetto, prezzo);
 		}
 }

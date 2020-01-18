@@ -67,6 +67,9 @@ public class LoginController {
 		return  (found != null);
 	}
 	
+    public UserBean getUserFromId(Integer id) {
+    	return UtenteDao.userFromId(id);
+    }
     
     public boolean updateInfo(UserBean lb) {
     	return dao.UtenteDao.update(lb.getId(), lb.getNome(), lb.getCognome(), lb.getUsername(), lb.getPassword());

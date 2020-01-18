@@ -14,7 +14,8 @@
       <Button fx:id="btnOrders" layoutX="17.0" layoutY="63.0" mnemonicParsing="false" onAction="#viewOrders" text="View Orders" />
       <Button fx:id="btnMod" layoutX="17.0" layoutY="106.0" mnemonicParsing="false" onAction="#modifyProfile" text="Modify Profile" />
       <Button fx:id="btnMsg" layoutX="17.0" layoutY="147.0" mnemonicParsing="false" onAction="#viewMessages" text="Messages" />
-      <Button fx:id="btnBack" layoutX="17.0" layoutY="188.0" mnemonicParsing="false" onAction="#goBack" text="LogOut" />
+      <Button fx:id="btnLogOut" layoutX="17.0" layoutY="188.0" mnemonicParsing="false" onAction="#logOut" text="LogOut" />
       <ImageView fx:id="imgLogo" fitHeight="113.0" fitWidth="150.0" layoutX="332.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <Button fx:id="btnBack" layoutX="17.0" layoutY="228.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
    </children>
 </Pane>

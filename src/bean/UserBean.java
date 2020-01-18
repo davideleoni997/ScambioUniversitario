@@ -23,6 +23,18 @@ public class UserBean {
 		this.username = "";
 		this.password = "";
 	}
+	
+	public UserBean(String username, String password, String nome, String cognome, Boolean company, Integer id,
+			Image logo) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.company = company;
+		this.id = id;
+		this.logo = logo;
+	}
 
 	public void setUsername(String user) {
 		this.username = user;

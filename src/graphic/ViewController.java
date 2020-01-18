@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import bean.InsertionBean;
 import bean.UserBean;
 
 import controller.OrderController;
@@ -16,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import logic.Order;
+import util.Property;
 
 public class ViewController {
 	private static final String ERROR_CLASS = "ViewController:";
@@ -85,7 +87,7 @@ public class ViewController {
 			
 			FXMLLoader fl = new FXMLLoader(); //Creo loader
 			
-			fl.setLocation(getClass().getResource("RegisterMenu.fxml")); //TODO
+			fl.setLocation(getClass().getResource("RegisterMenu.fxml"));
 			Pane root = (Pane) fl.load(); //Carico fxml scena
 			
 			Scene scene = new Scene(root); //nuova scena
@@ -100,13 +102,16 @@ public class ViewController {
 		}
 	}
 
-	public void createLoginMenu() { //Metodo creazione schermata login
+	public void createLoginMenu(String dispatch) { //Metodo creazione schermata login
 		try {
 			
 			FXMLLoader fl = new FXMLLoader(); //Creo loader
 		
 			fl.setLocation(getClass().getResource("LoginMenu.fxml"));
 			Pane root = (Pane) fl.load();    //Carico fxml della scena
+			LoginViewController lvc = fl.getController();
+			lvc.setDisp(dispatch);
+			
 			Scene scene = new Scene(root); //nuova scena
 			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
 		 
@@ -126,7 +131,7 @@ public class ViewController {
 			
 			FXMLLoader fl = new FXMLLoader(); //Creo loader
 		
-			fl.setLocation(getClass().getResource("ResearchMenu.fxml")); //TODO
+			fl.setLocation(getClass().getResource("ResearchMenu.fxml"));
 			Pane root = (Pane) fl.load();    //Carico fxml della scena
 			ResearchMenuController rmc = fl.getController();
 			rmc.setResearch(text);
@@ -283,6 +288,48 @@ public class ViewController {
 	
 	public void goBack() {
 		this.primaryStage.setScene(scenes.pop());
+	}
+
+	public void createInsertionDetailMenu(InsertionBean ib) {
+		try {
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
+		
+			fl.setLocation(getClass().getResource("InsertionDetail.fxml"));
+			Pane root = (Pane) fl.load(); //Carico fxml scena
+		
+			InsertionDetailController idc = fl.getController();
+			idc.setInsertion(ib);
+		
+			Scene scene = new Scene(root); //nuova scena
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
+			primaryStage.setScene(scene);
+		}
+		catch(Exception e) {
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+		}
+	}
+
+	public void createNewInsertionMenu() {
+		Property prop = new Property();
+		if(prop.loadProperty("user_id").equalsIgnoreCase("0")) {
+			vc.createLoginMenu("NewInsertion");
+		}
+		else {
+			try {
+				FXMLLoader fl = new FXMLLoader(); //Creo loader
+			
+				fl.setLocation(getClass().getResource("NewInsertionMenu.fxml"));//TODO
+				Pane root = (Pane) fl.load(); //Carico fxml scena
+			
+				Scene scene = new Scene(root); //nuova scena
+				scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
+				primaryStage.setScene(scene);
+			}
+			catch(Exception e) {
+				Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+			}
+		}
+		   
 	}
 
 	

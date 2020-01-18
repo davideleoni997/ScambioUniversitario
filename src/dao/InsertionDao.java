@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +15,8 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import bean.InsertionBean;
+import javafx.scene.image.Image;
 import logic.Filters;
 import logic.Insertion;
 
@@ -30,13 +33,19 @@ public class InsertionDao {
     private static final String user = "root";
     private static final String db_url = "jdbc:mariadb://localhost:3306/scambio";
     private static final String connector = "org.mariadb.jdbc.Driver";
+	private static final String COLUMN_ID = "id";
+	private static final String COLUMN_IMAGE1 = "image1";
+	private static final String COLUMN_IMAGE2 = "image2";
+	private static final String COLUMN_IMAGE3 = "image3";
+	private static final String COLUMN_SELLER = "seller";
+	private static final String COLUMN_SOLD = "sold";
 	
     private InsertionDao() {
         throw new IllegalStateException("Utility class");
       }
     
-    public static Vector<Insertion> getReserach(String research, Filters filters) {
-    	Vector<Insertion> ins = new Vector<>();
+    public static Vector<InsertionBean> getReserach(String research, Filters filters) {
+    	Vector<InsertionBean> ins = new Vector<>();
     	//Insertion[] ins = new Insertion[100];
     	
     	// STEP 1: dichiarazioni
@@ -53,7 +62,7 @@ public class InsertionDao {
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
             
-            String sql = "SELECT title, descr, price, data FROM insertions where descr LIKE '%"
+            String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold FROM insertions where descr LIKE '%"
                     + research + "%' OR title LIKE '%"+ research + "%';";
             rs = stmt.executeQuery(sql);
            
@@ -70,19 +79,60 @@ public class InsertionDao {
             String desc = rs.getString(COLUMN_DESCR);
             String price = rs.getString(COLUMN_PRICE);
             Date date = rs.getDate(COLUMN_DATA);
-           
-
-            Insertion insert = new Insertion(title,desc,date,Integer.parseInt(price));
+            Integer id = rs.getInt(COLUMN_ID);
+            Blob image1 = rs.getBlob(COLUMN_IMAGE1);
+            Blob image2 = rs.getBlob(COLUMN_IMAGE2);
+            Blob image3 = rs.getBlob(COLUMN_IMAGE3);
+            Integer seller = rs.getInt(COLUMN_SELLER);
+            Boolean sold = rs.getBoolean(COLUMN_SOLD);
+            
+            InputStream out1;
+            Image img1 = null;
+            InputStream out2;
+            Image img2 = null;
+            InputStream out3;
+            Image img3 = null;
+            
+            if(image1 != null) {
+            	out1 = image1.getBinaryStream();
+            	img1 = new Image(out1);}
+            if(image2 != null) {
+            	out2 = image2.getBinaryStream();
+            	img2 = new Image(out2);}
+            if(image3 != null) {
+            	out3 = image3.getBinaryStream();
+            	img3 = new Image(out3);}
+            
+            InsertionBean insert = new InsertionBean(title,desc,date,Integer.parseInt(price),id,img1,img2,img3,UtenteDao.getUsernameById(seller),seller,sold);
             
             ins.add(insert);
             
             while(rs.next()) {
+            	img1 = null;
+            	img2 = null;
+            	img3 = null;
             	title = rs.getString(COLUMN_TITLE);
                 desc = rs.getString(COLUMN_DESCR);
                 price = rs.getString(COLUMN_PRICE);
                 date = rs.getDate(COLUMN_DATA);
-            	
-                insert = new Insertion(title,desc,date,Integer.parseInt(price));
+                id = rs.getInt(COLUMN_ID);
+                image1 = rs.getBlob(COLUMN_IMAGE1);
+                image2 = rs.getBlob(COLUMN_IMAGE2);
+                image3 = rs.getBlob(COLUMN_IMAGE3);
+                seller = rs.getInt(COLUMN_SELLER);
+                sold = rs.getBoolean(COLUMN_SOLD);
+                
+                if(image1 != null) {
+                    out1 = image1.getBinaryStream();
+                    img1 = new Image(out1);}
+                if(image2 != null) {
+                    out2 = image2.getBinaryStream();
+                    img2 = new Image(out2);}
+                if(image3 != null) {
+                    out3 = image3.getBinaryStream();
+                    img3 = new Image(out3);}
+                
+                insert = new InsertionBean(title,desc,date,Integer.parseInt(price),id,img1,img2,img3,UtenteDao.getUsernameById(seller),seller,sold);
                 ins.add(insert);
             }
 
@@ -269,4 +319,6 @@ public class InsertionDao {
     	
     	return true;
     }
+    
+    
 }

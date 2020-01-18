@@ -101,4 +101,14 @@ public interface LanguageFactory {
 	public abstract String getNearestString();
 	
 	public abstract String getFarthestString();
+	
+	public abstract String getTitleString();
+	
+	public abstract String getNewInsertionText();
+	
+	public abstract String getNewInsertionString();
+	
+	public abstract String getDescriptionString();
+	
+	public abstract String getBuyString();
 }

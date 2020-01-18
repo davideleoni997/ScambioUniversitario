@@ -13,5 +13,7 @@
       <Button fx:id="btnSearch" layoutX="273.0" layoutY="138.0" mnemonicParsing="false" onAction="#search" text="Search" />
       <Button fx:id="btnLogin" layoutX="536.0" layoutY="10.0" mnemonicParsing="false" onAction="#login" text="Log In" />
       <Button fx:id="btnRegister" layoutX="450.0" layoutY="10.0" mnemonicParsing="false" onAction="#register" text="Register" />
+      <Label fx:id="lblInsertionText" layoutX="221.0" layoutY="200.0" text="Or create your own Insertion!" />
+      <Button fx:id="btnInsertion" layoutX="254.0" layoutY="244.0" mnemonicParsing="false" onAction="#newInsertion" text="New Insertion" />
    </children>
 </Pane>

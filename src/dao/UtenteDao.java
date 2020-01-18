@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import bean.UserBean;
 import javafx.scene.image.Image;
 import logic.Utente;
 
@@ -72,10 +73,7 @@ public class UtenteDao {
             {	 Blob logo =rs.getBlob(COLUMN_LOGO);
             	 InputStream out = logo.getBinaryStream();
             	 imgLogo = new Image(out);}
-            u = new Utente(usernameLoaded, passwordLoaded, nome, cognome);
-            u.setCompany(company);
-            u.setId(id);
-            u.setLogo(imgLogo);
+            u = new Utente(usernameLoaded, passwordLoaded, nome, cognome,company,id,imgLogo);
             
             
             // STEP 6: Clean-up dell'ambiente
@@ -173,6 +171,67 @@ public class UtenteDao {
          return id;
     }
 
+    public static String getUsernameById(Integer id) {
+    	PreparedStatement pst = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        String username = "";
+        try {
+            // STEP 2: loading dinamico del driver mysql
+            Class.forName(CONNECTOR);
+
+            // STEP 3: apertura connessione
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // STEP 4: creazione ed esecuzione della query
+            pst = conn.prepareStatement("SELECT username FROM utenti where id = ?");
+            
+            pst.setInt(1, id);
+            
+            rs = pst.executeQuery();
+
+            if (!rs.first()) // rs not empty
+                return username;
+
+            // lettura delle colonne "by name"
+            username = rs.getString(COLUMN_USERNAME);           
+            
+            // STEP 6: Clean-up dell'ambiente
+            rs.close();
+            pst.close();
+            conn.close();
+            
+        } catch (SQLException se) {
+            // Errore durante l'apertura della connessione
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+        } catch (Exception e) {
+            // Errore nel loading del driver
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+        } finally {
+        	try {
+        		if(rs!=null)
+        			rs.close();
+        	}
+        	catch(Exception e) {	
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+        	}
+            try {
+                if (pst != null)
+                    pst.close();
+            } catch (SQLException se2) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+            }
+        }
+
+         return username;
+    }
+    
     public static Utente findByNameAndPasswordMockup(String username, String password) {
         if ("myusername".equals(username) && "mypassword".equals(password))
             return new Utente("myusername", "", "Tizio","Caio");
@@ -338,4 +397,83 @@ public class UtenteDao {
        	
        	
       }
+
+	public static UserBean userFromId(Integer id) {
+		// STEP 1: dichiarazioni
+        Statement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        Utente u = null;
+        try {
+            // STEP 2: loading dinamico del driver mysql
+            Class.forName(CONNECTOR);
+
+            // STEP 3: apertura connessione
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // STEP 4: creazione ed esecuzione della query
+            stmt = conn.createStatement();
+            String sql = "SELECT nome, username, password, cognome, company, logo, id FROM utenti where id = '"+ id + "';";
+            rs = stmt.executeQuery(sql);
+
+            if (!rs.first()) // rs not empty
+                return null;
+
+            boolean moreThanOne = rs.first() && rs.next();
+            assert !moreThanOne; // per abilitare le asserzioni, avviare la JVM con il parametro -ea
+            // (Run Configurations -> <configurazione utilizzata per l'avvio del server> -> Arguments -> VM Arguments).
+            // N.B. Le asserzioni andrebbero usate solo per test e debug, non per codice in produzione
+
+            // riposizionamento del cursore
+            rs.first();
+
+            // lettura delle colonne "by name"
+            String nome = rs.getString(COLUMN_NOME);
+            String cognome = rs.getString(COLUMN_COGNOME);
+            String usernameLoaded = rs.getString(COLUMN_USERNAME);
+            String passwordLoaded = rs.getString(COLUMN_PASSWORD);
+            Boolean company = rs.getBoolean(COLUMN_COMPANY);
+            Integer user_id = rs.getInt(COLUMN_ID);
+           
+            Image imgLogo = null;
+            if(company)
+            {	 Blob logo =rs.getBlob(COLUMN_LOGO);
+            	 InputStream out = logo.getBinaryStream();
+            	 imgLogo = new Image(out);}
+            u = new Utente(usernameLoaded, passwordLoaded, nome, cognome,company,user_id,imgLogo);      
+            
+            // STEP 6: Clean-up dell'ambiente
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            // Errore durante l'apertura della connessione
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+        } catch (Exception e) {
+            // Errore nel loading del driver
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+        } finally {
+        	try {
+        		if(rs!=null)
+        			rs.close();
+        	}
+        	catch(Exception e) {		
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+        	}
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+            }
+        }
+
+        return u.tobean();
+	}
 }

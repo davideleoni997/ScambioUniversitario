@@ -1,7 +1,10 @@
 package graphic;
 
+
 import java.net.URL;
+
 import java.util.ResourceBundle;
+
 
 import bean.UserBean;
 import factory.LanguageFactory;
@@ -11,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import util.Property;
 
 public class ProfileMenuController implements Initializable{
 	private LanguageFactory lg;
@@ -39,6 +43,9 @@ public class ProfileMenuController implements Initializable{
 	private Button btnMsg;
 	
 	@FXML
+	private Button btnLogOut;
+	
+	@FXML
 	private Button btnBack;
 	
 	@FXML
@@ -50,6 +57,8 @@ public class ProfileMenuController implements Initializable{
 			lg = LanguageFactory.getfactory(0);
 		else
 			lg = LanguageFactory.getfactory(1);
+		
+	
 	}
 	
 	@FXML
@@ -72,6 +81,13 @@ public class ProfileMenuController implements Initializable{
 	
 	@FXML
 	public void goBack() {
+		vc.goBack();
+	}
+	
+	@FXML
+	public void logOut() {
+		Property prop = new Property();
+		prop.setProperty("user_id", "0");
 		vc.goBack();
 	}
 	
@@ -99,9 +115,7 @@ public class ProfileMenuController implements Initializable{
 		btnOrders.setText(lg.getViewOrders());
 		btnMod.setText(lg.getModifyProfile());
 		btnMsg.setText(lg.getMessagesString());
-	
-		
-			
-		
+		btnBack.setText(lg.getBackString());
+					
 	}
 }

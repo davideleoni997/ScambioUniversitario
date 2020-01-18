@@ -270,7 +270,7 @@ public class OrderDao {
 	}
 	
 	
-	public static boolean buyBook(int buyer,int seller, int ordine,String oggetto, Integer prezzo) {
+	public static boolean buyBook(int buyer,int seller, int inserzione,String oggetto, Integer prezzo) {
 		Connection conn = null;
         CallableStatement pst = null;
         try {
@@ -289,7 +289,7 @@ public class OrderDao {
             pst.setInt(1, buyer);
             pst.setInt(2, seller);
             pst.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
-            pst.setInt(4, ordine);
+            pst.setInt(4, inserzione);
             pst.setInt(5, res);
             pst.registerOutParameter(5, java.sql.Types.INTEGER);
             

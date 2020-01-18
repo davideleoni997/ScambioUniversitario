@@ -267,4 +267,30 @@ public class ENFactory implements LanguageFactory{
 	public String getFarthestString() {
 		return doc.getElementsByTagName("Farthest").item(0).getTextContent();
 	}
+
+	@Override
+	public String getTitleString() {
+		return doc.getElementsByTagName("Title").item(0).getTextContent();
+		
+	}
+
+	@Override
+	public String getNewInsertionText() {
+		return doc.getElementsByTagName("NewInsertionText").item(0).getTextContent();
+	}
+
+	@Override
+	public String getNewInsertionString() {
+		return doc.getElementsByTagName("NewInsertion").item(0).getTextContent();
+	}
+
+	@Override
+	public String getDescriptionString() {
+		return doc.getElementsByTagName("Description").item(0).getTextContent();
+	}
+
+	@Override
+	public String getBuyString() {
+		return doc.getElementsByTagName("Buy").item(0).getTextContent();
+	}
 }

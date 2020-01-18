@@ -1,6 +1,8 @@
 package graphic;
 
+
 import java.net.URL;
+
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,6 +11,7 @@ import java.util.logging.Logger;
 
 import bean.UserBean;
 import controller.LoginController;
+
 import factory.LanguageFactory;
 
 import javafx.event.ActionEvent;
@@ -17,12 +20,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import util.Property;
 
 
 public class LoginViewController implements Initializable{
 
 	private LanguageFactory lg;
 	private ViewController vc;
+	private String dispatch;
+	
 	@FXML
 	private Label lblWelcome;
 	@FXML
@@ -67,15 +73,24 @@ public class LoginViewController implements Initializable{
 		lb.setPassword(tfpsw.getText());
 		LoginController lc = LoginController.getInstance();
 		if(lc.validate("user",lb)) {
-		
-		vc.getScenes().push(btnsub.getScene());
-		vc.createProfileMenu(lb);
-		
+			Property prop = new Property();
+			prop.setProperty("user_id",String.valueOf(lb.getId()));
+			
+			if(dispatch.equalsIgnoreCase("NewInsertion"))
+				vc.createNewInsertionMenu();
+			if(dispatch.equalsIgnoreCase("Profile"))
+				vc.createProfileMenu(lb);
+			if(dispatch.equalsIgnoreCase("Buy"))
+				vc.goBack();
 		}
 		else {
 			lblerrormsg.setText(lg.getWrongData());
 			lblerrormsg.setVisible(true);
 		}
+	}
+	
+	public void setDisp(String disp) {
+		this.dispatch = disp;
 	}
 	
 	@FXML

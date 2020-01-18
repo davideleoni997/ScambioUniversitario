@@ -1,5 +1,6 @@
 package logic;
 
+import bean.UserBean;
 import javafx.scene.image.Image;
 
 public class Utente {
@@ -18,6 +19,18 @@ public class Utente {
         this.username = username;
         this.password = password;
     }
+
+	public Utente(String username, String password, String nome, String cognome, boolean company, Integer id,
+			Image logo) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.company = company;
+		this.id = id;
+		this.logo = logo;
+	}
 
 	public String getUsername() {
 		return username;
@@ -77,5 +90,9 @@ public class Utente {
 
 	public boolean update() {
 		return dao.UtenteDao.update(this.id,this.nome,this.cognome,this.username,this.password);
+	}
+	
+	public UserBean tobean() {
+		return new UserBean(this.username,this.password,this.nome,this.cognome,this.company,this.id,this.logo);
 	}
 }

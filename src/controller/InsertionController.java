@@ -1,12 +1,12 @@
 package controller;
 
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import bean.InsertionBean;
 import dao.InsertionDao;
+
 import logic.Filters;
-import logic.Insertion;
+
 
 public class InsertionController {
 
@@ -29,21 +29,10 @@ public class InsertionController {
 		return true;
 	}
 	
-	public Vector<String> getResearchResults(String research, Filters filters) {
-		
-		Vector<String> out = new Vector<>();
-		try {
-			Vector<Insertion> ins;
-			ins=InsertionDao.getReserach(research, filters);
-			for(Insertion inserzione : ins) {
-					out.add(inserzione.getTitle());		
-			}
+	public Vector<InsertionBean> getResearchResults(String research, Filters filters) {
 			
-		}
-		
-		catch(Exception e) {
-			Logger.getGlobal().log(Level.WARNING,"InsController",e);
-		}
-		return out;
+			return InsertionDao.getReserach(research, filters);
+			
+			
 	}
 }

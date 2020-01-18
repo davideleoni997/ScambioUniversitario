@@ -5,12 +5,14 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.LoginController;
 import factory.LanguageFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import util.Property;
 
 public class MainMenuController implements Initializable{
 	LanguageFactory lg;
@@ -31,6 +33,12 @@ public class MainMenuController implements Initializable{
 	@FXML
 	private Button btnSearch;
 	
+	@FXML
+	private Label lblInsertionText;
+	
+	@FXML
+	private Button btnInsertion;
+	
 	public MainMenuController() {
 		vc = ViewController.getInstance();
 		try{
@@ -48,8 +56,16 @@ public class MainMenuController implements Initializable{
 	
 	@FXML
 	private void login() {
-		vc.getScenes().push(btnLogin.getScene());
-		vc.createLoginMenu();
+		Property prop = new Property();
+		if(prop.loadProperty("user_id").equalsIgnoreCase("0")) {
+			vc.getScenes().push(btnLogin.getScene());
+			vc.createLoginMenu("Profile");
+		}
+		else {
+			LoginController lc = LoginController.getInstance();
+			vc.getScenes().push(btnLogin.getScene());
+			vc.createProfileMenu(lc.getUserFromId(Integer.parseInt(prop.loadProperty("user_id"))));
+		}
 	}
 	
 	@FXML
@@ -63,12 +79,20 @@ public class MainMenuController implements Initializable{
 		vc.getScenes().push(btnSearch.getScene());
 		vc.createResearchMenu(txtResearch.getText());
 	}
+	
+	@FXML
+	private void newInsertion() {
+		vc.getScenes().push(btnInsertion.getScene());
+		vc.createNewInsertionMenu();
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		btnRegister.setText(lg.getRegister());
 		lblSearch.setText(lg.getSearchText());
 		btnSearch.setText(lg.getSearchString());
+		lblInsertionText.setText(lg.getNewInsertionText());
+		btnInsertion.setText(lg.getNewInsertionString());
 		
 	}
 	

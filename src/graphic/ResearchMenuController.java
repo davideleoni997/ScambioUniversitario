@@ -6,10 +6,12 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import bean.InsertionBean;
 import controller.InsertionController;
 import factory.LanguageFactory;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CustomMenuItem;
@@ -19,6 +21,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Pane;
 
 
 public class ResearchMenuController implements Initializable{
@@ -27,7 +30,7 @@ public class ResearchMenuController implements Initializable{
 	private String research;
 	
 	@FXML
-	private ListView<String> listSearch;
+	private ListView<Pane> listSearch;
 	
 	@FXML
 	private TextField txtSearch;
@@ -158,7 +161,7 @@ public class ResearchMenuController implements Initializable{
 				lg = LanguageFactory.getfactory(1);
 		}
 		catch(Exception e) {
-			Logger.getGlobal().log(Level.WARNING,"LogViewController",e);
+			Logger.getGlobal().log(Level.WARNING,"ResearchMenuController",e);
 		}
 	}
 	
@@ -216,15 +219,28 @@ public class ResearchMenuController implements Initializable{
 		
 		
 		InsertionController ic = new InsertionController();
-			//TODO ricerca vera con oggetti inserzione, non stringhe
-		Vector<String> results = ic.getResearchResults(research, null);
+		Vector<InsertionBean> results = ic.getResearchResults(research, null);
 		update(results);
 		
 	}
 	
-	private void update(Vector<String> out) {
-		for(String riga : out)
-		listSearch.getItems().add(riga);
+	private void update(Vector<InsertionBean> insertionList) {
+		for(InsertionBean inserzione : insertionList) {
+			try {
+			//Crea adapter oggetto inserzione e assegnagli dati bean
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
+			
+			fl.setLocation(getClass().getResource("InsertionListAdapter.fxml"));
+			Pane root = (Pane) fl.load();    //Carico fxml della scena
+			InsertionListAdapterController iac = fl.getController();
+			iac.setData(inserzione);
+			
+			listSearch.getItems().add(root);
+			}
+			catch(Exception e) {
+				Logger.getGlobal().log(Level.WARNING,"InsertionBeanAdapter",e);
+			}
+		}
 	}
 	
 	@FXML
