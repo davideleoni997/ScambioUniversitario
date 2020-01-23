@@ -20,6 +20,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class RegisterMenuController implements Initializable{
 	private LanguageFactory lg;
@@ -149,6 +150,8 @@ public class RegisterMenuController implements Initializable{
 	@FXML
 	public void upload() {
 		final FileChooser fc = new FileChooser();
+		ExtensionFilter ef = new ExtensionFilter("Images","*.png");
+		fc.getExtensionFilters().add(ef);
 		logo = fc.showOpenDialog(vc.getPrimaryStage());
 		if(logo!=null) {
 			Runnable update = () -> {
@@ -160,8 +163,13 @@ public class RegisterMenuController implements Initializable{
 			Platform.runLater(update);
 			
 		}
-		else
-			;//TODO
+		else {
+			Runnable update = () -> {
+				lblUpload.setText("No logo"); //TODO strings
+			lblUpload.setVisible(true);};
+			
+			Platform.runLater(update);
+		}
 	}
 	
 	@FXML

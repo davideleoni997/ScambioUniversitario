@@ -80,59 +80,56 @@ public class InsertionDao {
             String price = rs.getString(COLUMN_PRICE);
             Date date = rs.getDate(COLUMN_DATA);
             Integer id = rs.getInt(COLUMN_ID);
-            Blob image1 = rs.getBlob(COLUMN_IMAGE1);
-            Blob image2 = rs.getBlob(COLUMN_IMAGE2);
-            Blob image3 = rs.getBlob(COLUMN_IMAGE3);
+            LinkedList<Blob> images = new LinkedList<>();
+            Blob blob;
+            if(( blob = rs.getBlob(COLUMN_IMAGE1)) != null)
+            	images.add(blob);
+            if(( blob = rs.getBlob(COLUMN_IMAGE2)) != null)
+            	images.add(blob);
+            if(( blob = rs.getBlob(COLUMN_IMAGE3)) != null)
+            	images.add(blob);
             Integer seller = rs.getInt(COLUMN_SELLER);
             Boolean sold = rs.getBoolean(COLUMN_SOLD);
+            LinkedList<Image> imagesList = new LinkedList<>();
+           
+            for(Blob img : images) {
+            		
+            		InputStream imgIn = img.getBinaryStream();
+            		Image listItem = new Image(imgIn);
+            		imagesList.add(listItem);
+            		
+            	
+            }
             
-            InputStream out1;
-            Image img1 = null;
-            InputStream out2;
-            Image img2 = null;
-            InputStream out3;
-            Image img3 = null;
             
-            if(image1 != null) {
-            	out1 = image1.getBinaryStream();
-            	img1 = new Image(out1);}
-            if(image2 != null) {
-            	out2 = image2.getBinaryStream();
-            	img2 = new Image(out2);}
-            if(image3 != null) {
-            	out3 = image3.getBinaryStream();
-            	img3 = new Image(out3);}
-            
-            InsertionBean insert = new InsertionBean(title,desc,date,Integer.parseInt(price),id,img1,img2,img3,UtenteDao.getUsernameById(seller),seller,sold);
+            InsertionBean insert = new InsertionBean(title,desc,date,Integer.parseInt(price),id,imagesList,UtenteDao.getUsernameById(seller),seller,sold);
             
             ins.add(insert);
             
             while(rs.next()) {
-            	img1 = null;
-            	img2 = null;
-            	img3 = null;
+            	images.clear();
             	title = rs.getString(COLUMN_TITLE);
                 desc = rs.getString(COLUMN_DESCR);
                 price = rs.getString(COLUMN_PRICE);
                 date = rs.getDate(COLUMN_DATA);
                 id = rs.getInt(COLUMN_ID);
-                image1 = rs.getBlob(COLUMN_IMAGE1);
-                image2 = rs.getBlob(COLUMN_IMAGE2);
-                image3 = rs.getBlob(COLUMN_IMAGE3);
+                if(( blob = rs.getBlob(COLUMN_IMAGE1)) != null)
+                	images.add(blob);
+                if(( blob = rs.getBlob(COLUMN_IMAGE2)) != null)
+                	images.add(blob);
+                if(( blob = rs.getBlob(COLUMN_IMAGE3)) != null)
+                	images.add(blob);
                 seller = rs.getInt(COLUMN_SELLER);
                 sold = rs.getBoolean(COLUMN_SOLD);
+                for(Blob img : images) {
+                	
+                	InputStream imgIn = img.getBinaryStream();
+            		Image listItem = new Image(imgIn);
+            		imagesList.add(listItem);
+            		
+                }
                 
-                if(image1 != null) {
-                    out1 = image1.getBinaryStream();
-                    img1 = new Image(out1);}
-                if(image2 != null) {
-                    out2 = image2.getBinaryStream();
-                    img2 = new Image(out2);}
-                if(image3 != null) {
-                    out3 = image3.getBinaryStream();
-                    img3 = new Image(out3);}
-                
-                insert = new InsertionBean(title,desc,date,Integer.parseInt(price),id,img1,img2,img3,UtenteDao.getUsernameById(seller),seller,sold);
+                insert = new InsertionBean(title,desc,date,Integer.parseInt(price),id,imagesList,UtenteDao.getUsernameById(seller),seller,sold);
                 ins.add(insert);
             }
 
@@ -250,12 +247,12 @@ public class InsertionDao {
         return ins;
     }
     
-    public static Boolean newInsertion(String title, String desc, String price, File[] pics,Integer seller) {
+    public static Boolean newInsertion(String title, String desc, String price, LinkedList<File> pics,Integer seller) {
     	
     	
         Connection conn = null;
         PreparedStatement pst = null;
-        try {
+        try{
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -266,34 +263,39 @@ public class InsertionDao {
             //!!!RICORDA ID AUTOINCREMENT!!!
             pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller) values(?,?,?,?,?,?,?,?)");
             
-            FileInputStream[] images = new FileInputStream[3];
+           
             
             pst.setString(1, title);
             pst.setString(2, desc);
             pst.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
             pst.setString(4, price);
-            if(pics!=null)
-            	for(int i=4; i< pics.length+4;i++) {
-            		
-            		images[i-4]=new FileInputStream(pics[i-4]);
-            		pst.setBinaryStream(i, images[i-4],images[i-4].available());	
-            		
-            }
-            else {
-            	pst.setNull(5,java.sql.Types.BLOB);
-            	pst.setNull(6, java.sql.Types.BLOB);
-            	pst.setNull(7, java.sql.Types.BLOB);
-            }
+            pst.setNull(5,java.sql.Types.BLOB);
+        	pst.setNull(6, java.sql.Types.BLOB);
+        	pst.setNull(7, java.sql.Types.BLOB);
+            for(File f : pics)
+            	{
+            	FileInputStream image = new FileInputStream(f);
+            	if(pics.indexOf(f) == 0)
+            		pst.setBinaryStream(5, image,image.available());
+            	
+            	if(pics.indexOf(f) == 1)
+            		pst.setBinaryStream(6, image,image.available());
+        		
+        		if(pics.indexOf(f) == 2)
+        			pst.setBinaryStream(7, image,image.available());
+        		if(pics.indexOf(f) > 2)
+        			break;
+    			
+    		}
             pst.setInt(8, seller);
             pst.executeUpdate();
             pst.close();
-            if(pics!=null)
-            	for(int i=0;i<3;i++)
-            		images[i].close();
             
             
             
-        } catch (Exception e) {
+            
+        } 
+        catch (Exception e) {
             // Errore nel loading del driver
         	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
             return false;

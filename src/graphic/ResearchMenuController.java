@@ -1,7 +1,7 @@
 package graphic;
 
 import java.net.URL;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -219,12 +219,12 @@ public class ResearchMenuController implements Initializable{
 		
 		
 		InsertionController ic = new InsertionController();
-		LinkedList<InsertionBean> results = ic.getResearchResults(research, null);
+		List<InsertionBean> results = ic.getResearchResults(research, null);
 		update(results);
 		
 	}
 	
-	private void update(LinkedList<InsertionBean> insertionList) {
+	private void update(List<InsertionBean> insertionList) {
 		for(InsertionBean inserzione : insertionList) {
 			try {
 			//Crea adapter oggetto inserzione e assegnagli dati bean

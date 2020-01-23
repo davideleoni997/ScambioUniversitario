@@ -292,7 +292,7 @@ public class UtenteDao {
     public static boolean newCompany(String nome, String username, String password, Boolean company,File logo) {
    	 Connection conn = null;
         PreparedStatement pst = null;
-        try {
+        try(FileInputStream logoStream = new FileInputStream(logo); ) {
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -301,8 +301,6 @@ public class UtenteDao {
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
             pst = conn.prepareStatement("INSERT into utenti(nome,username,password,company,logo,matricola) VALUES(?,?,?,?,?,?)");
-            FileInputStream logoStream = null;
-            logoStream = new FileInputStream(logo); 
             pst.setString(1, nome);
             pst.setString(2, username);
             pst.setString(3, password);

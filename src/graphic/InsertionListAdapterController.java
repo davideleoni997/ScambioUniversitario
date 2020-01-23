@@ -59,10 +59,11 @@ public class InsertionListAdapterController implements Initializable{
 	public void setData(InsertionBean ib) {
 		this.ib = ib;
 		txtTitle.setText(ib.getTitle());
-		txtPrice.setText(ib.getPrice() + "€");
+		txtPrice.setText(ib.getPrice() + "Euros");
 		txtSeller.setText(ib.getSeller());
 		txtDate.setText(ib.getDate().toString());
-		imgMain.setImage(ib.getImage1());
+		if(ib.getImages().size() > 0)
+		imgMain.setImage(ib.getImages().get(0));
 	}
 	
 	@FXML

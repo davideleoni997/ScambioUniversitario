@@ -1,7 +1,9 @@
 package bean;
 
 
+import java.io.File;
 import java.util.Date;
+import java.util.LinkedList;
 
 import javafx.scene.image.Image;
 
@@ -12,9 +14,7 @@ public class InsertionBean {
 	private Date date;
 	private Integer price;
 	private Integer id;
-	private Image image1;
-	private Image image2;
-	private Image image3;
+	private LinkedList<Image> images;
 	private String seller;
 	private Integer sellerId;
 	
@@ -25,23 +25,20 @@ public class InsertionBean {
 		
 	}
 	
-	public InsertionBean(String title, String desc, Date date, Integer price, Integer id, Image image1, Image image2,
-			Image image3, String seller, Integer sellerId, Boolean sold) {
+	public InsertionBean(String title, String desc, Date date, Integer price, Integer id, LinkedList<Image> images, String seller, Integer sellerId, Boolean sold) {
 		super();
 		this.title = title;
 		this.desc = desc;
 		this.date = date;
 		this.price = price;
 		this.id = id;
-		this.image1 = image1;
-		this.image2 = image2;
-		this.image3 = image3;
+		this.images = images;
 		this.seller = seller;
 		this.sellerId = sellerId;
 		this.sold = sold;
 	}
 	
-	public InsertionBean(String title, String desc, Date date, Integer price, Integer id, Image image1,Image image2,Image image3, Integer sellerId,
+	public InsertionBean(String title, String desc, Date date, Integer price, Integer id, LinkedList<Image> images, Integer sellerId,
 			Boolean sold) {
 		super();
 		this.title = title;
@@ -49,9 +46,7 @@ public class InsertionBean {
 		this.date = date;
 		this.price = price;
 		this.id = id;
-		this.image1 = image1;
-		this.image2 = image2;
-		this.image3 = image3;
+		this.images = images;
 		this.sellerId = sellerId;
 		this.sold = sold;
 	}
@@ -112,28 +107,12 @@ public class InsertionBean {
 		this.sold = sold;
 	}
 
-	public Image getImage1() {
-		return image1;
+	public LinkedList<Image> getImages() {
+		return images;
 	}
 
-	public void setImage1(Image image1) {
-		this.image1 = image1;
-	}
-
-	public Image getImage2() {
-		return image2;
-	}
-
-	public void setImage2(Image image2) {
-		this.image2 = image2;
-	}
-
-	public Image getImage3() {
-		return image3;
-	}
-
-	public void setImage3(Image image3) {
-		this.image3 = image3;
+	public void setImages(LinkedList<Image> images) {
+		this.images = images;
 	}
 
 	public Integer getSellerId() {

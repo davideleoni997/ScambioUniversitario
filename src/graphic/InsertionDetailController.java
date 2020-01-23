@@ -116,12 +116,15 @@ public class InsertionDetailController implements Initializable{
 	
 	public void setInsertion(InsertionBean ib) {
 		this.ib = ib;
-		img1.setImage(ib.getImage1());
-		img2.setImage(ib.getImage2());
-		img3.setImage(ib.getImage3());
+		if(ib.getImages().size() > 0)
+		img1.setImage(ib.getImages().get(0));
+		if(ib.getImages().size() > 1)
+		img2.setImage(ib.getImages().get(1));
+		if(ib.getImages().size() > 2)
+		img3.setImage(ib.getImages().get(2));
 		txtTitle.setText(ib.getTitle());
 		txtSeller.setText(ib.getSeller());
-		txtPrice.setText(ib.getPrice()+"€");
+		txtPrice.setText(ib.getPrice()+" Euros");
 		txtDate.setText(ib.getDate().toString());
 		txtDescription.setText(ib.getDesc());
 	}
