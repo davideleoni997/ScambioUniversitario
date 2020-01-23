@@ -9,8 +9,8 @@
    <children>
       <Label fx:id="lblName" layoutX="14.0" layoutY="14.0" text="Nome :" />
       <Label fx:id="lblSurname" layoutX="14.0" layoutY="38.0" text="Cognome :" />
-      <Label fx:id="lblname" layoutX="58.0" layoutY="14.0" />
-      <Label fx:id="lblsurname" layoutX="78.0" layoutY="38.0" />
+      <Label fx:id="txtname" layoutX="58.0" layoutY="14.0" />
+      <Label fx:id="txtsurname" layoutX="78.0" layoutY="38.0" />
       <Button fx:id="btnOrders" layoutX="17.0" layoutY="63.0" mnemonicParsing="false" onAction="#viewOrders" text="View Orders" />
       <Button fx:id="btnMod" layoutX="17.0" layoutY="106.0" mnemonicParsing="false" onAction="#modifyProfile" text="Modify Profile" />
       <Button fx:id="btnMsg" layoutX="17.0" layoutY="147.0" mnemonicParsing="false" onAction="#viewMessages" text="Messages" />

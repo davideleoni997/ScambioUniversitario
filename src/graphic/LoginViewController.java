@@ -47,7 +47,7 @@ public class LoginViewController implements Initializable{
 	private Button btnBack;
 
 	public LoginViewController() {
-		
+		//Needed to initialize the controller for javaFX
 	}
 	
 	@Override

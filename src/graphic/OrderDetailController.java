@@ -17,19 +17,19 @@ public class OrderDetailController implements Initializable{
 	private Order order;
 	
 	@FXML
-	private Label lblbuyer;
+	private Label txtbuyer;
 	
 	@FXML
-	private Label lblseller;
+	private Label txtseller;
 	
 	@FXML
-	private Label lblprezzo;
+	private Label txtprezzo;
 	
 	@FXML
-	private Label lblitem;
+	private Label txtitem;
 	
 	@FXML
-	private Label lbldate;
+	private Label txtdate;
 	
 	@FXML
 	private Label lblBuyer;
@@ -67,11 +67,11 @@ public class OrderDetailController implements Initializable{
 	}
 	
 	public void update() {
-		lblbuyer.setText(order.getBuyer());
-		lblseller.setText(order.getSeller());
-		lblprezzo.setText(String.valueOf(order.getItem().getPrezzo()));
-		lblitem.setText(order.getItem().getNome());
-		lbldate.setText(String.valueOf(order.getData()));
+		txtbuyer.setText(order.getBuyer());
+		txtseller.setText(order.getSeller());
+		txtprezzo.setText(String.valueOf(order.getItem().getPrezzo()));
+		txtitem.setText(order.getItem().getNome());
+		txtdate.setText(String.valueOf(order.getData()));
 	}
 
 	@Override
@@ -82,5 +82,9 @@ public class OrderDetailController implements Initializable{
 		lblItem.setText(lg.getItemString()+":");
 		lblDate.setText(lg.getDateString()+":");
 		btnback.setText(lg.getBackString());
+	}
+	
+	private void pay() {
+		//TODO add button to pay if not paid and mockup payment system
 	}
 }

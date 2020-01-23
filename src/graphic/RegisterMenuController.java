@@ -134,7 +134,7 @@ public class RegisterMenuController implements Initializable{
 	@FXML
 	public void submit() {
 		if(txtPsw.getText().equals(txtCheck.getText())) {
-			RegistrationController rc = new RegistrationController();
+			RegistrationController rc = RegistrationController.getInstance();
 			RadioButton selected = (RadioButton) tgStud.getSelectedToggle();
 			if(selected.getText().equals(lg.getStudString()))
 				rc.registraUtente(txtName.getText(), txtSurname.getText(), txtUser.getText(), txtPsw.getText(), false, txtEnroll.getText());
@@ -151,15 +151,13 @@ public class RegisterMenuController implements Initializable{
 		final FileChooser fc = new FileChooser();
 		logo = fc.showOpenDialog(vc.getPrimaryStage());
 		if(logo!=null) {
+			Runnable update = () -> {
+				lblUpload.setText(logo.getPath());
+			lblUpload.setVisible(true);
+			imgLogo.setImage(new Image(logo.toURI().toString()));
+			imgLogo.setVisible(true);};
 			
-			Platform.runLater(new Runnable() {
-				@Override public void run() {
-					lblUpload.setText(logo.getPath());
-					lblUpload.setVisible(true);
-					imgLogo.setImage(new Image(logo.toURI().toString()));
-					imgLogo.setVisible(true);
-				}
-			});
+			Platform.runLater(update);
 			
 		}
 		else
@@ -168,29 +166,25 @@ public class RegisterMenuController implements Initializable{
 	
 	@FXML
 	public void studentSelected() {
-		Platform.runLater(new Runnable() {
-			@Override public void run() {
-				lblEnroll.setVisible(true);
-				txtEnroll.setEditable(true);
-				txtEnroll.setVisible(true);
-				lblSurname.setVisible(true);
-				txtSurname.setVisible(true);
-				lblLogo.setVisible(false);
-				btnLogo.setVisible(false);
-				btnLogo.setDisable(true);
-				imgLogo.setVisible(false);
-				lblUpload.setVisible(false);
-			}
-		});
+		Runnable update = () -> {
+			lblEnroll.setVisible(true);
+		txtEnroll.setEditable(true);
+		txtEnroll.setVisible(true);
+		lblSurname.setVisible(true);
+		txtSurname.setVisible(true);
+		lblLogo.setVisible(false);
+		btnLogo.setVisible(false);
+		btnLogo.setDisable(true);
+		imgLogo.setVisible(false);
+		lblUpload.setVisible(false);};
+		Platform.runLater(update);
 		
 		
 	}
 	
 	@FXML
 	public void companySelected() {
-		Platform.runLater(new Runnable() {
-			@Override public void run() {
-		lblEnroll.setVisible(false);
+		Runnable update = () -> {lblEnroll.setVisible(false);
 		txtEnroll.setEditable(false);
 		txtEnroll.setVisible(false);
 		lblSurname.setVisible(false);
@@ -199,10 +193,11 @@ public class RegisterMenuController implements Initializable{
 		btnLogo.setDisable(false);
 		btnLogo.setVisible(true);
 		imgLogo.setVisible(true);
-		if(logo == null)
-		lblUpload.setText("");
-		lblUpload.setVisible(true);
-			}
-		});
+		if(logo == null) {
+			lblUpload.setText("");
+			lblUpload.setVisible(true);
+		}
+		};
+		Platform.runLater(update);
 	}
 }

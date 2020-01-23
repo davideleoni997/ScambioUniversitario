@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.Vector;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,10 +29,10 @@ public class InsertionDao {
 	private static final String COLUMN_DESCR = "descr";
 	private static final String COLUMN_PRICE = "price";
 	private static final String COLUMN_TITLE = "title";
-	private static final String pass = "root";
-    private static final String user = "root";
-    private static final String db_url = "jdbc:mariadb://localhost:3306/scambio";
-    private static final String connector = "org.mariadb.jdbc.Driver";
+	private static final String PASS = "root";
+    private static final String USER = "root";
+    private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
+    private static final String CONNECTOR = "org.mariadb.jdbc.Driver";
 	private static final String COLUMN_ID = "id";
 	private static final String COLUMN_IMAGE1 = "image1";
 	private static final String COLUMN_IMAGE2 = "image2";
@@ -44,9 +44,9 @@ public class InsertionDao {
         throw new IllegalStateException("Utility class");
       }
     
-    public static Vector<InsertionBean> getReserach(String research, Filters filters) {
-    	Vector<InsertionBean> ins = new Vector<>();
-    	//Insertion[] ins = new Insertion[100];
+    public static LinkedList<InsertionBean> getReserach(String research, Filters filters) {
+    	LinkedList<InsertionBean> ins = new LinkedList<>();
+
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
@@ -54,10 +54,10 @@ public class InsertionDao {
         ResultSet rs = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName(connector);
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(db_url, user, pass);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
@@ -182,10 +182,10 @@ public class InsertionDao {
         ResultSet rs = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName(connector);
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(db_url, user, pass);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
@@ -206,10 +206,10 @@ public class InsertionDao {
             String price = rs.getString(COLUMN_PRICE);
             Date date = rs.getDate("date");
             Blob[] images = new Blob[3];
-            images[0] = rs.getBlob("image1");
-            images[1] = rs.getBlob("image2");
-            images[2] = rs.getBlob("image3");
-            Integer seller = rs.getInt("seller");
+            images[0] = rs.getBlob(COLUMN_IMAGE1);
+            images[1] = rs.getBlob(COLUMN_IMAGE2);
+            images[2] = rs.getBlob(COLUMN_IMAGE3);
+            Integer seller = rs.getInt(COLUMN_SELLER);
             Boolean sold = rs.getBoolean("sold");
            
             
@@ -257,10 +257,10 @@ public class InsertionDao {
         PreparedStatement pst = null;
         try {
             // STEP 2: loading dinamico del driver mysql
-            Class.forName(connector);
+            Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(db_url, user, pass);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
@@ -274,13 +274,10 @@ public class InsertionDao {
             pst.setString(4, price);
             if(pics!=null)
             	for(int i=4; i< pics.length+4;i++) {
-            		try {
+            		
             		images[i-4]=new FileInputStream(pics[i-4]);
-            		pst.setBinaryStream(i, images[i-4],images[i-4].available());
-            		}
-            		catch(Exception e) {
-            			Logger.getGlobal().log(Level.WARNING,"File Opening Image",e);
-            		}
+            		pst.setBinaryStream(i, images[i-4],images[i-4].available());	
+            		
             }
             else {
             	pst.setNull(5,java.sql.Types.BLOB);

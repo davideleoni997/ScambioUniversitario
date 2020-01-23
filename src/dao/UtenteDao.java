@@ -27,7 +27,7 @@ public class UtenteDao {
 	private static final String COLUMN_LOGO = "logo";
     
     private UtenteDao() {
-        throw new IllegalStateException("Utility class");
+       //Costruttore Utente dao
       }
 
     public static Utente findByNameAndPassword(String username, String password) {
@@ -302,13 +302,7 @@ public class UtenteDao {
             //!!!RICORDA ID AUTOINCREMENT!!!
             pst = conn.prepareStatement("INSERT into utenti(nome,username,password,company,logo,matricola) VALUES(?,?,?,?,?,?)");
             FileInputStream logoStream = null;
-            try {
-            logoStream = new FileInputStream(logo);
-            }
-            catch(Exception e) {
-            	Logger.getGlobal().log(Level.WARNING,"Error with file",e);
-            }
-            
+            logoStream = new FileInputStream(logo); 
             pst.setString(1, nome);
             pst.setString(2, username);
             pst.setString(3, password);
@@ -433,14 +427,14 @@ public class UtenteDao {
             String usernameLoaded = rs.getString(COLUMN_USERNAME);
             String passwordLoaded = rs.getString(COLUMN_PASSWORD);
             Boolean company = rs.getBoolean(COLUMN_COMPANY);
-            Integer user_id = rs.getInt(COLUMN_ID);
+            Integer userId = rs.getInt(COLUMN_ID);
            
             Image imgLogo = null;
-            if(company)
+            if(Boolean.TRUE.equals(company))
             {	 Blob logo =rs.getBlob(COLUMN_LOGO);
             	 InputStream out = logo.getBinaryStream();
             	 imgLogo = new Image(out);}
-            u = new Utente(usernameLoaded, passwordLoaded, nome, cognome,company,user_id,imgLogo);      
+            u = new Utente(usernameLoaded, passwordLoaded, nome, cognome,company,userId,imgLogo);      
             
             // STEP 6: Clean-up dell'ambiente
             rs.close();

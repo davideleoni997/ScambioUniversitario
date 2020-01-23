@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.LinkedList;
 import java.util.Vector;
 
 import bean.InsertionBean;
@@ -29,7 +30,7 @@ public class InsertionController {
 		return true;
 	}
 	
-	public Vector<InsertionBean> getResearchResults(String research, Filters filters) {
+	public LinkedList<InsertionBean> getResearchResults(String research, Filters filters) {
 			
 			return InsertionDao.getReserach(research, filters);
 			

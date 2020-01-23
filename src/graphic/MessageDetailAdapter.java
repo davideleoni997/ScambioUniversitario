@@ -21,7 +21,7 @@ public class MessageDetailAdapter implements Initializable{
 	private Label lblMessage;
 	
 	@FXML
-	private Label lblsender;
+	private Label txtsender;
 	
 	@FXML
 	private Label lblmsg;
@@ -36,7 +36,7 @@ public class MessageDetailAdapter implements Initializable{
 	
 	public void setAdapter(Message msg) {
 		
-		lblsender.setText(String.valueOf(msg.getFrom()));
+		txtsender.setText(String.valueOf(msg.getFrom()));
 	
 		lblmsg.setText(msg.getDesc());
 	}

@@ -12,10 +12,10 @@
       <Label fx:id="lblPrezzo" layoutX="20.0" layoutY="85.0" text="Prezzo:" />
       <Label fx:id="lblItem" layoutX="23.0" layoutY="111.0" text="Oggetto:" />
       <Label fx:id="lblDate" layoutX="20.0" layoutY="138.0" text="Data :" />
-      <Label fx:id="lblbuyer" layoutX="115.0" layoutY="22.0" />
-      <Label fx:id="lblseller" layoutX="86.0" layoutY="54.0" />
-      <Label fx:id="lblprezzo" layoutX="75.0" layoutY="85.0" />
-      <Label fx:id="lblitem" layoutX="86.0" layoutY="111.0" />
-      <Label fx:id="lbldate" layoutX="61.0" layoutY="138.0" />
+      <Label fx:id="txtbuyer" layoutX="115.0" layoutY="22.0" />
+      <Label fx:id="txtseller" layoutX="86.0" layoutY="54.0" />
+      <Label fx:id="txtprezzo" layoutX="75.0" layoutY="85.0" />
+      <Label fx:id="txtitem" layoutX="86.0" layoutY="111.0" />
+      <Label fx:id="txtdate" layoutX="61.0" layoutY="138.0" />
    </children>
 </Pane>

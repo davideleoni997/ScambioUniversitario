@@ -20,7 +20,7 @@ public class ConversationListAdapter implements Initializable{
 	private Label lblSender;
 	
 	@FXML
-	private Label lblsender;
+	private Label txtsender;
 	
 	@FXML
 	private Button btndetail; 
@@ -38,7 +38,7 @@ public class ConversationListAdapter implements Initializable{
 	public void setAdapter(UserBean lb,Message msg) {
 		this.lb=lb;
 		this.msg = msg;
-		lblsender.setText(String.valueOf(msg.getFrom()));
+		txtsender.setText(String.valueOf(msg.getFrom()));
 	}
 	
 	@FXML

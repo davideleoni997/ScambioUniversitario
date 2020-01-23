@@ -2,7 +2,7 @@ package graphic;
 
 
 import java.net.URL;
-
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +13,10 @@ import controller.OrderController;
 import factory.LanguageFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import util.Property;
@@ -96,9 +99,19 @@ public class InsertionDetailController implements Initializable{
 			vc.getScenes().push(btnBuy.getScene());
 			vc.createLoginMenu("Buy");
 		}
-		else
-			//TODO Mockup External payment system dentro orderController newOrder
-		OrderController.newOrder(Integer.parseInt(prop.loadProperty("user_id")), ib.getSellerId(), ib.getTitle(), ib.getId(), ib.getPrice());
+		else {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirmation");//TODO Strings
+			alert.setHeaderText("Do you really want to buy the item?");
+			ButtonType buttonConf = new ButtonType("Yes");
+			ButtonType buttonCanc = new ButtonType("No");
+			alert.getButtonTypes().setAll(buttonConf,buttonCanc);
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonConf){
+				OrderController.newOrder(Integer.parseInt(prop.loadProperty("user_id")), ib.getSellerId(), ib.getTitle(), ib.getId(), ib.getPrice());
+			} 
+			}
 	}
 	
 	public void setInsertion(InsertionBean ib) {
@@ -108,7 +121,7 @@ public class InsertionDetailController implements Initializable{
 		img3.setImage(ib.getImage3());
 		txtTitle.setText(ib.getTitle());
 		txtSeller.setText(ib.getSeller());
-		txtPrice.setText(ib.getPrice()+" Euro");
+		txtPrice.setText(ib.getPrice()+"€");
 		txtDate.setText(ib.getDate().toString());
 		txtDescription.setText(ib.getDesc());
 	}

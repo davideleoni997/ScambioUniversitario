@@ -28,10 +28,10 @@ public class ProfileMenuController implements Initializable{
 	private Label lblSurname;
 	
 	@FXML
-	private Label lblname;
+	private Label txtname;
 	
 	@FXML
-	private Label lblsurname;
+	private Label txtsurname;
 	
 	@FXML
 	private Button btnOrders;
@@ -63,19 +63,19 @@ public class ProfileMenuController implements Initializable{
 	
 	@FXML
 	public void viewOrders() {
-		vc.getScenes().push(lblname.getScene());
+		vc.getScenes().push(txtname.getScene());
 		vc.createOrderMenu(ub.getUsername());
 	}
 	
 	@FXML
 	public void modifyProfile() {
-		vc.getScenes().push(lblname.getScene());
+		vc.getScenes().push(txtname.getScene());
 		vc.createModifyMenu(ub);
 	}
 	
 	@FXML
 	public void viewMessages() {
-		vc.getScenes().push(lblname.getScene());
+		vc.getScenes().push(txtname.getScene());
 		vc.createMessageMenu(ub);
 	}
 	
@@ -94,17 +94,15 @@ public class ProfileMenuController implements Initializable{
 	public void setUser(UserBean ub) {
 		
 		this.ub = ub;
-		lblname.setText(ub.getNome());
-		lblsurname.setText(ub.getCognome());
-		Platform.runLater(new Runnable() {
-			@Override public void run() {
-				if(ub.getCompany()) {
-					imgLogo.setImage(ub.getLogo());
-					imgLogo.setVisible(true);
-					lblSurname.setVisible(false);
-				}
-			}
-		});
+		txtname.setText(ub.getNome());
+		txtsurname.setText(ub.getCognome());
+		Runnable update = () -> 
+		{ if(ub.getCompany()) {
+			imgLogo.setImage(ub.getLogo());
+			imgLogo.setVisible(true);
+			lblSurname.setVisible(false);
+		} };
+		Platform.runLater(update);
 		
 	}
 
