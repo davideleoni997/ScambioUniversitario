@@ -3,12 +3,17 @@ package graphic;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import controller.MessageController;
+import controller.OrderController;
+import dao.UtenteDao;
+import external.MockupPayment;
 import factory.LanguageFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import logic.Order;
+import util.Property;
 
 public class OrderDetailController implements Initializable{
 	private LanguageFactory lg;
@@ -49,6 +54,18 @@ public class OrderDetailController implements Initializable{
 	@FXML
 	private Button btnback;
 	
+	@FXML
+	private Label lblPaid;
+	
+	@FXML
+	private Label txtPaid;
+	
+	@FXML
+	private Button btnPay;
+	
+	@FXML
+	private Label txtError;
+	
 	public OrderDetailController() {
 		vc = ViewController.getInstance();
 		if(System.getProperty("user.language").equalsIgnoreCase("en"))
@@ -72,6 +89,12 @@ public class OrderDetailController implements Initializable{
 		txtprezzo.setText(String.valueOf(order.getItem().getPrezzo()));
 		txtitem.setText(order.getItem().getNome());
 		txtdate.setText(String.valueOf(order.getData()));
+		if(Boolean.TRUE.equals(order.getPaid()))
+			txtPaid.setText(lg.getYesString());
+		else {
+			txtPaid.setText(lg.getNoString());
+			btnPay.setVisible(true);
+		}
 	}
 
 	@Override
@@ -81,10 +104,24 @@ public class OrderDetailController implements Initializable{
 		lblPrezzo.setText(lg.getPriceString()+":");
 		lblItem.setText(lg.getItemString()+":");
 		lblDate.setText(lg.getDateString()+":");
+		lblPaid.setText(lg.getPaidString()+":");
 		btnback.setText(lg.getBackString());
+		btnPay.setText(lg.getPayString());
 	}
 	
+	@FXML
 	private void pay() {
-		//TODO add button to pay if not paid and mockup payment system
+		if(MockupPayment.Payment()) {
+			OrderController oc = new OrderController();
+			oc.payOrder(order.getId());
+			vc.createOrderDetailMenu(order.getId());
+			MessageController mc = new MessageController();
+			Property prop = new Property();
+			mc.newMessage(Integer.parseInt(prop.loadProperty("user_id")), UtenteDao.getIdByUsername(order.getSeller()), "I have paid the order :"+ order.getId());
+			//TODO LEVARE UTENTE DAO DA QUI!!!!!
+		}
+		else {
+			txtError.setText(lg.getPaymentErrorString());
+		}
 	}
 }

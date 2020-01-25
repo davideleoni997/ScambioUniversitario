@@ -2,7 +2,6 @@ package controller;
 
 
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
 
 import bean.InsertionBean;
@@ -32,7 +31,7 @@ public class InsertionController {
 		return true;
 	}
 	
-	public boolean newInsertion(String title, String desc, String price, LinkedList<File> images, Integer seller) {
+	public boolean newInsertion(String title, String desc, String price, List<File> images, Integer seller) {
 		
 		try {
 			

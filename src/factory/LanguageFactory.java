@@ -111,4 +111,24 @@ public interface LanguageFactory {
 	public abstract String getDescriptionString();
 	
 	public abstract String getBuyString();
+	
+	public abstract String getConfirmationString();
+	
+	public abstract String getConfirmationBuyText();
+	
+	public abstract String getYesString();
+	
+	public abstract String getNoString();
+	
+	public abstract String getImagesString();
+	
+	public abstract String getInsertString();
+	
+	public abstract String getNoLogoString();
+	
+	public abstract String getPaidString();
+	
+	public abstract String getPayString();
+	
+	public abstract String getPaymentErrorString();
 }

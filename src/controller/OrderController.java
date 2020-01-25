@@ -34,7 +34,13 @@ public class OrderController {
 		this.length = length;
 	}
 	
+	public OrderController() {
+		
+	}
 	
+	public void payOrder(Integer id) {
+		OrderDao.payOrder(id);
+	}
 	
 	public Order[] getOrdersInfo(String user) {
 			

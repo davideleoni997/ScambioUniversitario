@@ -26,7 +26,7 @@ import util.Property;
 public class NewInsertionMenuController implements Initializable{
 	private LanguageFactory lg;
 	private ViewController vc;
-	private LinkedList<File> images;
+	private List<File> images;
 	
 	
 	@FXML
@@ -95,7 +95,7 @@ public class NewInsertionMenuController implements Initializable{
 		final FileChooser fc = new FileChooser();
 		ExtensionFilter ef = new ExtensionFilter("Images","*.png");
 		fc.getExtensionFilters().add(ef);
-		List<File> images = fc.showOpenMultipleDialog(vc.getPrimaryStage());
+		this.images = fc.showOpenMultipleDialog(vc.getPrimaryStage());
 		if(images != null){
 			
 			Runnable update = () -> {
@@ -136,12 +136,12 @@ public class NewInsertionMenuController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		lblNewInsertion.setText("New Insertion"); //TODO Strings
+		lblNewInsertion.setText(lg.getNewInsertionString()); //TODO Strings
 		lblTitle.setText(lg.getTitleString());
 		lblPrice.setText(lg.getPriceString());
 		lblDescription.setText(lg.getDescriptionString());
-		lblImages.setText("Images");
-		btnInsert.setText("Insert");
+		lblImages.setText(lg.getImagesString());
+		btnInsert.setText(lg.getInsertString());
 		btnCancel.setText(lg.getBackString());
 		
 	}

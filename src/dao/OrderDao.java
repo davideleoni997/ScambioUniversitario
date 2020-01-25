@@ -140,7 +140,7 @@ public class OrderDao {
 
         // STEP 4: creazione ed esecuzione della query
         stmt = conn.createStatement();
-        String sql = "SELECT idOrder, oggetto, prezzo, data, seller, buyer FROM orders where idOrder = '"
+        String sql = "SELECT idOrder, oggetto, prezzo, data, seller, buyer, pagato FROM orders where idOrder = '"
                 + id + "';";
         rs = stmt.executeQuery(sql);
 
@@ -158,10 +158,12 @@ public class OrderDao {
         int seller = rs.getInt("seller");
         int buyer = rs.getInt("buyer");
         Date data = rs.getDate("data");
+        Boolean pagato = rs.getBoolean("pagato");
         Item item = new Item(nome,prezzo);
         order.setId(id);
         order.setItem(item);
         order.setData(data);
+        order.setPaid(pagato);
         rs.close();
         sql = "SELECT nome FROM utenti where id = '"
                 + buyer + "';";
@@ -323,6 +325,46 @@ public class OrderDao {
         }
     	
     	return true;
+	}
+
+	public static void payOrder(Integer id) {
+		Connection conn = null;
+        PreparedStatement pst = null;
+        try {
+            // STEP 2: loading dinamico del driver mysql
+            Class.forName(CONNECTOR);
+
+            // STEP 3: apertura connessione
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // STEP 4: creazione ed esecuzione della query
+            //!!!RICORDA ID AUTOINCREMENT!!!
+            pst = conn.prepareStatement("UPDATE orders SET pagato = 1 WHERE idOrder = ?");           
+            pst.setInt(1, id);  
+            pst.executeUpdate();
+            pst.close();
+        }
+          catch (Exception e) {
+            // Errore nel loading del driver
+        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+           
+        } finally {
+        	try {
+        		if(pst!=null)
+        			pst.close();
+        	}
+        	catch(Exception e) {
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+        	}
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+            }
+        }
+    	
+		
 	}
 	
 }

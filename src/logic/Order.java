@@ -7,8 +7,18 @@ public class Order {
 	private Item item;
 	private Integer id;
 	private String seller;
-	private Boolean sold;
+	private Boolean sold,paid;
 	
+	public Boolean getPaid() {
+		return paid;
+	}
+
+
+	public void setPaid(Boolean paid) {
+		this.paid = paid;
+	}
+
+
 	public String getSeller() {
 		return seller;
 	}

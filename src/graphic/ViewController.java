@@ -318,7 +318,7 @@ public class ViewController {
 			try {
 				FXMLLoader fl = new FXMLLoader(); //Creo loader
 			
-				fl.setLocation(getClass().getResource("NewInsertionMenu.fxml"));//TODO
+				fl.setLocation(getClass().getResource("NewInsertionMenu.fxml"));
 				Pane root = (Pane) fl.load(); //Carico fxml scena
 			
 				Scene scene = new Scene(root); //nuova scena

@@ -1,20 +1,17 @@
 package bean;
 
 
-import java.io.File;
-import java.util.Date;
-import java.util.LinkedList;
+
+import java.util.List;
 
 import javafx.scene.image.Image;
+import logic.BasicInformations;
 
 public class InsertionBean {
 
-	private String title;
-	private String desc;
-	private Date date;
-	private Integer price;
+	private BasicInformations basic;
 	private Integer id;
-	private LinkedList<Image> images;
+	private List<Image> images;
 	private String seller;
 	private Integer sellerId;
 	
@@ -25,12 +22,9 @@ public class InsertionBean {
 		
 	}
 	
-	public InsertionBean(String title, String desc, Date date, Integer price, Integer id, LinkedList<Image> images, String seller, Integer sellerId, Boolean sold) {
+	public InsertionBean(BasicInformations basic, Integer id, List<Image> images, String seller, Integer sellerId, Boolean sold) {
 		super();
-		this.title = title;
-		this.desc = desc;
-		this.date = date;
-		this.price = price;
+		this.basic = basic;
 		this.id = id;
 		this.images = images;
 		this.seller = seller;
@@ -38,49 +32,22 @@ public class InsertionBean {
 		this.sold = sold;
 	}
 	
-	public InsertionBean(String title, String desc, Date date, Integer price, Integer id, LinkedList<Image> images, Integer sellerId,
+	public InsertionBean(BasicInformations basic, Integer id, List<Image> images, Integer sellerId,
 			Boolean sold) {
 		super();
-		this.title = title;
-		this.desc = desc;
-		this.date = date;
-		this.price = price;
+		this.basic = basic;
 		this.id = id;
 		this.images = images;
 		this.sellerId = sellerId;
 		this.sold = sold;
 	}
 
-	public String getTitle() {
-		return title;
+	public BasicInformations getBasic() {
+		return basic;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
+	public void setBasic(BasicInformations basic) {
+		this.basic = basic;
 	}
 
 	public Integer getId() {
@@ -107,11 +74,11 @@ public class InsertionBean {
 		this.sold = sold;
 	}
 
-	public LinkedList<Image> getImages() {
+	public List<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(LinkedList<Image> images) {
+	public void setImages(List<Image> images) {
 		this.images = images;
 	}
 
@@ -122,7 +89,5 @@ public class InsertionBean {
 	public void setSellerId(Integer sellerId) {
 		this.sellerId = sellerId;
 	}
-
-	
 	
 }

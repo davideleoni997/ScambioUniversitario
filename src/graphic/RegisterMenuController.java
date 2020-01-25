@@ -137,8 +137,10 @@ public class RegisterMenuController implements Initializable{
 		if(txtPsw.getText().equals(txtCheck.getText())) {
 			RegistrationController rc = RegistrationController.getInstance();
 			RadioButton selected = (RadioButton) tgStud.getSelectedToggle();
-			if(selected.getText().equals(lg.getStudString()))
+			if(selected.getText().equals(lg.getStudString())) {
+				//TODO Mockup external db studenti
 				rc.registraUtente(txtName.getText(), txtSurname.getText(), txtUser.getText(), txtPsw.getText(), false, txtEnroll.getText());
+			}
 			else
 				rc.registraSocieta(txtName.getText(), txtUser.getText(), txtPsw.getText(), true, logo);
 		}
@@ -165,7 +167,7 @@ public class RegisterMenuController implements Initializable{
 		}
 		else {
 			Runnable update = () -> {
-				lblUpload.setText("No logo"); //TODO strings
+				lblUpload.setText(lg.getNoLogoString());
 			lblUpload.setVisible(true);};
 			
 			Platform.runLater(update);

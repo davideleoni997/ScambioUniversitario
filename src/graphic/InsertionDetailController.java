@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bean.InsertionBean;
-
+import controller.MessageController;
 import controller.OrderController;
 import factory.LanguageFactory;
 import javafx.fxml.FXML;
@@ -101,32 +101,38 @@ public class InsertionDetailController implements Initializable{
 		}
 		else {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Confirmation");//TODO Strings
-			alert.setHeaderText("Do you really want to buy the item?");
-			ButtonType buttonConf = new ButtonType("Yes");
-			ButtonType buttonCanc = new ButtonType("No");
+			alert.setTitle(lg.getConfirmationString());
+			alert.setHeaderText(lg.getConfirmationBuyText());
+			ButtonType buttonConf = new ButtonType(lg.getYesString());
+			ButtonType buttonCanc = new ButtonType(lg.getNoString());
 			alert.getButtonTypes().setAll(buttonConf,buttonCanc);
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonConf){
-				OrderController.newOrder(Integer.parseInt(prop.loadProperty("user_id")), ib.getSellerId(), ib.getTitle(), ib.getId(), ib.getPrice());
+				OrderController.newOrder(Integer.parseInt(prop.loadProperty("user_id")), ib.getSellerId(), ib.getBasic().getTitle(), ib.getId(), ib.getBasic().getPrice());
+				MessageController mc = new MessageController();
+				mc.newMessage(Integer.parseInt(prop.loadProperty("user_id")), ib.getSellerId(), "I have bought your item :"+ ib.getBasic().getTitle());
 			} 
 			}
 	}
 	
 	public void setInsertion(InsertionBean ib) {
 		this.ib = ib;
+		
 		if(ib.getImages().size() > 0)
-		img1.setImage(ib.getImages().get(0));
+			img1.setImage(ib.getImages().get(0));
+		
 		if(ib.getImages().size() > 1)
-		img2.setImage(ib.getImages().get(1));
+			img2.setImage(ib.getImages().get(1));
+		
 		if(ib.getImages().size() > 2)
-		img3.setImage(ib.getImages().get(2));
-		txtTitle.setText(ib.getTitle());
+			img3.setImage(ib.getImages().get(2));
+		
+		txtTitle.setText(ib.getBasic().getTitle());
 		txtSeller.setText(ib.getSeller());
-		txtPrice.setText(ib.getPrice()+" Euros");
-		txtDate.setText(ib.getDate().toString());
-		txtDescription.setText(ib.getDesc());
+		txtPrice.setText(ib.getBasic().getPrice()+" Euros");
+		txtDate.setText(ib.getBasic().getDate().toString());
+		txtDescription.setText(ib.getBasic().getDesc());
 	}
 
 	@Override

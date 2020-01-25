@@ -12,11 +12,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bean.InsertionBean;
 import javafx.scene.image.Image;
+import logic.BasicInformations;
 import logic.Filters;
 import logic.Insertion;
 
@@ -44,7 +46,7 @@ public class InsertionDao {
         throw new IllegalStateException("Utility class");
       }
     
-    public static LinkedList<InsertionBean> getReserach(String research, Filters filters) {
+    public static List<InsertionBean> getReserach(String research, Filters filters) {
     	LinkedList<InsertionBean> ins = new LinkedList<>();
 
     	
@@ -74,63 +76,14 @@ public class InsertionDao {
             // riposizionamento del cursore
             rs.first();
 
-            // lettura delle colonne "by name"
-            String title = rs.getString(COLUMN_TITLE);
-            String desc = rs.getString(COLUMN_DESCR);
-            String price = rs.getString(COLUMN_PRICE);
-            Date date = rs.getDate(COLUMN_DATA);
-            Integer id = rs.getInt(COLUMN_ID);
-            LinkedList<Blob> images = new LinkedList<>();
-            Blob blob;
-            if(( blob = rs.getBlob(COLUMN_IMAGE1)) != null)
-            	images.add(blob);
-            if(( blob = rs.getBlob(COLUMN_IMAGE2)) != null)
-            	images.add(blob);
-            if(( blob = rs.getBlob(COLUMN_IMAGE3)) != null)
-            	images.add(blob);
-            Integer seller = rs.getInt(COLUMN_SELLER);
-            Boolean sold = rs.getBoolean(COLUMN_SOLD);
-            LinkedList<Image> imagesList = new LinkedList<>();
-           
-            for(Blob img : images) {
-            		
-            		InputStream imgIn = img.getBinaryStream();
-            		Image listItem = new Image(imgIn);
-            		imagesList.add(listItem);
-            		
-            	
-            }
             
             
-            InsertionBean insert = new InsertionBean(title,desc,date,Integer.parseInt(price),id,imagesList,UtenteDao.getUsernameById(seller),seller,sold);
             
-            ins.add(insert);
+            ins.add(getInfo(rs));
             
             while(rs.next()) {
-            	images.clear();
-            	title = rs.getString(COLUMN_TITLE);
-                desc = rs.getString(COLUMN_DESCR);
-                price = rs.getString(COLUMN_PRICE);
-                date = rs.getDate(COLUMN_DATA);
-                id = rs.getInt(COLUMN_ID);
-                if(( blob = rs.getBlob(COLUMN_IMAGE1)) != null)
-                	images.add(blob);
-                if(( blob = rs.getBlob(COLUMN_IMAGE2)) != null)
-                	images.add(blob);
-                if(( blob = rs.getBlob(COLUMN_IMAGE3)) != null)
-                	images.add(blob);
-                seller = rs.getInt(COLUMN_SELLER);
-                sold = rs.getBoolean(COLUMN_SOLD);
-                for(Blob img : images) {
-                	
-                	InputStream imgIn = img.getBinaryStream();
-            		Image listItem = new Image(imgIn);
-            		imagesList.add(listItem);
-            		
-                }
-                
-                insert = new InsertionBean(title,desc,date,Integer.parseInt(price),id,imagesList,UtenteDao.getUsernameById(seller),seller,sold);
-                ins.add(insert);
+            	
+            ins.add(getInfo(rs));
             }
 
             // STEP 6: Clean-up dell'ambiente
@@ -170,7 +123,41 @@ public class InsertionDao {
         return ins;
     }
     
-    public static Insertion getDetail(Integer id) {
+    private static InsertionBean getInfo(ResultSet rs) throws SQLException {
+    	// lettura delle colonne "by name"
+        String title = rs.getString(COLUMN_TITLE);
+        String desc = rs.getString(COLUMN_DESCR);
+        String price = rs.getString(COLUMN_PRICE);
+        Date date = rs.getDate(COLUMN_DATA);
+        Integer id = rs.getInt(COLUMN_ID);
+        LinkedList<Blob> images = new LinkedList<>();
+        Blob blob;
+        if(( blob = rs.getBlob(COLUMN_IMAGE1)) != null)
+        	images.add(blob);
+        if(( blob = rs.getBlob(COLUMN_IMAGE2)) != null)
+        	images.add(blob);
+        if(( blob = rs.getBlob(COLUMN_IMAGE3)) != null)
+        	images.add(blob);
+        Integer seller = rs.getInt(COLUMN_SELLER);
+        Boolean sold = rs.getBoolean(COLUMN_SOLD);
+        LinkedList<Image> imagesList = new LinkedList<>();
+       
+        for(Blob img : images) {
+        		
+        		InputStream imgIn = img.getBinaryStream();
+        		Image listItem = new Image(imgIn);
+        		imagesList.add(listItem);
+        		
+        	
+        }
+        
+       BasicInformations basic = new BasicInformations(title,desc,date,Integer.parseInt(price));
+       return new InsertionBean(basic,id,imagesList,UtenteDao.getUsernameById(seller),seller,sold);
+        
+		
+	}
+
+	public static Insertion getDetail(Integer id) {
     	Insertion ins = new Insertion();
     	
     	// STEP 1: dichiarazioni
@@ -247,7 +234,7 @@ public class InsertionDao {
         return ins;
     }
     
-    public static Boolean newInsertion(String title, String desc, String price, LinkedList<File> pics,Integer seller) {
+    public static Boolean newInsertion(String title, String desc, String price, List<File> pics,Integer seller) {
     	
     	
         Connection conn = null;

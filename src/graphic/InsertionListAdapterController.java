@@ -58,12 +58,12 @@ public class InsertionListAdapterController implements Initializable{
 	
 	public void setData(InsertionBean ib) {
 		this.ib = ib;
-		txtTitle.setText(ib.getTitle());
-		txtPrice.setText(ib.getPrice() + "Euros");
+		txtTitle.setText(ib.getBasic().getTitle());
+		txtPrice.setText(ib.getBasic().getPrice() + "Euros");
 		txtSeller.setText(ib.getSeller());
-		txtDate.setText(ib.getDate().toString());
+		txtDate.setText(ib.getBasic().getDate().toString());
 		if(ib.getImages().size() > 0)
-		imgMain.setImage(ib.getImages().get(0));
+			imgMain.setImage(ib.getImages().get(0));
 	}
 	
 	@FXML
@@ -80,8 +80,8 @@ public class InsertionListAdapterController implements Initializable{
 		lblDate.setText(lg.getDateString());
 		btnDetails.setText(lg.getDetailsString());
 		try {
-		Image img = new Image(getClass().getResourceAsStream(("No-Image-Available.png")));
-		imgMain.setImage(img);
+			Image img = new Image(getClass().getResourceAsStream(("No-Image-Available.png")));
+			imgMain.setImage(img);
 		}
 		catch(Exception e) {
 			Logger.getGlobal().log(Level.WARNING,"Image loading",e);
