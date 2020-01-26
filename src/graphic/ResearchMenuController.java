@@ -22,12 +22,16 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
+import logic.Filters;
+import logic.Filters.Date;
+import logic.Filters.Distance;
 
 
 public class ResearchMenuController implements Initializable{
 	private LanguageFactory lg;
 	private ViewController vc;
 	private String research;
+	private Filters filters;
 	
 	@FXML
 	private ListView<Pane> listSearch;
@@ -153,6 +157,7 @@ public class ResearchMenuController implements Initializable{
 	private Button btnClearOrder;
 	
 	public ResearchMenuController() {
+		filters = new Filters();
 		vc = ViewController.getInstance();
 		try{
 			if(System.getProperty("user.language").equalsIgnoreCase("en"))
@@ -165,7 +170,6 @@ public class ResearchMenuController implements Initializable{
 		}
 	}
 	
-	//TODO manca filtro distanza
 	
 	public void setResearch(String research) {
 		this.research = research;
@@ -185,15 +189,33 @@ public class ResearchMenuController implements Initializable{
 		
 		
 		listSearch.getItems().clear();
+		if(!txtUni.getText().isEmpty())
+			filters.setUniversity(txtUni.getText());
+		if(!txtCity.getText().isEmpty())
+			filters.setCity(txtCity.getText());
+		if(!txtSubject.getText().isEmpty())
+			filters.setSubject(txtSubject.getText());
 			
+		filters.setBook(radioBook.isSelected());
+		
+	    filters.setNotes(radioNotes.isSelected());
 		search();
 	}
 	
 	@FXML
 	public void applyOrder() {
 		
+		
 		listSearch.getItems().clear();
-			
+		if(radioOrderNear.isSelected())
+			filters.setDistance(Distance.NEAR);
+		else
+			filters.setDistance(Distance.FAR);
+		
+		if(radioOrderNew.isSelected())
+			filters.setDate(Date.NEW);
+		else
+			filters.setDate(Date.OLD);
 		search();
 	}
 	
@@ -219,7 +241,7 @@ public class ResearchMenuController implements Initializable{
 		
 		
 		InsertionController ic = new InsertionController();
-		List<InsertionBean> results = ic.getResearchResults(research, null);
+		List<InsertionBean> results = ic.getResearchResults(research, filters);
 		update(results);
 		
 	}

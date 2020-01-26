@@ -370,6 +370,24 @@ public class ViewController {
 		}
 	}
 
+	public void createNewReportMenu(Integer id) {
+		try {
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
+		
+			fl.setLocation(getClass().getResource("NewReport.fxml"));
+			Pane root = (Pane) fl.load(); //Carico fxml scena
+			NewReportController rdc = fl.getController();
+			rdc.setInfo(id);
+		
+			Scene scene = new Scene(root); //nuova scena
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
+			primaryStage.setScene(scene);
+		}
+		catch(Exception e) {
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+		}
+	}
+
 	
 	
 }

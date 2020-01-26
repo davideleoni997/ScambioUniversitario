@@ -73,7 +73,9 @@ public class InsertionDetailController implements Initializable{
 	@FXML
 	private Button btnBuy;
 	
-	//TODO Pulsante e schermata reportInsertion
+	@FXML
+	private Button btnReport;
+	
 	
 	public InsertionDetailController() {
 		vc = ViewController.getInstance();
@@ -148,5 +150,11 @@ public class InsertionDetailController implements Initializable{
 		btnBack.setText(lg.getBackString());
 		btnBuy.setText(lg.getBuyString());
 		
+	}
+	
+	@FXML
+	public void report() {
+		vc.getScenes().push(btnReport.getScene());
+		vc.createNewReportMenu(ib.getId());
 	}
 }

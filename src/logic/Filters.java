@@ -2,20 +2,81 @@ package logic;
 
 public class Filters {
 	
-	private String date;
-	private String university;
-	private String distance;
-	private String position;
+	public enum Distance{
+		FAR,
+		NEAR
+	}
 	
+	public enum Date{
+		OLD,
+		NEW
+	}
+	
+	
+	
+	private Date date;
+	private String university;
+	private Distance distance;
+	private String position;
+	private Boolean book;
+	private Boolean notes;
+	private String city;
+	private String subject;
+
 	public Filters() {
-		//TO_DO
+		date = Date.NEW;
+		distance = Distance.NEAR;
+		book = true;
+		notes = true;
 	}
 
-	public String getDate() {
+	public Filters(Date date, String university, Distance distance, String position, Boolean book, Boolean notes) {
+		super();
+		this.date = date;
+		this.university = university;
+		this.distance = distance;
+		this.position = position;
+	
+	}
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+
+	public Boolean getBook() {
+		return book;
+	}
+
+	public void setBook(Boolean book) {
+		this.book = book;
+	}
+
+	public Boolean getNotes() {
+		return notes;
+	}
+
+	public void setNotes(Boolean notes) {
+		this.notes = notes;
+	}
+
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -27,11 +88,11 @@ public class Filters {
 		this.university = university;
 	}
 
-	public String getDistance() {
+	public Distance getDistance() {
 		return distance;
 	}
 
-	public void setDistance(String distance) {
+	public void setDistance(Distance distance) {
 		this.distance = distance;
 	}
 

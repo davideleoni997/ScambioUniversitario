@@ -48,7 +48,7 @@ public class InsertionDao {
     
     public static List<InsertionBean> getReserach(String research, Filters filters) {
     	LinkedList<InsertionBean> ins = new LinkedList<>();
-
+    	//TODO usare filtri
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
@@ -65,7 +65,13 @@ public class InsertionDao {
             stmt = conn.createStatement();
             
             String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold FROM insertions where descr LIKE '%"
-                    + research + "%' OR title LIKE '%"+ research + "%';";
+                    + research + "%' OR title LIKE '%"+ research + "%'";
+            if (filters.getDate().equals(logic.Filters.Date.NEW))
+            	sql = sql + "ORDER BY data desc";
+            else
+            	sql = sql + "ORDER BY data asc";
+            
+            
             rs = stmt.executeQuery(sql);
            
      
