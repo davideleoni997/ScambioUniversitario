@@ -7,7 +7,8 @@ public class Order {
 	private Item item;
 	private Integer id;
 	private String seller;
-	private Boolean sold,paid;
+	private Boolean sold;
+	private Boolean paid;
 	
 	public Boolean getPaid() {
 		return paid;

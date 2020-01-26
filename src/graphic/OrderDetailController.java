@@ -111,7 +111,7 @@ public class OrderDetailController implements Initializable{
 	
 	@FXML
 	private void pay() {
-		if(MockupPayment.Payment()) {
+		if(MockupPayment.payment()) {
 			OrderController oc = new OrderController();
 			oc.payOrder(order.getId());
 			vc.createOrderDetailMenu(order.getId());

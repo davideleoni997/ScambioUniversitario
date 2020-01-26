@@ -15,5 +15,6 @@
       <Button fx:id="btnRegister" layoutX="450.0" layoutY="10.0" mnemonicParsing="false" onAction="#register" text="Register" />
       <Label fx:id="lblInsertionText" layoutX="221.0" layoutY="200.0" text="Or create your own Insertion!" />
       <Button fx:id="btnInsertion" layoutX="254.0" layoutY="244.0" mnemonicParsing="false" onAction="#newInsertion" text="New Insertion" />
+      <Button fx:id="btnAdmin" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#adminLog" text="Admin Login" />
    </children>
 </Pane>

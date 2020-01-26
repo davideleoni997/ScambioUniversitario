@@ -23,6 +23,7 @@ import util.Property;
 
 public class InsertionDetailController implements Initializable{
 
+	private static final String USER_ID = "user_id";
 	private LanguageFactory lg;
 	private ViewController vc;
 	private InsertionBean ib;
@@ -72,6 +73,8 @@ public class InsertionDetailController implements Initializable{
 	@FXML
 	private Button btnBuy;
 	
+	//TODO Pulsante e schermata reportInsertion
+	
 	public InsertionDetailController() {
 		vc = ViewController.getInstance();
 		
@@ -95,7 +98,7 @@ public class InsertionDetailController implements Initializable{
 	@FXML
 	public void buy() {
 		Property prop = new Property();
-		if(prop.loadProperty("user_id").equals("0")) {
+		if(prop.loadProperty(USER_ID).equals("0")) {
 			vc.getScenes().push(btnBuy.getScene());
 			vc.createLoginMenu("Buy");
 		}
@@ -109,9 +112,9 @@ public class InsertionDetailController implements Initializable{
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonConf){
-				OrderController.newOrder(Integer.parseInt(prop.loadProperty("user_id")), ib.getSellerId(), ib.getBasic().getTitle(), ib.getId(), ib.getBasic().getPrice());
+				OrderController.newOrder(Integer.parseInt(prop.loadProperty(USER_ID)), ib.getSellerId(), ib.getBasic().getTitle(), ib.getId(), ib.getBasic().getPrice());
 				MessageController mc = new MessageController();
-				mc.newMessage(Integer.parseInt(prop.loadProperty("user_id")), ib.getSellerId(), "I have bought your item :"+ ib.getBasic().getTitle());
+				mc.newMessage(Integer.parseInt(prop.loadProperty(USER_ID)), ib.getSellerId(), "I have bought your item :"+ ib.getBasic().getTitle());
 			} 
 			}
 	}

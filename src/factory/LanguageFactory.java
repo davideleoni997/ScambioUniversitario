@@ -131,4 +131,10 @@ public interface LanguageFactory {
 	public abstract String getPayString();
 	
 	public abstract String getPaymentErrorString();
+	
+	public abstract String getEnrollErrorString();
+	
+	public abstract String getNoAction();
+
+	public abstract String getDeleteInsertionString();
 }

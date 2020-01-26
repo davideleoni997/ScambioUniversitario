@@ -248,4 +248,16 @@
 	<It>Errore con il pagamento</It>
 	<En>Payment Error</En>
 </PaymentError>
+<EnrollError>
+	<It>Matricola e nome/cognome non corrispondono</It>
+	<En>Enrollment number and name/surname mismatch</En>
+</EnrollError>
+<NoAction>
+	<It>Nessuna azione</It>
+	<En>No Action</En>
+</NoAction>
+<DeleteInsertion>
+	<It>Elimina inserzione</It>
+	<En>Delete Insertion</En>
+</DeleteInsertion>
 </Scambio>

@@ -25,6 +25,7 @@ import util.Property;
 
 public class LoginViewController implements Initializable{
 
+	private static final String ADMIN = "admin";
 	private LanguageFactory lg;
 	private ViewController vc;
 	private String dispatch;
@@ -72,7 +73,11 @@ public class LoginViewController implements Initializable{
 		lb.setUsername(tfuser.getText());
 		lb.setPassword(tfpsw.getText());
 		LoginController lc = LoginController.getInstance();
-		if(lc.validate("user",lb)) {
+		String logType = "user";
+		if(dispatch.equalsIgnoreCase(ADMIN))
+			logType = ADMIN;
+			
+		if(lc.validate(logType,lb)) {
 			Property prop = new Property();
 			prop.setProperty("user_id",String.valueOf(lb.getId()));
 			
@@ -82,6 +87,9 @@ public class LoginViewController implements Initializable{
 				vc.createProfileMenu(lb);
 			if(dispatch.equalsIgnoreCase("Buy"))
 				vc.goBack();
+			if(dispatch.equalsIgnoreCase(ADMIN)) {
+				vc.createAdminMenu(lb);
+			}
 		}
 		else {
 			lblerrormsg.setText(lg.getWrongData());

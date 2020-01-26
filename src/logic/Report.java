@@ -22,11 +22,11 @@ public class Report {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
+	public Integer getInsId() {
 		return insId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setInsId(Integer userId) {
 		this.insId = userId;
 	}
 

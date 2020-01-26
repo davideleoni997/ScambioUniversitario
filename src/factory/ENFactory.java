@@ -405,4 +405,22 @@ public class ENFactory implements LanguageFactory{
 		Element n = (Element) doc.getElementsByTagName("PaymentError").item(0);
 		return n.getElementsByTagName(LANGUAGE).item(0).getTextContent();
 	}
+
+	@Override
+	public String getEnrollErrorString() {
+		Element n = (Element) doc.getElementsByTagName("EnrollError").item(0);
+		return n.getElementsByTagName(LANGUAGE).item(0).getTextContent();
+	}
+	
+	@Override
+	public String getNoAction() {
+		Element n = (Element) doc.getElementsByTagName("NoAction").item(0);
+		return n.getElementsByTagName(LANGUAGE).item(0).getTextContent();
+	}
+
+	@Override
+	public String getDeleteInsertionString() {
+		Element n = (Element) doc.getElementsByTagName("DeleteInsertion").item(0);
+		return n.getElementsByTagName(LANGUAGE).item(0).getTextContent();
+	}
 }

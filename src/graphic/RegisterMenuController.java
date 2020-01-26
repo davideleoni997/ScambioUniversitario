@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 
 import controller.RegistrationController;
+import external.MockupUniDB;
 import factory.LanguageFactory;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -138,8 +139,10 @@ public class RegisterMenuController implements Initializable{
 			RegistrationController rc = RegistrationController.getInstance();
 			RadioButton selected = (RadioButton) tgStud.getSelectedToggle();
 			if(selected.getText().equals(lg.getStudString())) {
-				//TODO Mockup external db studenti
-				rc.registraUtente(txtName.getText(), txtSurname.getText(), txtUser.getText(), txtPsw.getText(), false, txtEnroll.getText());
+				if(MockupUniDB.isUserInDB(txtEnroll.getText(), txtName.getText(), txtSurname.getText()))
+					rc.registraUtente(txtName.getText(), txtSurname.getText(), txtUser.getText(), txtPsw.getText(), false, txtEnroll.getText());
+				else
+					lblError.setText(lg.getEnrollErrorString());
 			}
 			else
 				rc.registraSocieta(txtName.getText(), txtUser.getText(), txtPsw.getText(), true, logo);

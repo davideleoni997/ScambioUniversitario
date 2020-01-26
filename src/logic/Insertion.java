@@ -1,13 +1,9 @@
 package logic;
 
 import java.sql.Blob;
-import java.util.Date;
 
 public class Insertion {
-	private String title;
-	private String desc;
-	private Date date;
-	private Integer price;
+	private BasicInformations basic;
 	private Integer id;
 	private Blob[] images;
 	private Integer seller;
@@ -17,59 +13,37 @@ public class Insertion {
 		super();
 	}
 	
-	public Insertion(String title, String desc, Date date, Integer price) {
+	public Insertion(BasicInformations basic) {
 		super();
-		this.title = title;
-		this.desc = desc;
-		this.date = date;
-		this.price = price;
+		this.basic = basic;
 	}
 	
-	public Insertion(Integer id, String title, String desc, Date date, Integer price) {
+	public Insertion(Integer id, BasicInformations basic) {
 		super();
 		this.id  = id;
-		this.title = title;
-		this.desc = desc;
-		this.date = date;
-		this.price = price;
+		this.basic = basic;
 	}
 	
-	public Insertion(Integer id, String title, String desc, Date date, Integer price,Blob[] images, Integer seller) {
+	public Insertion(Integer id, BasicInformations basic, Blob[] images, Integer seller) {
 		super();
 		this.id  = id;
-		this.title = title;
-		this.desc = desc;
-		this.date = date;
-		this.price = price;
+		this.basic = basic;
 		this.images=images;
 		this.seller = seller;
 	}
 	
-	public String getTitle() {
-		return title;
+	public BasicInformations getBasic() {
+		return basic;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+
+	public void setBasic(BasicInformations basic) {
+		this.basic = basic;
 	}
-	public String getDesc() {
-		return desc;
+
+	public Boolean getSold() {
+		return sold;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	public Integer getPrice() {
-		return price;
-	}
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
-	
+
 	public Integer getId() {
 		return id;
 	}

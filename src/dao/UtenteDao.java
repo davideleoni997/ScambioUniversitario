@@ -69,7 +69,7 @@ public class UtenteDao {
             Integer id = rs.getInt(COLUMN_ID);
            
             Image imgLogo = null;
-            if(company)
+            if(Boolean.TRUE.equals(company))
             {	 Blob logo =rs.getBlob(COLUMN_LOGO);
             	 InputStream out = logo.getBinaryStream();
             	 imgLogo = new Image(out);}
@@ -468,4 +468,6 @@ public class UtenteDao {
 
         return u.tobean();
 	}
+
+	
 }

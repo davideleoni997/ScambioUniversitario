@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,8 +25,8 @@ public class ReportDao {
         throw new IllegalStateException("Utility class");
       }
 	
-	public static Report[] getReports() {
-		Report[] reports = new Report[100];
+	public static List<Report> getReports() {
+		List<Report> reports = new LinkedList<Report>();
 		
 		Statement stmt = null;
 	    Connection conn = null;
@@ -38,35 +40,22 @@ public class ReportDao {
 
         // STEP 4: creazione ed esecuzione della query
         stmt = conn.createStatement();
-        String sql = "SELECT id, insId, desc, reportFrom FROM reports;";
+        String sql = "SELECT id, insId, description, reportFrom FROM reports";
                  
         rs = stmt.executeQuery(sql);
 
         if (!rs.first()) // rs not empty
-            return new Report[0];
+            return reports;
 
         // riposizionamento del cursore
         rs.first();
-
-        // lettura delle colonne "by name"
-        Integer id = rs.getInt("id");
-        Integer idInsertion = rs.getInt("insId");
-        String desc = rs.getString("desc");
-        Integer repId = rs.getInt("reportFrom");
+      
+        reports.add(getInfo(rs));
         
-        int i=0;
-        reports[i] = new Report(id,idInsertion,desc,repId);
-        i++;
         
         while(rs.next()) {
-        	id = rs.getInt("id");
-            idInsertion = rs.getInt("insId");
-            desc = rs.getString("desc");
-            repId = rs.getInt("reportFrom");
+           reports.add(getInfo(rs));
             
-            reports[i] = new Report(id,idInsertion,desc,repId);
-            i++;
-        	
         }
         // STEP 6: Clean-up dell'ambiente
         rs.close();
@@ -105,6 +94,14 @@ public class ReportDao {
 		
 	}
 	
+	private static Report getInfo(ResultSet rs) throws SQLException {
+		Integer id = rs.getInt("id");
+        Integer idInsertion = rs.getInt("insId");
+        String desc = rs.getString("description");
+        Integer repId = rs.getInt("reportFrom");
+		return new Report(id,idInsertion,desc,repId);
+	}
+
 	public static Report[] mockupReports() {
 		Report[] reports = new Report[100];
 		
@@ -130,7 +127,7 @@ public class ReportDao {
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
-            pst = conn.prepareStatement("INSERT into Report(insId,desc,reportFrom) values(?,?,?)");
+            pst = conn.prepareStatement("INSERT into Report(insId,description,reportFrom) values(?,?,?)");
             
            
             
@@ -166,5 +163,51 @@ public class ReportDao {
     	
     	return true;
     
+	}
+
+	public static void removeReport(Integer id) {
+			Connection conn = null;
+	        PreparedStatement pst = null;
+	        try {
+	            // STEP 2: loading dinamico del driver mysql
+	            Class.forName(CONNECTOR);
+
+	            // STEP 3: apertura connessione
+	            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+	            // STEP 4: creazione ed esecuzione della query
+	            //!!!RICORDA ID AUTOINCREMENT!!!
+	            pst = conn.prepareStatement("DELETE from reports where id = ?");
+	            
+	           
+	            
+	            pst.setInt(1, id);
+	            
+	            
+	            pst.executeUpdate();
+	            pst.close();
+	            
+	            
+	        } catch (Exception e) {
+	            // Errore nel loading del driver
+	        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+	           
+	        } finally {
+	        	try {
+	        		if(pst!=null)
+	        			pst.close();
+	        	}
+	        	catch(Exception e) {
+	        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+	        	}
+	            
+	            try {
+	                if (conn != null)
+	                    conn.close();
+	            } catch (SQLException se) {
+	            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+	            }
+	        }
+		
 	}
 }

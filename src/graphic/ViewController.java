@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import logic.Order;
+import logic.Report;
 import util.Property;
 
 public class ViewController {
@@ -330,6 +331,43 @@ public class ViewController {
 			}
 		}
 		   
+	}
+
+	public void createAdminMenu(UserBean lb) {
+		try {
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
+		
+			fl.setLocation(getClass().getResource("AdminMenu.fxml"));
+			Pane root = (Pane) fl.load(); //Carico fxml scena
+			AdminMenuController amc = fl.getController();
+			amc.update(lb);
+		
+			Scene scene = new Scene(root); //nuova scena
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
+			primaryStage.setScene(scene);
+		}
+		catch(Exception e) {
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+		}
+	}
+
+	public void createReportDetail(Report rep, UserBean lb) {
+		try {
+			FXMLLoader fl = new FXMLLoader(); //Creo loader
+		
+			fl.setLocation(getClass().getResource("ReportDetail.fxml"));
+			Pane root = (Pane) fl.load(); //Carico fxml scena
+			ReportDetailController rdc = fl.getController();
+			rdc.setReport(rep);
+			rdc.setUser(lb);
+		
+			Scene scene = new Scene(root); //nuova scena
+			scene.getStylesheets().add(getClass().getResource(CSSPATH).toExternalForm());
+			primaryStage.setScene(scene);
+		}
+		catch(Exception e) {
+			Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+		}
 	}
 
 	

@@ -19,6 +19,9 @@ public class MainMenuController implements Initializable{
 	ViewController vc;
 	
 	@FXML
+	private Button btnAdmin;
+	
+	@FXML
 	private Button btnLogin;
 	
 	@FXML
@@ -94,6 +97,12 @@ public class MainMenuController implements Initializable{
 		lblInsertionText.setText(lg.getNewInsertionText());
 		btnInsertion.setText(lg.getNewInsertionString());
 		
+	}
+	
+	@FXML
+	private void adminLog() {
+		vc.getScenes().push(btnLogin.getScene());
+		vc.createLoginMenu("admin");
 	}
 	
 }

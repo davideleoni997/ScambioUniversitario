@@ -4,15 +4,16 @@ import java.util.Random;
 
 public class MockupPayment {
 
-	public static boolean Payment() {
+	private MockupPayment() {
+		throw new IllegalStateException("Mockup external class");
+	}
+	
+	public static boolean payment() {
 		
 		
 		Random r = new Random();
 		Integer res = r.nextInt(99);
 		
-		if(res > 50)
-		return true;
-		else
-		return false;
+		return (res > 50) ;
 	}
 }

@@ -136,7 +136,7 @@ public class NewInsertionMenuController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		lblNewInsertion.setText(lg.getNewInsertionString()); //TODO Strings
+		lblNewInsertion.setText(lg.getNewInsertionString());
 		lblTitle.setText(lg.getTitleString());
 		lblPrice.setText(lg.getPriceString());
 		lblDescription.setText(lg.getDescriptionString());

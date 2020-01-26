@@ -196,8 +196,8 @@ public class InsertionDao {
             Integer seller = rs.getInt(COLUMN_SELLER);
             Boolean sold = rs.getBoolean("sold");
            
-            
-            ins = new Insertion(id,title,desc,date,Integer.parseInt(price),images,seller);
+            BasicInformations basic = new BasicInformations(title,desc,date,Integer.parseInt(price));
+            ins = new Insertion(id,basic,images,seller);
             ins.setSold(sold);
             // STEP 6: Clean-up dell'ambiente
             rs.close();
@@ -305,6 +305,45 @@ public class InsertionDao {
     	
     	return true;
     }
+
+	public static void ban(Integer id) {
+		Connection conn = null;
+        PreparedStatement pst = null;
+        try {
+            // STEP 2: loading dinamico del driver mysql
+            Class.forName(CONNECTOR);
+
+            // STEP 3: apertura connessione
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            // STEP 4: creazione ed esecuzione della query
+            //!!!RICORDA ID AUTOINCREMENT!!!
+            pst = conn.prepareStatement("DELETE from insertions where id = ?");            
+           
+            pst.setInt(1, id);                       
+            pst.executeUpdate();
+            pst.close();      
+            
+        } catch (Exception e) {
+            // Errore nel loading del driver
+       	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+          
+        } finally {
+        	try {
+        		if(pst!=null)
+        			pst.close();
+        	}
+        	catch(Exception e) {	
+        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
+        	}
+            
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+           	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+            }
+        }
+	}
     
     
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import bean.UserBean;
+import dao.AdminDao;
 import dao.UtenteDao;
 import logic.Utente;
 
@@ -56,17 +57,19 @@ public class LoginController {
 			return false;
 		}
 
-		
-		Utente found = login(lb.getUsername(), lb.getPassword());
-		if(found!= null) {
-		lb.setNome(found.getNome());
-		lb.setCognome(found.getCognome());
-		lb.setCompany(found.isCompany());
-		lb.setId(found.getId());}
-		lb.setLogo(found.getLogo());
-		return  (found != null);
+		if(tipoLogin.equals("user")) {
+			Utente found = login(lb.getUsername(), lb.getPassword());
+			if(found!= null) {
+				lb.setNome(found.getNome());
+				lb.setCognome(found.getCognome());
+				lb.setCompany(found.isCompany());
+				lb.setId(found.getId());
+				lb.setLogo(found.getLogo());}
+			return  (found != null);}
+		else
+			return  AdminDao.adminLogin(lb.getUsername(), lb.getPassword());
 	}
-	
+    
     public UserBean getUserFromId(Integer id) {
     	return UtenteDao.userFromId(id);
     }
