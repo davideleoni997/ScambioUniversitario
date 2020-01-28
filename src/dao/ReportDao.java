@@ -26,7 +26,7 @@ public class ReportDao {
       }
 	
 	public static List<Report> getReports() {
-		List<Report> reports = new LinkedList<Report>();
+		List<Report> reports = new LinkedList<>();
 		
 		Statement stmt = null;
 	    Connection conn = null;

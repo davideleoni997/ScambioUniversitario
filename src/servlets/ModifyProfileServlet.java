@@ -32,8 +32,7 @@ public class ModifyProfileServlet extends HttpServlet{
 		
 		
 		LoginController lc = LoginController.getInstance();
-		UserBean ub = new UserBean();
-		ub = (UserBean)request.getSession().getAttribute("currentUser");
+		UserBean ub = (UserBean)request.getSession().getAttribute("currentUser");
 		ub.setUsername(request.getParameter("username"));
 		ub.setPassword(request.getParameter("newpsw"));
 		RequestDispatcher disp;

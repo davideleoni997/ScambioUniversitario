@@ -40,10 +40,6 @@ public class Insertion {
 		this.basic = basic;
 	}
 
-	public Boolean getSold() {
-		return sold;
-	}
-
 	public Integer getId() {
 		return id;
 	}

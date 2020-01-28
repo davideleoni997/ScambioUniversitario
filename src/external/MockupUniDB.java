@@ -7,6 +7,8 @@ public class MockupUniDB {
 	}
 	
 	public static Boolean isUserInDB(String matricola, String nome, String cognome) {
-		return true;
+			String test = matricola + nome + cognome;
+			return test.charAt(2) == '1';
+			
 	}
 }

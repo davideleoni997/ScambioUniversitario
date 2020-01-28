@@ -10,7 +10,7 @@ import logic.Report;
 public class ReportController {
 
 	public ReportController() {
-		
+		//Per instanziare report
 	}
 	
 	public void newReport(Integer insReported, String desc, Integer reporter) {

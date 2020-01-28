@@ -25,12 +25,11 @@ public class Filters {
 		book = true;
 		notes = true;
 		university = "";
-		;
 		city = "";
 		subject = "";
 	}
 
-	public Filters(Date date, String university, Boolean book, Boolean notes) {
+	public Filters(Date date, String university) {
 		super();
 		this.date = date;
 		this.university = university;

@@ -18,6 +18,8 @@ import controller.LoginController;
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
+	private static final String LOGIN_JSP = "login.jsp";
+	private static final String CURRENT_USER = "currentUser";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -54,9 +56,9 @@ public class LoginServlet extends HttpServlet {
 			
 			
 			
-			if(request.getSession().getAttribute("currentUser") == null) {
+			if(request.getSession().getAttribute(CURRENT_USER) == null) {
 					UserBean user = new UserBean();
-					if(request.getHeader("referer").contains("LoginServlet") || request.getHeader("referer").contains("login.jsp"))
+					if(request.getHeader("referer").contains("LoginServlet") || request.getHeader("referer").contains(LOGIN_JSP))
 						{
 						// get data for the logger
 						String username = request.getParameter("username");
@@ -75,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 				
 	
 							// set user come attributo di sessione
-							request.getSession().setAttribute("currentUser", user);
+							request.getSession().setAttribute(CURRENT_USER, user);
 	
 							disp = request.getRequestDispatcher("ProfileServlet");
 	
@@ -83,25 +85,25 @@ public class LoginServlet extends HttpServlet {
 	
 							request.setAttribute("currentMessage", "Wrong username or password, please retry.");
 				
-							disp = request.getRequestDispatcher("login.jsp");
+							disp = request.getRequestDispatcher(LOGIN_JSP);
 						}
 			
 						}
 					else {
-						disp = request.getRequestDispatcher("login.jsp");
+						disp = request.getRequestDispatcher(LOGIN_JSP);
 					}
 					
 			}
 			
 			
 			else {
-				if(lc.validate("user", (UserBean) request.getSession().getAttribute("currentUser")))
+				if(lc.validate("user", (UserBean) request.getSession().getAttribute(CURRENT_USER)))
 					// forward to the correct page
 						disp = request.getRequestDispatcher("ProfileServlet");
 					
 				else
 					
-						disp = request.getRequestDispatcher("login.jsp");
+						disp = request.getRequestDispatcher(LOGIN_JSP);
 			}
 		
 			disp.forward(request, response);

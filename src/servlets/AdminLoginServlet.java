@@ -14,6 +14,8 @@ import controller.LoginController;
 
 @WebServlet("/AdminLoginServlet")
 public class AdminLoginServlet extends HttpServlet {
+		private static final String ADMINLOGIN_JSP = "adminlogin.jsp";
+		private static final String CURRENT_USER = "currentUser";
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -50,9 +52,9 @@ public class AdminLoginServlet extends HttpServlet {
 				
 				
 				
-				if(request.getSession().getAttribute("currentUser") == null) {
+				if(request.getSession().getAttribute(CURRENT_USER) == null) {
 						UserBean user = new UserBean();
-						if(request.getHeader("referer").contains("AdminLoginServlet") || request.getHeader("referer").contains("adminlogin.jsp"))
+						if(request.getHeader("referer").contains("AdminLoginServlet") || request.getHeader("referer").contains(ADMINLOGIN_JSP))
 							{
 							// get data for the logger
 							String username = request.getParameter("username");
@@ -71,7 +73,7 @@ public class AdminLoginServlet extends HttpServlet {
 					
 		
 								// set user come attributo di sessione
-								request.getSession().setAttribute("currentUser", user);
+								request.getSession().setAttribute(CURRENT_USER, user);
 		
 								disp = request.getRequestDispatcher("reports.jsp");
 		
@@ -79,25 +81,25 @@ public class AdminLoginServlet extends HttpServlet {
 		
 								request.setAttribute("currentMessage", "Wrong username or password, please retry.");
 					
-								disp = request.getRequestDispatcher("adminlogin.jsp");
+								disp = request.getRequestDispatcher(ADMINLOGIN_JSP);
 							}
 				
 							}
 						else {
-							disp = request.getRequestDispatcher("adminlogin.jsp");
+							disp = request.getRequestDispatcher(ADMINLOGIN_JSP);
 						}
 						
 				}
 				
 				
 				else {
-					if(lc.validate("admin", (UserBean) request.getSession().getAttribute("currentUser")))
+					if(lc.validate("admin", (UserBean) request.getSession().getAttribute(CURRENT_USER)))
 						// forward to the correct page
 							disp = request.getRequestDispatcher("reports.jsp");
 						
 					else
 						
-							disp = request.getRequestDispatcher("adminlogin.jsp");
+							disp = request.getRequestDispatcher(ADMINLOGIN_JSP);
 				}
 			
 				disp.forward(request, response);
