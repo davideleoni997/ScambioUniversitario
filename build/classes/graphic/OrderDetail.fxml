@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphic.OrderDetailController">
+   <children>
+      <Button fx:id="btnback" layoutX="15.0" layoutY="194.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Label fx:id="lblBuyer" layoutX="20.0" layoutY="22.0" text="Compratore:" />
+      <Label fx:id="lblSeller" layoutX="20.0" layoutY="54.0" text="Venditore:" />
+      <Label fx:id="lblPrezzo" layoutX="20.0" layoutY="85.0" text="Prezzo:" />
+      <Label fx:id="lblItem" layoutX="23.0" layoutY="111.0" text="Oggetto:" />
+      <Label fx:id="lblDate" layoutX="20.0" layoutY="138.0" text="Data :" />
+      <Label fx:id="txtbuyer" layoutX="115.0" layoutY="22.0" />
+      <Label fx:id="txtseller" layoutX="86.0" layoutY="54.0" />
+      <Label fx:id="txtprezzo" layoutX="75.0" layoutY="85.0" />
+      <Label fx:id="txtitem" layoutX="86.0" layoutY="111.0" />
+      <Label fx:id="txtdate" layoutX="61.0" layoutY="138.0" />
+      <Label fx:id="lblPaid" layoutX="21.0" layoutY="164.0" text="Pagato :" />
+      <Label fx:id="txtPaid" layoutX="75.0" layoutY="164.0" />
+      <Button fx:id="btnPay" layoutX="75.0" layoutY="194.0" mnemonicParsing="false" onAction="#pay" text="Pay" visible="false" />
+      <Label fx:id="txtError" layoutX="223.0" layoutY="198.0" />
+   </children>
+</Pane>

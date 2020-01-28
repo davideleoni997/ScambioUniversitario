@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphic.RegisterMenuController">
+   <children>
+      <RadioButton fx:id="radioStud" layoutX="193.0" layoutY="49.0" mnemonicParsing="false" onAction="#studentSelected" selected="true" text="Student">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgStud" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="radioCompany" layoutX="264.0" layoutY="49.0" mnemonicParsing="false" onAction="#companySelected" text="Company" toggleGroup="$tgStud" />
+      <Label fx:id="lblStudQuestion" layoutX="193.0" layoutY="14.0" text="Are you a student or a company?" />
+      <Label fx:id="lblEnroll" layoutX="26.0" layoutY="83.0" text="Enrollment number:" />
+      <TextField fx:id="txtEnroll" layoutX="206.0" layoutY="79.0" />
+      <Label fx:id="lblName" layoutX="26.0" layoutY="120.0" text="Name :" />
+      <TextField fx:id="txtName" layoutX="206.0" layoutY="116.0" />
+      <Label fx:id="lblSurname" layoutX="26.0" layoutY="163.0" text="Surname:" />
+      <TextField fx:id="txtSurname" layoutX="206.0" layoutY="159.0" />
+      <Label fx:id="lblUser" layoutX="26.0" layoutY="200.0" text="Username:" />
+      <TextField fx:id="txtUser" layoutX="206.0" layoutY="196.0" />
+      <Label fx:id="lblPsw" layoutX="26.0" layoutY="239.0" text="Password:" />
+      <TextField fx:id="txtPsw" layoutX="206.0" layoutY="235.0" />
+      <Label fx:id="lblCheck" layoutX="26.0" layoutY="279.0" text="Insert Password again :" />
+      <TextField fx:id="txtCheck" layoutX="206.0" layoutY="275.0" />
+      <Label fx:id="lblLogo" layoutX="26.0" layoutY="321.0" text="Company logo:" visible="false" />
+      <Button fx:id="btnLogo" layoutX="206.0" layoutY="317.0" mnemonicParsing="false" onAction="#upload" text="Upload" visible="false" />
+      <Label fx:id="lblUpload" layoutX="286.0" layoutY="321.0" text="UploadedFile" visible="false" />
+      <ImageView fx:id="imgLogo" fitHeight="80.0" fitWidth="113.0" layoutX="413.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <Button fx:id="btnSubmit" layoutX="207.0" layoutY="358.0" mnemonicParsing="false" onAction="#submit" text="Submit" />
+      <Button fx:id="btnBack" layoutX="274.0" layoutY="358.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+      <Label fx:id="lblError" layoutX="379.0" layoutY="120.0" prefHeight="17.0" prefWidth="0.0" />
+   </children>
+</Pane>

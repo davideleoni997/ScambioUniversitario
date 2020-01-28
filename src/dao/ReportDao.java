@@ -127,7 +127,7 @@ public class ReportDao {
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
-            pst = conn.prepareStatement("INSERT into Report(insId,description,reportFrom) values(?,?,?)");
+            pst = conn.prepareStatement("INSERT into reports(insId,description,reportFrom) values(?,?,?)");
             
            
             

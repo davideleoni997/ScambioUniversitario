@@ -48,8 +48,9 @@ public class InsertionDao {
     
     public static List<InsertionBean> getReserach(String research, Filters filters) {
     	LinkedList<InsertionBean> ins = new LinkedList<>();
-    	//TODO usare filtri
     	
+    	if (filters == null)
+    		filters = new Filters();
     	// STEP 1: dichiarazioni
         Statement stmt = null;
         Connection conn = null;
@@ -64,8 +65,23 @@ public class InsertionDao {
             // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
             
-            String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold FROM insertions where descr LIKE '%"
-                    + research + "%' OR title LIKE '%"+ research + "%'";
+            String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold FROM insertions where title LIKE '%"+ research + "%' ";
+            
+            if(!filters.getUniversity().isEmpty())
+            	sql = sql + "AND university LIKE '%" + filters.getUniversity() + "%' ";
+            
+            if(!filters.getCity().isEmpty())
+            	sql = sql + "AND city LIKE '%" + filters.getCity() + "%' ";
+            
+            if(!filters.getSubject().isEmpty())
+            	sql = sql + "AND subject LIKE '%" + filters.getSubject() + "%' ";
+            
+            if(!filters.getBook())
+            	sql = sql + "AND book = 0 ";
+            
+            if(!filters.getNotes())
+            	sql = sql + "AND notes = 0 ";
+            
             if (filters.getDate().equals(logic.Filters.Date.NEW))
             	sql = sql + "ORDER BY data desc";
             else
@@ -82,9 +98,6 @@ public class InsertionDao {
             // riposizionamento del cursore
             rs.first();
 
-            
-            
-            
             ins.add(getInfo(rs));
             
             while(rs.next()) {
@@ -240,7 +253,7 @@ public class InsertionDao {
         return ins;
     }
     
-    public static Boolean newInsertion(String title, String desc, String price, List<File> pics,Integer seller) {
+    public static Boolean newInsertion(String title, String desc, String price, List<File> pics,Integer seller,String university,String city,String subject, Boolean book, Boolean note) {
     	
     	
         Connection conn = null;
@@ -254,7 +267,7 @@ public class InsertionDao {
 
             // STEP 4: creazione ed esecuzione della query
             //!!!RICORDA ID AUTOINCREMENT!!!
-            pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller) values(?,?,?,?,?,?,?,?)");
+            pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller,university,city,subject,book,notes) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
            
             
@@ -281,6 +294,11 @@ public class InsertionDao {
     			
     		}
             pst.setInt(8, seller);
+            pst.setString(9, university);
+            pst.setString(10, city);
+            pst.setString(11, subject);
+            pst.setBoolean(12, book);
+            pst.setBoolean(13, note);
             pst.executeUpdate();
             pst.close();
             

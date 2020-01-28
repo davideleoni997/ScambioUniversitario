@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -70,6 +71,30 @@ public class NewInsertionMenuController implements Initializable{
 	
 	@FXML
 	private Button btnCancel;
+	
+	@FXML
+	private Label lblUni;
+	
+	@FXML
+	private TextField txtUni;
+	
+	@FXML
+	private Label lblCity;
+	
+	@FXML
+	private TextField txtCity;
+	
+	@FXML
+	private Label lblSubj;
+	
+	@FXML
+	private TextField txtSubj;
+	
+	@FXML
+	private RadioButton radioBook;
+	
+	@FXML
+	private RadioButton radioNotes;
 	
 	public NewInsertionMenuController() {
 		this.images = new LinkedList<>();
@@ -143,6 +168,11 @@ public class NewInsertionMenuController implements Initializable{
 		lblImages.setText(lg.getImagesString());
 		btnInsert.setText(lg.getInsertString());
 		btnCancel.setText(lg.getBackString());
+		lblUni.setText(lg.getUniversityString());
+		lblCity.setText(lg.getCityString());
+		lblSubj.setText(lg.getSubjectString());
+		radioBook.setText(lg.getBooksString());
+		radioNotes.setText(lg.getNotesString());
 		
 	}
 	
@@ -150,7 +180,9 @@ public class NewInsertionMenuController implements Initializable{
 	public void insert() {
 		Property prop = new Property();
 		InsertionController ic = new InsertionController();
-		ic.newInsertion(txtTitle.getText(), txtDescription.getText(), txtPrice.getText(),images,Integer.parseInt(prop.loadProperty("user_id")));
+		
+		ic.newInsertion(txtTitle.getText(), txtDescription.getText(), txtPrice.getText(),images,Integer.parseInt(prop.loadProperty("user_id")),txtUni.getText(),txtCity.getText(),txtSubj.getText(),radioBook.isSelected(),radioNotes.isSelected());
+		
 		vc.goBack();
 	}
 	

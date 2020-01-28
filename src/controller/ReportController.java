@@ -21,7 +21,7 @@ public class ReportController {
 		return ReportDao.getReports();
 	}
 	
-	public void Ban(Integer repId,Integer id) {
+	public void ban(Integer repId,Integer id) {
 		removeReport(repId);
 		InsertionDao.ban(id);
 	}

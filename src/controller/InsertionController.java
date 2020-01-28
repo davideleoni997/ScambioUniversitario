@@ -16,26 +16,11 @@ public class InsertionController {
 		//Costruttore
 	}
 	
-	public boolean newInsertionMockup() {
+	public boolean newInsertion(String title, String desc, String price, List<File> images, Integer seller, String university,String city,String subject, Boolean book, Boolean note) {
 		
 		try {
 			
-			InsertionDao.newInsertion("Libri","Nuovo" , "23", null, 12);
-		}
-		
-		
-		catch (Exception e) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public boolean newInsertion(String title, String desc, String price, List<File> images, Integer seller) {
-		
-		try {
-			
-			InsertionDao.newInsertion(title, desc, price, images, seller);
+			InsertionDao.newInsertion(title, desc, price, images, seller, university, city, subject, book, note);
 		}
 		
 		

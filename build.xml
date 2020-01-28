@@ -3,26 +3,58 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Scambio">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Dynamic_Scambio">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="E:/eclipse/java-2019-09/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-    <path id="JUnit 4.libraryclasspath">
-        <pathelement location="../../../../../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
-        <pathelement location="../../../../../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+    <path id="Web App Libraries.libraryclasspath">
+        <pathelement location="WebContent/WEB-INF/lib/junit-4.13.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/mariadb-java-client-2.5.2.jar"/>
     </path>
-    <path id="Scambio.classpath">
-        <pathelement location="bin"/>
-        <pathelement location="junit-4.13.jar"/>
-        <path refid="JUnit 4.libraryclasspath"/>
-        <pathelement location="mariadb-java-client-2.5.2.jar"/>
-        <pathelement location="jfxrt.jar"/>
+    <path id="EAR Libraries.libraryclasspath"/>
+    <path id="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath">
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/annotations-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina-ant.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina-ha.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina-storeconfig.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina-tribes.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/ecj-4.9.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/el-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/jasper-el.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/jasper.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/jaspic-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/jsp-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/servlet-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-coyote.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-dbcp.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-de.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-es.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-fr.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-ja.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-ko.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-pt-BR.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-ru.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-zh-CN.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-jdbc.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-jni.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-util-scan.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-util.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-websocket.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/websocket-api.jar"/>
+    </path>
+    <path id="Dynamic_Scambio.classpath">
+        <pathelement location="build/classes"/>
+        <path refid="Web App Libraries.libraryclasspath"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath"/>
     </path>
     <target name="init">
-        <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="build/classes">
             <fileset dir="src">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.xtend"/>
@@ -31,16 +63,16 @@
         </copy>
     </target>
     <target name="clean">
-        <delete dir="bin"/>
+        <delete dir="build/classes"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="Scambio.classpath"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
@@ -57,9 +89,9 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
-    <target name="Main (1)">
+    <target name="Main (2)">
         <java classname="graphic.Main" failonerror="true" fork="yes">
-            <classpath refid="Scambio.classpath"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
         </java>
     </target>
 </project>

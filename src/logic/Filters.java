@@ -2,10 +2,7 @@ package logic;
 
 public class Filters {
 	
-	public enum Distance{
-		FAR,
-		NEAR
-	}
+	
 	
 	public enum Date{
 		OLD,
@@ -16,8 +13,7 @@ public class Filters {
 	
 	private Date date;
 	private String university;
-	private Distance distance;
-	private String position;
+	
 	private Boolean book;
 	private Boolean notes;
 	private String city;
@@ -25,17 +21,19 @@ public class Filters {
 
 	public Filters() {
 		date = Date.NEW;
-		distance = Distance.NEAR;
+		
 		book = true;
 		notes = true;
+		university = "";
+		;
+		city = "";
+		subject = "";
 	}
 
-	public Filters(Date date, String university, Distance distance, String position, Boolean book, Boolean notes) {
+	public Filters(Date date, String university, Boolean book, Boolean notes) {
 		super();
 		this.date = date;
 		this.university = university;
-		this.distance = distance;
-		this.position = position;
 	
 	}
 	
@@ -88,19 +86,4 @@ public class Filters {
 		this.university = university;
 	}
 
-	public Distance getDistance() {
-		return distance;
-	}
-
-	public void setDistance(Distance distance) {
-		this.distance = distance;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
 }

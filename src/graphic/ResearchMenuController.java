@@ -24,7 +24,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import logic.Filters;
 import logic.Filters.Date;
-import logic.Filters.Distance;
+
 
 
 public class ResearchMenuController implements Initializable{
@@ -130,18 +130,6 @@ public class ResearchMenuController implements Initializable{
 	private ToggleGroup orderTime;
 	
 	@FXML
-	private CustomMenuItem orderDistanceNear;
-	
-	@FXML
-	private RadioButton radioOrderNear;
-	
-	@FXML
-	private CustomMenuItem orderDistanceFar;
-	
-	@FXML
-	private RadioButton radioOrderFar;
-	
-	@FXML
 	private ToggleGroup toggleDistance;
 	
 	@FXML
@@ -155,6 +143,7 @@ public class ResearchMenuController implements Initializable{
 	
 	@FXML
 	private Button btnClearOrder;
+	
 	
 	public ResearchMenuController() {
 		filters = new Filters();
@@ -191,10 +180,18 @@ public class ResearchMenuController implements Initializable{
 		listSearch.getItems().clear();
 		if(!txtUni.getText().isEmpty())
 			filters.setUniversity(txtUni.getText());
+		else
+			filters.setUniversity("");
+		
 		if(!txtCity.getText().isEmpty())
 			filters.setCity(txtCity.getText());
+		else
+			filters.setCity("");
+		
 		if(!txtSubject.getText().isEmpty())
 			filters.setSubject(txtSubject.getText());
+		else
+			filters.setSubject("");
 			
 		filters.setBook(radioBook.isSelected());
 		
@@ -207,10 +204,6 @@ public class ResearchMenuController implements Initializable{
 		
 		
 		listSearch.getItems().clear();
-		if(radioOrderNear.isSelected())
-			filters.setDistance(Distance.NEAR);
-		else
-			filters.setDistance(Distance.FAR);
 		
 		if(radioOrderNew.isSelected())
 			filters.setDate(Date.NEW);
@@ -232,8 +225,6 @@ public class ResearchMenuController implements Initializable{
 	public void clearOrder() {
 		radioOrderNew.setSelected(true);
 		radioOrderOld.setSelected(false);
-		radioOrderNear.setSelected(true);
-		radioOrderFar.setSelected(false);
 	}
 	
 	
@@ -295,15 +286,13 @@ public class ResearchMenuController implements Initializable{
 		btnClear.setText(lg.getClearString());
 		orderTimeNew.setHideOnClick(false);
 		orderTimeOld.setHideOnClick(false);
-		orderDistanceNear.setHideOnClick(false);
-		orderDistanceFar.setHideOnClick(false);
+		
 		orderApply.setHideOnClick(false);
 		orderClear.setHideOnClick(false);
 		menuOrder.setText(lg.getOrderString());
 		radioOrderNew.setText(lg.getNewerString());
 		radioOrderOld.setText(lg.getOlderString());
-		radioOrderNear.setText(lg.getNearestString());
-		radioOrderFar.setText(lg.getFarthestString());
+		
 		btnApplyOrder.setText(lg.getApplyString());
 		btnClearOrder.setText(lg.getClearString());
 	}

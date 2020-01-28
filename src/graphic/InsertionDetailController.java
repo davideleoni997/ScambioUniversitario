@@ -18,6 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import util.Property;
 
@@ -149,7 +150,13 @@ public class InsertionDetailController implements Initializable{
 		lblDescription.setText(lg.getDescriptionString());
 		btnBack.setText(lg.getBackString());
 		btnBuy.setText(lg.getBuyString());
-		
+		try {
+			Image img = new Image(getClass().getResourceAsStream(("No-Image-Available.png")));
+			img1.setImage(img);
+		}
+		catch(Exception e) {
+			Logger.getGlobal().log(Level.WARNING,"Image loading",e);
+		}
 	}
 	
 	@FXML
