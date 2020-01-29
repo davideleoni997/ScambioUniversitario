@@ -1,5 +1,7 @@
 package logic;
 
+import java.sql.SQLException;
+
 import bean.UserBean;
 import javafx.scene.image.Image;
 
@@ -88,7 +90,7 @@ public class Utente {
 		this.logo = logo;
 	}
 
-	public boolean update() {
+	public boolean update() throws ClassNotFoundException, SQLException {
 		return dao.UtenteDao.update(this.id,this.nome,this.cognome,this.username,this.password);
 	}
 	

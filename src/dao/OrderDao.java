@@ -24,13 +24,12 @@ public class OrderDao {
     private static final String USER = "root";
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";	
 	
-	public static Order[] orderListFromDB(String user) {
+	public static Order[] orderListFromDB(String user) throws SQLException, ClassNotFoundException {
 		
 		Order[] order= new Order[100];
 	    Statement stmt = null;
 	    Connection conn = null;
 	    ResultSet rs = null;
-	    try {
 	    
 	    Class.forName(CONNECTOR);
 		
@@ -92,46 +91,19 @@ public class OrderDao {
         rs.close();
         stmt.close();
         conn.close();
-    } catch (SQLException se) {
-        // Errore durante l'apertura della connessione
-    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-    } catch (Exception e) {
-        // Errore nel loading del driver
-    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-    } finally {
-    	try {
-    		if(rs!=null)
-    			rs.close();
-    	}
-    	catch(Exception e) {	
-    		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-    	}
-        try {
-            if (stmt != null)
-                stmt.close();
-        } catch (SQLException se2) {
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-        }
-        try {
-            if (conn != null)
-                conn.close();
-        } catch (SQLException se) {
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        }
-    }
 		
 		
 		
 		return order;
 	}
 	
-	public static Order getOrderInfo(Integer id) {
+	public static Order getOrderInfo(Integer id) throws SQLException, ClassNotFoundException {
 		Order order = null;
 			
 	    Statement stmt = null;
 	    Connection conn = null;
 	    ResultSet rs = null;
-	    try {
+	   
 	    
 	    Class.forName(CONNECTOR);
 		
@@ -188,45 +160,17 @@ public class OrderDao {
         // STEP 6: Clean-up dell'ambiente
         rs.close();
         stmt.close();
-        conn.close();
-    } catch (SQLException se) {
-        // Errore durante l'apertura della connessione
-    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-    } catch (Exception e) {
-        // Errore nel loading del driver
-    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-    } finally {
-    	try {
-    		if(rs!=null)
-    			rs.close();
-    	}
-    	catch(Exception e) {	
-    		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-    	}
-        try {
-            if (stmt != null)
-                stmt.close();
-        } catch (SQLException se2) {
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-        }
-        try {
-            if (conn != null)
-                conn.close();
-        } catch (SQLException se) {
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        }
-    }
-		
+        conn.close();		
 		
 		
 		return order;
 	}
 	
-	public static boolean newOrder(int buyer,int seller, String oggetto, int prezzo) {
+	public static boolean newOrder(int buyer,int seller, String oggetto, int prezzo) throws ClassNotFoundException, SQLException {
 		
         Connection conn = null;
         PreparedStatement pst = null;
-        try {
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -248,25 +192,7 @@ public class OrderDao {
             pst.executeUpdate();
             pst.close();
             
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-            return false;
-        } finally {
-        	try {
-        		if(pst!=null)
-        			pst.close();
-        	}
-        	catch(Exception e) {	
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+        
     	
     	return true;
 	}
@@ -327,10 +253,10 @@ public class OrderDao {
     	return true;
 	}
 
-	public static void payOrder(Integer id) {
+	public static void payOrder(Integer id) throws SQLException, ClassNotFoundException {
 		Connection conn = null;
         PreparedStatement pst = null;
-        try {
+       
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -343,26 +269,7 @@ public class OrderDao {
             pst.setInt(1, id);  
             pst.executeUpdate();
             pst.close();
-        }
-          catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-           
-        } finally {
-        	try {
-        		if(pst!=null)
-        			pst.close();
-        	}
-        	catch(Exception e) {
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+        
     	
 		
 	}

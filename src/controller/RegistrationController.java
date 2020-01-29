@@ -2,6 +2,9 @@ package controller;
 
 import java.io.File;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import dao.UtenteDao;
 
 public class RegistrationController {
@@ -22,7 +25,13 @@ public class RegistrationController {
 	
 	
 	public boolean registraUtente(String nome,String cognome,String username,String password,Boolean company,String matricola) {
-		return UtenteDao.newStudent(nome, cognome, username, password, company, matricola);
+		try {
+			return UtenteDao.newStudent(nome, cognome, username, password, company, matricola);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "registra", e);
+			return false;
+		}
 		
 	}
 

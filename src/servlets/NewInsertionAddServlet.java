@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.UserBean;
 import controller.InsertionController;
 import logic.BasicInformations;
+import logic.Filters;
 
 @WebServlet("/NewInsertionAddServlet")
 public class NewInsertionAddServlet extends HttpServlet{
@@ -50,8 +51,15 @@ public class NewInsertionAddServlet extends HttpServlet{
 		basic.setTitle(request.getParameter("title"));
 		basic.setDesc(request.getParameter("desc"));
 		basic.setPrice(Integer.parseInt(request.getParameter("price")));
+		Filters filter = new Filters();
+		filter.setUniversity(request.getParameter("uni"));
+		filter.setCity(request.getParameter("city"));
+		filter.setSubject(request.getParameter("subj"));
+		filter.setBook(request.getParameter("book").equalsIgnoreCase("yes"));
+		filter.setNotes(request.getParameter("notes").equalsIgnoreCase("yes"));
 		
-		ic.newInsertion(basic, images, ub.getId(), request.getParameter("uni"), request.getParameter("city"), request.getParameter("subj"), request.getParameter("book").equalsIgnoreCase("yes"), request.getParameter("notes").equalsIgnoreCase("yes"));
+		
+		ic.newInsertion(basic, images, ub.getId(), filter);
 		
 		RequestDispatcher disp;
 		

@@ -1,5 +1,9 @@
 package controller;
 
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import dao.OrderDao;
 import logic.Order;
 
@@ -35,17 +39,29 @@ public class OrderController {
 	}
 	
 	public OrderController() {
-		
+		list = new Order[0];
 	}
 	
 	public void payOrder(Integer id) {
-		OrderDao.payOrder(id);
+		try {
+			OrderDao.payOrder(id);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "payOrder", e);
+		
+		}
 	}
 	
 	public Order[] getOrdersInfo(String user) {
 			
 			
-			this.setList(OrderDao.orderListFromDB(user));
+			try {
+				this.setList(OrderDao.orderListFromDB(user));
+			} catch (Exception e) {
+				
+				Logger.getGlobal().log(Level.WARNING, "getOrders", e);
+			
+			}
 			
 			if(list!=null)
 				this.setLength(this.list.length);
@@ -59,7 +75,13 @@ public class OrderController {
 	
 	public static Order getOrderDetail(Integer id) {
 			Order order = null;
-			order = OrderDao.getOrderInfo(id);
+			try {
+				order = OrderDao.getOrderInfo(id);
+			} catch (Exception e) {
+				
+				Logger.getGlobal().log(Level.WARNING, "getMessage", e);
+			
+			}
 			return order;
 		}
 		

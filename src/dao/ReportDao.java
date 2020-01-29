@@ -8,14 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import logic.Report;
 
 public class ReportDao {
 
-	private static final String ERROR_CLASS = "UtenteDao";
+	
 	private static final String CONNECTOR = "org.mariadb.jdbc.Driver";
 	private static final String PASS = "root";
     private static final String USER = "root";
@@ -25,13 +23,13 @@ public class ReportDao {
         throw new IllegalStateException("Utility class");
       }
 	
-	public static List<Report> getReports() {
+	public static List<Report> getReports() throws ClassNotFoundException, SQLException {
 		List<Report> reports = new LinkedList<>();
 		
 		Statement stmt = null;
 	    Connection conn = null;
 	    ResultSet rs = null;
-	    try {
+	    
 	    
 	    Class.forName(CONNECTOR);
 		
@@ -61,33 +59,7 @@ public class ReportDao {
         rs.close();
         stmt.close();
         conn.close();
-    } catch (SQLException se) {
-        // Errore durante l'apertura della connessione
-    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-    } catch (Exception e) {
-        // Errore nel loading del driver
-    	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-    } finally {
-    	try {
-    		if(rs!=null)
-    			rs.close();
-    	}
-    	catch(Exception e) {	
-    		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-    	}
-        try {
-            if (stmt != null)
-                stmt.close();
-        } catch (SQLException se2) {
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-        }
-        try {
-            if (conn != null)
-                conn.close();
-        } catch (SQLException se) {
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        }
-    }
+    
 		
 		
 		return reports;
@@ -112,13 +84,13 @@ public class ReportDao {
 		return reports;
 	}
 	
-	public static boolean newReport(Integer insReported,String desc,Integer reporter) {
+	public static boolean newReport(Integer insReported,String desc,Integer reporter) throws SQLException, ClassNotFoundException {
 		
 
     	
         Connection conn = null;
         PreparedStatement pst = null;
-        try {
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -136,39 +108,17 @@ public class ReportDao {
             pst.setInt(3, reporter);
             
             pst.executeUpdate();
-            pst.close();
-            
-            
-            
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-            return false;
-        } finally {
-        	try {
-        		if(pst!=null)
-        			pst.close();
-        	}
-        	catch(Exception e) {
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+            pst.close();           
+       
     	
     	return true;
     
 	}
 
-	public static void removeReport(Integer id) {
+	public static void removeReport(Integer id) throws ClassNotFoundException, SQLException {
 			Connection conn = null;
 	        PreparedStatement pst = null;
-	        try {
+	       
 	            // STEP 2: loading dinamico del driver mysql
 	            Class.forName(CONNECTOR);
 
@@ -177,8 +127,7 @@ public class ReportDao {
 
 	            // STEP 4: creazione ed esecuzione della query
 	            //!!!RICORDA ID AUTOINCREMENT!!!
-	            pst = conn.prepareStatement("DELETE from reports where id = ?");
-	            
+	            pst = conn.prepareStatement("DELETE from reports where id = ?");            
 	           
 	            
 	            pst.setInt(1, id);
@@ -187,27 +136,7 @@ public class ReportDao {
 	            pst.executeUpdate();
 	            pst.close();
 	            
-	            
-	        } catch (Exception e) {
-	            // Errore nel loading del driver
-	        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-	           
-	        } finally {
-	        	try {
-	        		if(pst!=null)
-	        			pst.close();
-	        	}
-	        	catch(Exception e) {
-	        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-	        	}
-	            
-	            try {
-	                if (conn != null)
-	                    conn.close();
-	            } catch (SQLException se) {
-	            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-	            }
-	        }
+	        
 		
 	}
 }

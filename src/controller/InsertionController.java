@@ -20,11 +20,11 @@ public class InsertionController {
 		//Costruttore
 	}
 	
-	public boolean newInsertion(BasicInformations basic, List<File> images, Integer seller, String university,String city,String subject, Boolean book, Boolean note) {
+	public boolean newInsertion(BasicInformations basic, List<File> images, Integer seller, Filters filter) {
 		
 		try {
 			
-			InsertionDao.newInsertion(basic, images, seller, university, city, subject, book, note);
+			InsertionDao.newInsertion(basic, images, seller, filter);
 		}
 		
 		

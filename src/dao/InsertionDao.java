@@ -113,7 +113,7 @@ public class InsertionDao {
             return ins;
     }
     
-    private static InsertionBean getInfo(ResultSet rs) throws SQLException {
+    private static InsertionBean getInfo(ResultSet rs) throws SQLException, ClassNotFoundException {
     	// lettura delle colonne "by name"
         String title = rs.getString(COLUMN_TITLE);
         String desc = rs.getString(COLUMN_DESCR);
@@ -198,7 +198,7 @@ public class InsertionDao {
         return ins;
     }
     
-    public static Boolean newInsertion(BasicInformations basic, List<File> pics,Integer seller,String university,String city,String subject, Boolean book, Boolean note) throws SQLException, ClassNotFoundException, IOException {
+    public static Boolean newInsertion(BasicInformations basic, List<File> pics,Integer seller,Filters filter) throws SQLException, ClassNotFoundException, IOException {
     	
     	
         Connection conn = null;
@@ -239,11 +239,11 @@ public class InsertionDao {
     			
     		}
             pst.setInt(8, seller);
-            pst.setString(9, university);
-            pst.setString(10, city);
-            pst.setString(11, subject);
-            pst.setBoolean(12, book);
-            pst.setBoolean(13, note);
+            pst.setString(9, filter.getUniversity());
+            pst.setString(10, filter.getCity());
+            pst.setString(11, filter.getSubject());
+            pst.setBoolean(12, filter.getBook());
+            pst.setBoolean(13, filter.getNotes());
             pst.executeUpdate();
             pst.close();
             

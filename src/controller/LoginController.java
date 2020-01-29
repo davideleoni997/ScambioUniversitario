@@ -1,6 +1,8 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import bean.UserBean;
 import dao.AdminDao;
@@ -73,15 +75,33 @@ public class LoginController {
 	}
     
     public UserBean getUserFromId(Integer id) {
-    	return UtenteDao.userFromId(id);
+    	try {
+			return UtenteDao.userFromId(id);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "getUserFromId", e);
+			return null;
+		}
     }
     
     public Integer getIdFromUsername(String user) {
-    	return UtenteDao.getIdByUsername(user);
+    	try {
+			return UtenteDao.getIdByUsername(user);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "getIdFromUser", e);
+			return 0;
+		}
     }
     
     public boolean updateInfo(UserBean lb) {
-    	return dao.UtenteDao.update(lb.getId(), lb.getNome(), lb.getCognome(), lb.getUsername(), lb.getPassword());
+    	try {
+			return dao.UtenteDao.update(lb.getId(), lb.getNome(), lb.getCognome(), lb.getUsername(), lb.getPassword());
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "update", e);
+			return false;
+		}
     }
     
     /**
@@ -92,7 +112,13 @@ public class LoginController {
      * @return l'utente loggato oppure null se nessun utente corrisponde alla coppia username/password
      */
     public Utente login(String username, String password) {
-        return UtenteDao.findByNameAndPassword(username, password);
+        try {
+			return UtenteDao.findByNameAndPassword(username, password);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "getMessage", e);
+			return null;
+		}
        
         
     }

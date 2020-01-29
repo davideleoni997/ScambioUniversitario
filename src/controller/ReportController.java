@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,11 +18,24 @@ public class ReportController {
 	}
 	
 	public void newReport(Integer insReported, String desc, Integer reporter) {
-		ReportDao.newReport(insReported, desc, reporter);
+		try {
+			ReportDao.newReport(insReported, desc, reporter);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "getMessage", e);
+		
+		}
 	}
 	
 	public List<Report> getReport() {
-		return ReportDao.getReports();
+		try {
+			return ReportDao.getReports();
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "getMessage", e);
+			return new LinkedList<>();
+		
+		}
 	}
 	
 	public void ban(Integer repId,Integer id) {
@@ -34,6 +48,12 @@ public class ReportController {
 	}
 	
 	public void removeReport(Integer id) {
-		ReportDao.removeReport(id);
+		try {
+			ReportDao.removeReport(id);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "getMessage", e);
+		
+		}
 	}
 }

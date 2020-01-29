@@ -30,13 +30,13 @@ public class UtenteDao {
        //Costruttore Utente dao
       }
 
-    public static Utente findByNameAndPassword(String username, String password) {
+    public static Utente findByNameAndPassword(String username, String password) throws SQLException, ClassNotFoundException {
         // STEP 1: dichiarazioni
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
         Utente u = null;
-        try {
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -80,43 +80,17 @@ public class UtenteDao {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (SQLException se) {
-            // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        } finally {
-        	try {
-        		if(rs!=null)
-        			rs.close();
-        	}
-        	catch(Exception e) {		
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+        
 
         return u;
     }
     
-    public static int getIdByUsername(String username) {
+    public static int getIdByUsername(String username) throws SQLException, ClassNotFoundException {
     	Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
         int id = -1;
-        try {
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -140,43 +114,17 @@ public class UtenteDao {
             stmt.close();
             conn.close();
             
-        } catch (SQLException se) {
-            // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        } finally {
-        	try {
-        		if(rs!=null)
-        			rs.close();
-        	}
-        	catch(Exception e) {	
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+       
 
          return id;
     }
 
-    public static String getUsernameById(Integer id) {
+    public static String getUsernameById(Integer id) throws SQLException, ClassNotFoundException {
     	PreparedStatement pst = null;
         Connection conn = null;
         ResultSet rs = null;
         String username = "";
-        try {
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -201,33 +149,7 @@ public class UtenteDao {
             pst.close();
             conn.close();
             
-        } catch (SQLException se) {
-            // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        } finally {
-        	try {
-        		if(rs!=null)
-        			rs.close();
-        	}
-        	catch(Exception e) {	
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (pst != null)
-                    pst.close();
-            } catch (SQLException se2) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+        
 
          return username;
     }
@@ -238,10 +160,10 @@ public class UtenteDao {
         else return null;
     }
     
-    public static boolean update(Integer id,String nome, String cognome, String username, String password) {
+    public static boolean update(Integer id,String nome, String cognome, String username, String password) throws SQLException, ClassNotFoundException {
     	 Connection conn = null;
          PreparedStatement pst = null;
-         try {
+         
              // STEP 2: loading dinamico del driver mysql
              Class.forName(CONNECTOR);
 
@@ -264,26 +186,7 @@ public class UtenteDao {
              
              return true;
              
-         } catch (Exception e) {
-             // Errore nel loading del driver
-        	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-             return false;
-         } finally {
-         	try {
-         		if(pst!=null)
-         			pst.close();
-         	}
-         	catch(Exception e) {	
-         		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-         	}
-             
-             try {
-                 if (conn != null)
-                     conn.close();
-             } catch (SQLException se) {
-            	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-             }
-         }
+        
      	
      	
     }
@@ -338,10 +241,10 @@ public class UtenteDao {
    }
     
     
-    public static boolean newStudent(String nome, String cognome, String username, String password, Boolean company,String matricola) {
+    public static boolean newStudent(String nome, String cognome, String username, String password, Boolean company,String matricola) throws SQLException, ClassNotFoundException {
       	 Connection conn = null;
            PreparedStatement pst = null;
-           try {
+           
                // STEP 2: loading dinamico del driver mysql
                Class.forName(CONNECTOR);
 
@@ -366,37 +269,18 @@ public class UtenteDao {
                
                return true;
                
-           } catch (Exception e) {
-               // Errore nel loading del driver
-          	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-               return false;
-           } finally {
-           	try {
-           		if(pst!=null)
-           			pst.close();
-           	}
-           	catch(Exception e) {	
-           		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-           	}
-               
-               try {
-                   if (conn != null)
-                       conn.close();
-               } catch (SQLException se) {
-              	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-               }
-           }
+           
        	
        	
       }
 
-	public static UserBean userFromId(Integer id) {
+	public static UserBean userFromId(Integer id) throws SQLException, ClassNotFoundException {
 		// STEP 1: dichiarazioni
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
         Utente u = null;
-        try {
+       
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -438,33 +322,7 @@ public class UtenteDao {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (SQLException se) {
-            // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        } finally {
-        	try {
-        		if(rs!=null)
-        			rs.close();
-        	}
-        	catch(Exception e) {		
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+       
 
         return u.tobean();
 	}

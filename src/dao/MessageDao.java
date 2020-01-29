@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import logic.Message;
 
@@ -16,7 +14,7 @@ import java.sql.Date;
 
 public class MessageDao {
 	
-	private static final String ERROR_CLASS = "UtenteDao";
+	
 	private static final String COLUMN_DATE = "date";
 	private static final String COLUMN_DESC = "desc";
 	private static final String COLUMN_TO = "to";
@@ -31,14 +29,14 @@ public class MessageDao {
     private static final String USER = "root";
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
 	
-    public static Message[] messageList(Integer user) {
+    public static Message[] messageList(Integer user) throws SQLException, ClassNotFoundException {
     	Message[] messages = new Message[100];
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
-        try {
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -87,46 +85,20 @@ public class MessageDao {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (SQLException se) {
-            // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        } finally {
-        	try {
-        		if(rs!=null)
-        			rs.close();
-        	}
-        	catch(Exception e) {	
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+        
     	
         return messages;
     }
 	
     
-    public static Message[] conversation(Integer sender) {
+    public static Message[] conversation(Integer sender) throws SQLException, ClassNotFoundException {
     	Message[] messages = new Message[100];
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
-        try {
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -175,43 +147,17 @@ public class MessageDao {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (SQLException se) {
-            // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        } finally {
-        	try {
-        		if(rs!=null)
-        			rs.close();
-        	}
-        	catch(Exception e) {
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+        
     	
         return messages;
     }
     
-    public static Boolean newMessage(Integer sender, Integer to, String desc) {
+    public static Boolean newMessage(Integer sender, Integer to, String desc) throws ClassNotFoundException, SQLException {
     	
     	
         Connection conn = null;
         PreparedStatement pst= null;
-        try {
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -232,26 +178,7 @@ public class MessageDao {
             pst.executeUpdate();
                 
             pst.close();
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-            return false;
-        } finally {
-        	try {
-        		if(pst!=null)
-        			pst.close();
-        	}
-        	catch(Exception e) {	
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+        
     	
     	return true;
     }
