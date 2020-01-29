@@ -52,8 +52,7 @@ public class ReportDao {
         }
         // STEP 6: Clean-up dell'ambiente
         rs.close();
-        stmt.close();
-        conn.close();
+        
     
 		
 		
@@ -84,7 +83,7 @@ public class ReportDao {
             pst.setInt(3, reporter);
             
             pst.executeUpdate();
-            pst.close();           
+                      
        
     	
     	return true;
@@ -101,7 +100,7 @@ public class ReportDao {
 	            
 	            
 	            pst.executeUpdate();
-	            pst.close();
+	            
 	            
 		}
 		

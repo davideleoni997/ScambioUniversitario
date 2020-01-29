@@ -51,8 +51,7 @@ public class AdminDao {
             
             // STEP 6: Clean-up dell'ambiente
             rs.close();
-            pst.close();
-            conn.close();       
+                  
 
             return true;
 		}

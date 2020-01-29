@@ -84,8 +84,7 @@ public class OrderDao {
 
         // STEP 6: Clean-up dell'ambiente
         rs.close();
-        stmt.close();
-        conn.close();
+        
 		
 		
 		
@@ -151,8 +150,7 @@ public class OrderDao {
 
         // STEP 6: Clean-up dell'ambiente
         rs.close();
-        stmt.close();
-        conn.close();		
+       		
 		
 		
 		return order;
@@ -174,7 +172,7 @@ public class OrderDao {
             pst.setInt(5, prezzo);
             
             pst.executeUpdate();
-            pst.close();
+            
             
         
     	
@@ -250,7 +248,7 @@ public class OrderDao {
           
             pst.setInt(1, id);  
             pst.executeUpdate();
-            pst.close();
+            
         
 		}
 		

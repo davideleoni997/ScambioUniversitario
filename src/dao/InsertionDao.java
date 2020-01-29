@@ -107,8 +107,7 @@ public class InsertionDao {
 
             // STEP 6: Clean-up dell'ambiente
             rs.close();
-            stmt.close();
-            conn.close();
+            
         
             return ins;
     	}
@@ -188,8 +187,7 @@ public class InsertionDao {
             ins.setSold(sold);
             // STEP 6: Clean-up dell'ambiente
             rs.close();
-            stmt.close();
-            conn.close();
+            
         
     	
         return ins;
@@ -235,7 +233,7 @@ public class InsertionDao {
             pst.setBoolean(12, filter.getBook());
             pst.setBoolean(13, filter.getNotes());
             pst.executeUpdate();
-            pst.close();
+            
             
 
         
@@ -259,7 +257,7 @@ public class InsertionDao {
            
             pst.setInt(1, id);                       
             pst.executeUpdate();
-            pst.close();      
+                
             
         
 	}

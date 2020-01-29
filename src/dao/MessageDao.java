@@ -69,8 +69,7 @@ public class MessageDao {
 
             // STEP 6: Clean-up dell'ambiente
             rs.close();
-            stmt.close();
-            conn.close();
+           
         
     	
         return messages;
@@ -121,8 +120,7 @@ public class MessageDao {
 
             // STEP 6: Clean-up dell'ambiente
             rs.close();
-            stmt.close();
-            conn.close();
+         
         
     	
         return messages;
@@ -154,7 +152,7 @@ public class MessageDao {
             
             pst.executeUpdate();
                 
-            pst.close();
+         
         
     	
     	return true;
