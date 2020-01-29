@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import logic.BasicInformations;
 import util.Property;
 
 public class NewInsertionMenuController implements Initializable{
@@ -180,8 +181,11 @@ public class NewInsertionMenuController implements Initializable{
 	public void insert() {
 		Property prop = new Property();
 		InsertionController ic = new InsertionController();
-		
-		ic.newInsertion(txtTitle.getText(), txtDescription.getText(), txtPrice.getText(),images,Integer.parseInt(prop.loadProperty("user_id")),txtUni.getText(),txtCity.getText(),txtSubj.getText(),radioBook.isSelected(),radioNotes.isSelected());
+		BasicInformations basic = new BasicInformations();
+		basic.setTitle(txtTitle.getText());
+		basic.setDesc(txtDescription.getText());
+		basic.setPrice(Integer.parseInt(txtPrice.getText()));
+		ic.newInsertion(basic,images,Integer.parseInt(prop.loadProperty("user_id")),txtUni.getText(),txtCity.getText(),txtSubj.getText(),radioBook.isSelected(),radioNotes.isSelected());
 		
 		vc.goBack();
 	}

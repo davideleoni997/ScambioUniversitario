@@ -2,6 +2,8 @@ package dao;
 
 import java.io.File;
 import java.io.FileInputStream;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -46,7 +48,7 @@ public class InsertionDao {
         throw new IllegalStateException("Utility class");
       }
     
-    public static List<InsertionBean> getReserach(String research, Filters filters) {
+    public static List<InsertionBean> getReserach(String research, Filters filters) throws SQLException, ClassNotFoundException {
     	LinkedList<InsertionBean> ins = new LinkedList<>();
     	
     	if (filters == null)
@@ -55,7 +57,7 @@ public class InsertionDao {
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
-        try {
+       
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -109,37 +111,20 @@ public class InsertionDao {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (SQLException se) {
-            // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        } finally {
-        	try {
-        		if(rs!=null)
+        
+        	
+        	if(rs!=null)
         			rs.close();
-        	}
-        	catch(Exception e) {	
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (stmt != null)
+        	
+           
+            if (stmt != null)
                     stmt.close();
-            } catch (SQLException se2) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-            	
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
             
-        }
+            
+            if (conn != null)
+                    conn.close();
     	
-        return ins;
+            return ins;
     }
     
     private static InsertionBean getInfo(ResultSet rs) throws SQLException {
@@ -176,14 +161,14 @@ public class InsertionDao {
 		
 	}
 
-	public static Insertion getDetail(Integer id) {
+	public static Insertion getDetail(Integer id) throws SQLException, ClassNotFoundException {
     	Insertion ins = new Insertion();
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
-        try {
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -222,43 +207,28 @@ public class InsertionDao {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (SQLException se) {
-            // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        } finally {
-        	try {
-        		if(rs!=null)
-        			rs.close();
-        	}
-        	catch(Exception e) {	
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+       
+        	if(rs!=null)
+        		rs.close();
+        	
+        	
+            if (stmt != null)
+                stmt.close();
+            
+            if (conn != null)
+                conn.close();
+            
+        
     	
         return ins;
     }
     
-    public static Boolean newInsertion(String title, String desc, String price, List<File> pics,Integer seller,String university,String city,String subject, Boolean book, Boolean note) {
+    public static Boolean newInsertion(BasicInformations basic, List<File> pics,Integer seller,String university,String city,String subject, Boolean book, Boolean note) throws SQLException, ClassNotFoundException, IOException {
     	
     	
         Connection conn = null;
         PreparedStatement pst = null;
-        try{
+        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -271,10 +241,10 @@ public class InsertionDao {
             
            
             
-            pst.setString(1, title);
-            pst.setString(2, desc);
+            pst.setString(1, basic.getTitle());
+            pst.setString(2, basic.getDesc());
             pst.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
-            pst.setString(4, price);
+            pst.setString(4, String.valueOf(basic.getPrice()));
             pst.setNull(5,java.sql.Types.BLOB);
         	pst.setNull(6, java.sql.Types.BLOB);
         	pst.setNull(7, java.sql.Types.BLOB);
@@ -305,27 +275,15 @@ public class InsertionDao {
             
             
             
-        } 
-        catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-            return false;
-        } finally {
-        	try {
-        		if(pst!=null)
+        
+        
+        	if(pst!=null)
         			pst.close();
-        	}
-        	catch(Exception e) {
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            
-            try {
-                if (conn != null)
+        
+            if (conn != null)
                     conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+            
+        
     	
     	return true;
     }

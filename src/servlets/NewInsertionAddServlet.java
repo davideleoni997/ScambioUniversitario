@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.UserBean;
 import controller.InsertionController;
+import logic.BasicInformations;
 
 @WebServlet("/NewInsertionAddServlet")
 public class NewInsertionAddServlet extends HttpServlet{
@@ -45,7 +46,12 @@ public class NewInsertionAddServlet extends HttpServlet{
 		if(!request.getParameter("img3").isEmpty())
 			images.add(new File(request.getParameter("img3")));
 		
-		ic.newInsertion(request.getParameter("title"), request.getParameter("desc"), request.getParameter("price"), images, ub.getId(), request.getParameter("uni"), request.getParameter("city"), request.getParameter("subj"), request.getParameter("book").equalsIgnoreCase("yes"), request.getParameter("notes").equalsIgnoreCase("yes"));
+		BasicInformations basic = new BasicInformations();
+		basic.setTitle(request.getParameter("title"));
+		basic.setDesc(request.getParameter("desc"));
+		basic.setPrice(Integer.parseInt(request.getParameter("price")));
+		
+		ic.newInsertion(basic, images, ub.getId(), request.getParameter("uni"), request.getParameter("city"), request.getParameter("subj"), request.getParameter("book").equalsIgnoreCase("yes"), request.getParameter("notes").equalsIgnoreCase("yes"));
 		
 		RequestDispatcher disp;
 		

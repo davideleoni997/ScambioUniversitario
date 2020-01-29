@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.SQLException;
+
 import bean.UserBean;
 import dao.AdminDao;
 import dao.UtenteDao;
@@ -50,7 +52,7 @@ public class LoginController {
     private LoginController() {
     }
     
-    public boolean validate(String tipoLogin,UserBean lb) {
+    public boolean validate(String tipoLogin,UserBean lb) throws ClassNotFoundException, SQLException {
 		
 		// Controllo sintattico
 		if (lb.getUsername().equals("") || lb.getPassword().equals("")) {
@@ -72,6 +74,10 @@ public class LoginController {
     
     public UserBean getUserFromId(Integer id) {
     	return UtenteDao.userFromId(id);
+    }
+    
+    public Integer getIdFromUsername(String user) {
+    	return UtenteDao.getIdByUsername(user);
     }
     
     public boolean updateInfo(UserBean lb) {

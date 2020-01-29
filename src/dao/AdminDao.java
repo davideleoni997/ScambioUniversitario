@@ -23,13 +23,13 @@ public class AdminDao {
 		//Non necessario, metodi statici
 	}
 	
-	public static boolean adminLogin(String user, String pass) {
+	public static boolean adminLogin(String user, String pass) throws ClassNotFoundException, SQLException {
 		// STEP 1: dichiarazioni
         PreparedStatement pst = null;
         Connection conn = null;
         ResultSet rs = null;
        
-        try {
+       
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -57,14 +57,8 @@ public class AdminDao {
             rs.close();
             pst.close();
             conn.close();
-        } catch (SQLException se) {
-            // Errore durante l'apertura della connessione
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-        } catch (Exception e) {
-            // Errore nel loading del driver
-        	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        } finally {
-        	try {
+            
+        try {
         		if(rs!=null)
         			rs.close();
         	}
@@ -83,9 +77,9 @@ public class AdminDao {
             } catch (SQLException se) {
             	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             }
-        }
+        
 
-        return true;
+            return true;
 	}
 	
 }

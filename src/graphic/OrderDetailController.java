@@ -3,9 +3,10 @@ package graphic;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import controller.LoginController;
 import controller.MessageController;
 import controller.OrderController;
-import dao.UtenteDao;
+
 import external.MockupPayment;
 import factory.LanguageFactory;
 import javafx.fxml.FXML;
@@ -117,8 +118,9 @@ public class OrderDetailController implements Initializable{
 			vc.createOrderDetailMenu(order.getId());
 			MessageController mc = new MessageController();
 			Property prop = new Property();
-			mc.newMessage(Integer.parseInt(prop.loadProperty("user_id")), UtenteDao.getIdByUsername(order.getSeller()), "I have paid the order :"+ order.getId());
-			//TODO LEVARE UTENTE DAO DA QUI!!!!!
+			LoginController lc = LoginController.getInstance();
+			mc.newMessage(Integer.parseInt(prop.loadProperty("user_id")), lc.getIdFromUsername(order.getSeller()), "I have paid the order :"+ order.getId());
+			
 		}
 		else {
 			txtError.setText(lg.getPaymentErrorString());

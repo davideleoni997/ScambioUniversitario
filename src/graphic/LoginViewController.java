@@ -2,7 +2,7 @@ package graphic;
 
 
 import java.net.URL;
-
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,23 +77,30 @@ public class LoginViewController implements Initializable{
 		if(dispatch.equalsIgnoreCase(ADMIN))
 			logType = ADMIN;
 			
-		if(lc.validate(logType,lb)) {
-			Property prop = new Property();
-			prop.setProperty("user_id",String.valueOf(lb.getId()));
-			
-			if(dispatch.equalsIgnoreCase("NewInsertion"))
-				vc.createNewInsertionMenu();
-			if(dispatch.equalsIgnoreCase("Profile"))
-				vc.createProfileMenu(lb);
-			if(dispatch.equalsIgnoreCase("Buy"))
-				vc.goBack();
-			if(dispatch.equalsIgnoreCase(ADMIN)) {
-				vc.createAdminMenu(lb);
+		try {
+			if(lc.validate(logType,lb)) {
+				Property prop = new Property();
+				prop.setProperty("user_id",String.valueOf(lb.getId()));
+				
+				if(dispatch.equalsIgnoreCase("NewInsertion"))
+					vc.createNewInsertionMenu();
+				if(dispatch.equalsIgnoreCase("Profile"))
+					vc.createProfileMenu(lb);
+				if(dispatch.equalsIgnoreCase("Buy"))
+					vc.goBack();
+				if(dispatch.equalsIgnoreCase(ADMIN)) {
+					vc.createAdminMenu(lb);
+				}
 			}
-		}
-		else {
-			lblerrormsg.setText(lg.getWrongData());
-			lblerrormsg.setVisible(true);
+			else {
+				lblerrormsg.setText(lg.getWrongData());
+				lblerrormsg.setVisible(true);
+			}
+		} catch (ClassNotFoundException e) {
+			Logger.getGlobal().log(Level.WARNING, "ClassNotFound", e);
+		} catch (SQLException e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "SQLException", e);
 		}
 	}
 	

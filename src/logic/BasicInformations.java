@@ -15,6 +15,9 @@ public class BasicInformations{
 			this.date = date;
 			this.price = price;
 		}
+		public BasicInformations() {
+			//Costruttore vuoto
+		}
 		public String getTitle() {
 			return title;
 		}
