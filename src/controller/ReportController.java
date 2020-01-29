@@ -22,7 +22,7 @@ public class ReportController {
 			ReportDao.newReport(insReported, desc, reporter);
 		} catch (Exception e) {
 			
-			Logger.getGlobal().log(Level.WARNING, "getMessage", e);
+			Logger.getGlobal().log(Level.WARNING, "newReport", e);
 		
 		}
 	}
@@ -32,7 +32,7 @@ public class ReportController {
 			return ReportDao.getReports();
 		} catch (Exception e) {
 			
-			Logger.getGlobal().log(Level.WARNING, "getMessage", e);
+			Logger.getGlobal().log(Level.WARNING, "getReport", e);
 			return new LinkedList<>();
 		
 		}
@@ -52,7 +52,7 @@ public class ReportController {
 			ReportDao.removeReport(id);
 		} catch (Exception e) {
 			
-			Logger.getGlobal().log(Level.WARNING, "getMessage", e);
+			Logger.getGlobal().log(Level.WARNING, "removeReport", e);
 		
 		}
 	}

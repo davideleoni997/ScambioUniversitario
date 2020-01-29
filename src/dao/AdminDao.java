@@ -23,9 +23,7 @@ public class AdminDao {
 	}
 	
 	public static boolean adminLogin(String user, String pass) throws ClassNotFoundException, SQLException {
-		// STEP 1: dichiarazioni
-        PreparedStatement pst = null;
-        Connection conn = null;
+		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);PreparedStatement pst =conn.prepareStatement("SELECT user,pass from admins where user = ? and pass = ?")){// STEP 1: dichiarazioni
         ResultSet rs = null;
        
        
@@ -33,10 +31,9 @@ public class AdminDao {
             Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
+            
             // STEP 4: creazione ed esecuzione della query
-            pst = conn.prepareStatement("SELECT user,pass from admins where user = ? and pass = ?");
+          
             pst.setString(1, user);
             pst.setString(2, pass);
             rs = pst.executeQuery();
@@ -58,6 +55,7 @@ public class AdminDao {
             conn.close();       
 
             return true;
+		}
 	}
 	
 }

@@ -56,27 +56,17 @@ public class MessageDao {
             // riposizionamento del cursore
             rs.first();
 
-            // lettura delle colonne "by name"
-            Integer sender = rs.getInt(COLUMN_SENDER);
-            Integer to = rs.getInt(COLUMN_TO);
-            String desc = rs.getString(COLUMN_DESC);
-            Date date = rs.getDate(COLUMN_DATE);
-            
-
             int i=0;
 
-            Message msg = new Message(sender,to,desc,date);
+            Message msg = getInfo(rs);
             
             messages[i] = msg;
             i++;
             
             while(rs.next()) {
-            	sender= rs.getInt("title");
-                desc = rs.getString(COLUMN_DESC);
-                to = rs.getInt(COLUMN_TO);
-                date = rs.getDate(COLUMN_DATE);
             	
-                msg = new Message(sender,to,desc,date);
+            	
+                msg = getInfo(rs);
                 messages[i] = msg;
                 i++;
             }
@@ -119,26 +109,19 @@ public class MessageDao {
             rs.first();
 
             // lettura delle colonne "by name"
-            sender = rs.getInt(COLUMN_SENDER);
-            Integer to = rs.getInt(COLUMN_TO);
-            String desc = rs.getString(COLUMN_DESC);
-            Date date = rs.getDate(COLUMN_DATE);
             
 
             int i=0;
 
-            Message msg = new Message(sender,to,desc,date);
+            Message msg = getInfo(rs);
             
             messages[i] = msg;
             i++;
             
             while(rs.next()) {
-            	sender= rs.getInt(COLUMN_SENDER);
-                desc = rs.getString(COLUMN_DESC);
-                to = rs.getInt(COLUMN_TO);
-                date = rs.getDate(COLUMN_DATE);
             	
-                msg = new Message(sender,to,desc,date);
+            	
+                msg = getInfo(rs);
                 messages[i] = msg;
                 i++;
             }
@@ -152,7 +135,17 @@ public class MessageDao {
         return messages;
     }
     
-    public static Boolean newMessage(Integer sender, Integer to, String desc) throws ClassNotFoundException, SQLException {
+ private static Message getInfo(ResultSet rs) throws SQLException {
+	 Integer sender = rs.getInt(COLUMN_SENDER);
+     Integer to = rs.getInt(COLUMN_TO);
+     String desc = rs.getString(COLUMN_DESC);
+     Date date = rs.getDate(COLUMN_DATE);
+		
+     return new Message(sender,to,desc,date);
+	}
+
+
+   public static Boolean newMessage(Integer sender, Integer to, String desc) throws ClassNotFoundException, SQLException {
     	
     	
         Connection conn = null;
