@@ -2,7 +2,7 @@ package controller;
 
 
 import java.io.File;
-import java.sql.SQLException;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -39,13 +39,10 @@ public class InsertionController {
 			
 			try {
 				return InsertionDao.getReserach(research, filters);
-			} catch (ClassNotFoundException e) {
+			} catch (Exception e) {
 				Logger.getGlobal().log(Level.WARNING, "ClassNotFound", e);
 				return new LinkedList<>();
-			} catch (SQLException e) {
-				Logger.getGlobal().log(Level.WARNING, "ClassNotFound", e);
-				return new LinkedList<>();
-			}
+			} 
 			
 			
 	}

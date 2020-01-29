@@ -1,6 +1,9 @@
 package controller;
 
+
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import dao.InsertionDao;
 import dao.ReportDao;
@@ -23,7 +26,11 @@ public class ReportController {
 	
 	public void ban(Integer repId,Integer id) {
 		removeReport(repId);
-		InsertionDao.ban(id);
+		try {
+			InsertionDao.ban(id);
+		} catch (Exception e) {
+			Logger.getGlobal().log(Level.WARNING, "Ban", e);
+		}
 	}
 	
 	public void removeReport(Integer id) {

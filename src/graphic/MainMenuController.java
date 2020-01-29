@@ -67,7 +67,8 @@ public class MainMenuController implements Initializable{
 		else {
 			LoginController lc = LoginController.getInstance();
 			vc.getScenes().push(btnLogin.getScene());
-			vc.createProfileMenu(lc.getUserFromId(Integer.parseInt(prop.loadProperty("user_id"))));
+			Integer id = Integer.parseInt(prop.loadProperty("user_id"));
+			vc.createProfileMenu(lc.getUserFromId(id));
 		}
 	}
 	

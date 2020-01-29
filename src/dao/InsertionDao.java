@@ -15,8 +15,6 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import bean.InsertionBean;
 import javafx.scene.image.Image;
@@ -28,7 +26,7 @@ import java.sql.Date;
 
 public class InsertionDao {
 
-	private static final String ERROR_CLASS = "UtenteDao";
+	
 	private static final String COLUMN_DATA = "data";
 	private static final String COLUMN_DESCR = "descr";
 	private static final String COLUMN_PRICE = "price";
@@ -112,18 +110,6 @@ public class InsertionDao {
             stmt.close();
             conn.close();
         
-        	
-        	if(rs!=null)
-        			rs.close();
-        	
-           
-            if (stmt != null)
-                    stmt.close();
-            
-            
-            if (conn != null)
-                    conn.close();
-    	
             return ins;
     }
     
@@ -162,7 +148,7 @@ public class InsertionDao {
 	}
 
 	public static Insertion getDetail(Integer id) throws SQLException, ClassNotFoundException {
-    	Insertion ins = new Insertion();
+    	Insertion ins;
     	
     	// STEP 1: dichiarazioni
         Statement stmt = null;
@@ -207,17 +193,6 @@ public class InsertionDao {
             rs.close();
             stmt.close();
             conn.close();
-       
-        	if(rs!=null)
-        		rs.close();
-        	
-        	
-            if (stmt != null)
-                stmt.close();
-            
-            if (conn != null)
-                conn.close();
-            
         
     	
         return ins;
@@ -272,26 +247,16 @@ public class InsertionDao {
             pst.executeUpdate();
             pst.close();
             
-            
-            
-            
-        
-        
-        	if(pst!=null)
-        			pst.close();
-        
-            if (conn != null)
-                    conn.close();
-            
+
         
     	
     	return true;
     }
 
-	public static void ban(Integer id) {
+	public static void ban(Integer id) throws ClassNotFoundException, SQLException {
 		Connection conn = null;
         PreparedStatement pst = null;
-        try {
+       
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
@@ -305,26 +270,7 @@ public class InsertionDao {
             pst.executeUpdate();
             pst.close();      
             
-        } catch (Exception e) {
-            // Errore nel loading del driver
-       	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-          
-        } finally {
-        	try {
-        		if(pst!=null)
-        			pst.close();
-        	}
-        	catch(Exception e) {	
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-           	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        }
+        
 	}
     
     

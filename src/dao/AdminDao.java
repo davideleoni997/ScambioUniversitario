@@ -7,13 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 
 public class AdminDao {
-	private static final String ERROR_CLASS = "AdminDao";
+
 	private static final String CONNECTOR = "org.mariadb.jdbc.Driver";
 	private static final String PASS = "root";
     private static final String USER = "root";
@@ -56,28 +55,7 @@ public class AdminDao {
             // STEP 6: Clean-up dell'ambiente
             rs.close();
             pst.close();
-            conn.close();
-            
-        try {
-        		if(rs!=null)
-        			rs.close();
-        	}
-        	catch(Exception e) {		
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            try {
-                if (pst != null)
-                    pst.close();
-            } catch (SQLException se2) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se2);
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-            	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
-        
+            conn.close();       
 
             return true;
 	}
