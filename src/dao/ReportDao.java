@@ -25,19 +25,14 @@ public class ReportDao {
 	
 	public static List<Report> getReports() throws ClassNotFoundException, SQLException {
 		List<Report> reports = new LinkedList<>();
+		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
 		
-		Statement stmt = null;
-	    Connection conn = null;
 	    ResultSet rs = null;
 	    
 	    
 	    Class.forName(CONNECTOR);
 		
-	    // STEP 3: apertura connessione
-        conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-        // STEP 4: creazione ed esecuzione della query
-        stmt = conn.createStatement();
+	    
         String sql = "SELECT id, insId, description, reportFrom FROM reports";
                  
         rs = stmt.executeQuery(sql);
@@ -63,7 +58,7 @@ public class ReportDao {
 		
 		
 		return reports;
-		
+		}
 	}
 	
 	private static Report getInfo(ResultSet rs) throws SQLException {
@@ -73,34 +68,15 @@ public class ReportDao {
         Integer repId = rs.getInt("reportFrom");
 		return new Report(id,idInsertion,desc,repId);
 	}
-
-	public static Report[] mockupReports() {
-		Report[] reports = new Report[100];
-		
-		reports[0]=new Report(0,2,"Quack",1);
-		reports[1]=new Report(1,2,"Lorem",3);
-		reports[2]=new Report(2,2,"Ipsum",4);
-		
-		return reports;
-	}
 	
 	public static boolean newReport(Integer insReported,String desc,Integer reporter) throws SQLException, ClassNotFoundException {
 		
-
+		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pst = conn.prepareStatement("INSERT into reports(insId,description,reportFrom) values(?,?,?)")){
     	
-        Connection conn = null;
-        PreparedStatement pst = null;
+       
         
             // STEP 2: loading dinamico del driver mysql
-            Class.forName(CONNECTOR);
-
-            // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            // STEP 4: creazione ed esecuzione della query
-            //!!!RICORDA ID AUTOINCREMENT!!!
-            pst = conn.prepareStatement("INSERT into reports(insId,description,reportFrom) values(?,?,?)");
-            
+            Class.forName(CONNECTOR);          
            
             
             pst.setInt(1, insReported);
@@ -112,23 +88,14 @@ public class ReportDao {
        
     	
     	return true;
-    
+		}
 	}
 
 	public static void removeReport(Integer id) throws ClassNotFoundException, SQLException {
-			Connection conn = null;
-	        PreparedStatement pst = null;
-	       
+		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pst = conn.prepareStatement("DELETE from reports where id = ?")){
+			
 	            // STEP 2: loading dinamico del driver mysql
 	            Class.forName(CONNECTOR);
-
-	            // STEP 3: apertura connessione
-	            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-	            // STEP 4: creazione ed esecuzione della query
-	            //!!!RICORDA ID AUTOINCREMENT!!!
-	            pst = conn.prepareStatement("DELETE from reports where id = ?");            
-	           
 	            
 	            pst.setInt(1, id);
 	            
@@ -136,7 +103,7 @@ public class ReportDao {
 	            pst.executeUpdate();
 	            pst.close();
 	            
-	        
+		}
 		
 	}
 }

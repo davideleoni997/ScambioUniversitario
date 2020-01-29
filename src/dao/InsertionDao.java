@@ -51,19 +51,19 @@ public class InsertionDao {
     	
     	if (filters == null)
     		filters = new Filters();
-    	// STEP 1: dichiarazioni
-        Statement stmt = null;
-        Connection conn = null;
+    	try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
+        
+        
         ResultSet rs = null;
        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            
 
             // STEP 4: creazione ed esecuzione della query
-            stmt = conn.createStatement();
+          
             
             String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold FROM insertions where title LIKE '%"+ research + "%' ";
             
@@ -111,6 +111,7 @@ public class InsertionDao {
             conn.close();
         
             return ins;
+    	}
     }
     
     private static InsertionBean getInfo(ResultSet rs) throws SQLException, ClassNotFoundException {
@@ -148,21 +149,17 @@ public class InsertionDao {
 	}
 
 	public static Insertion getDetail(Integer id) throws SQLException, ClassNotFoundException {
+		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
     	Insertion ins;
     	
     	// STEP 1: dichiarazioni
-        Statement stmt = null;
-        Connection conn = null;
+        
         ResultSet rs = null;
         
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            // STEP 4: creazione ed esecuzione della query
-            stmt = conn.createStatement();
+            
             
             String sql = "SELECT title, descr, price, date, image1, image2, image3, seller,sold FROM insertions where id = '"+ id +"');";
             rs = stmt.executeQuery(sql);
@@ -196,24 +193,17 @@ public class InsertionDao {
         
     	
         return ins;
+		}
     }
     
     public static Boolean newInsertion(BasicInformations basic, List<File> pics,Integer seller,Filters filter) throws SQLException, ClassNotFoundException, IOException {
     	
-    	
-        Connection conn = null;
-        PreparedStatement pst = null;
+    	try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller,university,city,subject,book,notes) values(?,?,?,?,?,?,?,?,?,?,?,?,?)")){
+        
         
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
-
-            // STEP 3: apertura connessione
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            // STEP 4: creazione ed esecuzione della query
-            //!!!RICORDA ID AUTOINCREMENT!!!
-            pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller,university,city,subject,book,notes) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            
+         
            
             
             pst.setString(1, basic.getTitle());
@@ -251,6 +241,7 @@ public class InsertionDao {
         
     	
     	return true;
+    	}
     }
 
 	public static void ban(Integer id) throws ClassNotFoundException, SQLException {
