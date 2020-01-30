@@ -7,6 +7,7 @@ public class ENFactory implements LanguageFactory{
 		//constructor for the english language factory
 	}
 
+	@Override
 	public String getWelcomeString() {
 		return "Welcome to the login screen";
 		

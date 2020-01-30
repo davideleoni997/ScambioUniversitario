@@ -9,6 +9,7 @@ public class ITFactory implements LanguageFactory{
 		
 	}
 	
+	@Override
 	public String getWelcomeString() {
 		return "Benevenuto nella schermata di login";
 		
