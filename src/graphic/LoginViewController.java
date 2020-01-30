@@ -2,7 +2,7 @@ package graphic;
 
 
 import java.net.URL;
-import java.sql.SQLException;
+
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +78,7 @@ public class LoginViewController implements Initializable{
 		if(dispatch.equalsIgnoreCase(ADMIN))
 			logType = ADMIN;
 			
-		try {
+		
 			if(lc.validate(logType,lb)) {
 				Property prop = new Property();
 				prop.setProperty("user_id",String.valueOf(lb.getId()));
@@ -97,12 +97,7 @@ public class LoginViewController implements Initializable{
 				lblerrormsg.setText(lg.getWrongData());
 				lblerrormsg.setVisible(true);
 			}
-		} catch (ClassNotFoundException e) {
-			Logger.getGlobal().log(Level.WARNING, "ClassNotFound", e);
-		} catch (SQLException e) {
-			
-			Logger.getGlobal().log(Level.WARNING, "SQLException", e);
-		}
+		
 	}
 	
 	public void setDisp(String disp) {

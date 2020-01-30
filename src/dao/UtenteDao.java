@@ -2,7 +2,6 @@ package dao;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -198,7 +197,7 @@ public class UtenteDao {
     }
     
     
-    public static boolean newCompany(String nome, String username, String password, Boolean company,File logo) throws SQLException, ClassNotFoundException, FileNotFoundException, IOException {
+    public static boolean newCompany(String nome, String username, String password, Boolean company,File logo) throws SQLException, ClassNotFoundException, IOException {
     	Connection conn = null;
         PreparedStatement pst = null;
         try(FileInputStream logoStream = new FileInputStream(logo); ) {

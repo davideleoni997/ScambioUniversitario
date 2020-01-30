@@ -1,9 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +19,7 @@ import controller.LoginController;
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-	private static final String INDEX_JSP = "index,jsp";
+	
 	private static final String LOGIN_JSP = "login.jsp";
 	private static final String CURRENT_USER = "currentUser";
 	private static final long serialVersionUID = 1L;
@@ -56,76 +54,45 @@ public class LoginServlet extends HttpServlet {
 		RequestDispatcher disp;
 		
 		LoginController lc = LoginController.getInstance();
-		
-			
 			
 			
 			if(request.getSession().getAttribute(CURRENT_USER) == null) {
 					UserBean user = new UserBean();
-					if(request.getHeader("referer").contains("LoginServlet") || request.getHeader("referer").contains(LOGIN_JSP))
-						{
+					if(request.getHeader("referer").contains("LoginServlet") || request.getHeader("referer").contains(LOGIN_JSP)){
 						// get data for the logger
 						String username = request.getParameter("username");
-						String password = request.getParameter("password");
+						String password = request.getParameter("password");			
 			
-			
-						// Populate the UserBean
-			
+						// Populate the UserBean			
 						user.setUsername(username);
-						user.setPassword(password);
-					
+						user.setPassword(password);				
 				
 						// prova a fare il login
-						try {
-							if (lc.validate("user", user)) {
-
-
-
+						
+						if (lc.validate("user", user)) {
 								// set user come attributo di sessione
 								request.getSession().setAttribute(CURRENT_USER, user);
 
 								disp = request.getRequestDispatcher("ProfileServlet");
-
-							} else {
-
+						} else {
 								request.setAttribute("currentMessage", "Wrong username or password, please retry.");
 
 								disp = request.getRequestDispatcher(LOGIN_JSP);
-							}
-						} catch (ClassNotFoundException e) {
-							Logger.getGlobal().log(Level.WARNING, "ClassNotFound", e);
-							disp = request.getRequestDispatcher(INDEX_JSP);
-						} catch (SQLException e) {
-							Logger.getGlobal().log(Level.WARNING, "SQLException", e);
-							disp = request.getRequestDispatcher(INDEX_JSP);
-						}
-			
+								}
 						}
 					else {
 						disp = request.getRequestDispatcher(LOGIN_JSP);
-					}
-					
-			}
-			
+					}					
+			}			
 			
 			else {
-				try {
+				
 					if(lc.validate("user", (UserBean) request.getSession().getAttribute(CURRENT_USER)))
 						// forward to the correct page
-							disp = request.getRequestDispatcher("ProfileServlet");
-						
-					else
-						
+							disp = request.getRequestDispatcher("ProfileServlet");						
+					else						
 							disp = request.getRequestDispatcher(LOGIN_JSP);
-				} catch (ClassNotFoundException e) {
-					Logger.getGlobal().log(Level.WARNING, "ClassNotFound", e);
-					disp = request.getRequestDispatcher(INDEX_JSP);
-				} catch (SQLException e) {
-					Logger.getGlobal().log(Level.WARNING, "SQLEXception", e);
-					disp = request.getRequestDispatcher(INDEX_JSP);
-				}
-			}
-		
+			}		
 			disp.forward(request, response);
 		}
 	

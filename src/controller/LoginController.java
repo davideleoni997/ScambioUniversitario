@@ -1,6 +1,6 @@
 package controller;
 
-import java.sql.SQLException;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,7 +54,7 @@ public class LoginController {
     private LoginController() {
     }
     
-    public boolean validate(String tipoLogin,UserBean lb) throws ClassNotFoundException, SQLException {
+    public boolean validate(String tipoLogin,UserBean lb){
 		
 		// Controllo sintattico
 		if (lb.getUsername().equals("") || lb.getPassword().equals("")) {
@@ -69,9 +69,14 @@ public class LoginController {
 				lb.setCompany(found.isCompany());
 				lb.setId(found.getId());
 				lb.setLogo(found.getLogo());}
-			return  (found != null);}
-		else
-			return  AdminDao.adminLogin(lb.getUsername(), lb.getPassword());
+			return  (found != null);} else
+			try {
+				return  AdminDao.adminLogin(lb.getUsername(), lb.getPassword());
+			} catch (Exception e) {
+				
+				Logger.getGlobal().log(Level.WARNING, "validate", e);
+				return false;
+			}
 	}
     
     public UserBean getUserFromId(Integer id) {
