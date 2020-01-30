@@ -69,7 +69,8 @@ public class LoginController {
 				lb.setCompany(found.isCompany());
 				lb.setId(found.getId());
 				lb.setLogo(found.getLogo());}
-			return  (found != null);} else
+			return  (found != null);} 
+		else
 			try {
 				return  AdminDao.adminLogin(lb.getUsername(), lb.getPassword());
 			} catch (Exception e) {
