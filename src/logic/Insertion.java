@@ -18,10 +18,6 @@ public class Insertion {
 		this.filter = filter;
 	}
 
-	public Boolean getSold() {
-		return sold;
-	}
-
 	public Insertion() {
 		super();
 	}
