@@ -2,18 +2,18 @@ package dao;
 
 import java.io.File;
 import java.io.FileInputStream;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import bean.UserBean;
 import javafx.scene.image.Image;
 import logic.Utente;
 
 public class UtenteDao {
-    private static final String ERROR_CLASS = "UtenteDao";
+   
 	private static final String COLUMN_ID = "id";
 	private static final String COLUMN_COMPANY = "company";
 	private static final String COLUMN_PASSWORD = "password";
@@ -35,7 +35,7 @@ public class UtenteDao {
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
-        Utente u = null;
+       
         
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
@@ -48,32 +48,7 @@ public class UtenteDao {
             String sql = "SELECT nome, username, password, cognome, company, logo, id FROM utenti where username = '"
                     + username + "' AND password = '" + password + "';";
             rs = stmt.executeQuery(sql);
-
-            if (!rs.first()) // rs not empty
-                return null;
-
-            boolean moreThanOne = rs.first() && rs.next();
-            assert !moreThanOne; // per abilitare le asserzioni, avviare la JVM con il parametro -ea
-            // (Run Configurations -> <configurazione utilizzata per l'avvio del server> -> Arguments -> VM Arguments).
-            // N.B. Le asserzioni andrebbero usate solo per test e debug, non per codice in produzione
-
-            // riposizionamento del cursore
-            rs.first();
-
-            // lettura delle colonne "by name"
-            String nome = rs.getString(COLUMN_NOME);
-            String cognome = rs.getString(COLUMN_COGNOME);
-            String usernameLoaded = rs.getString(COLUMN_USERNAME);
-            String passwordLoaded = rs.getString(COLUMN_PASSWORD);
-            Boolean company = rs.getBoolean(COLUMN_COMPANY);
-            Integer id = rs.getInt(COLUMN_ID);
-           
-            Image imgLogo = null;
-            if(Boolean.TRUE.equals(company))
-            {	 Blob logo =rs.getBlob(COLUMN_LOGO);
-            	 InputStream out = logo.getBinaryStream();
-            	 imgLogo = new Image(out);}
-            u = new Utente(usernameLoaded, passwordLoaded, nome, cognome,company,id,imgLogo);
+         Utente u = getInfo(rs);
             
             
             // STEP 6: Clean-up dell'ambiente
@@ -85,7 +60,38 @@ public class UtenteDao {
         return u;
     }
     
-    public static int getIdByUsername(String username) throws SQLException, ClassNotFoundException {
+    private static Utente getInfo(ResultSet rs) throws SQLException {
+    	 Utente u = null;
+
+        if (!rs.first()) // rs not empty
+            return null;
+
+        boolean moreThanOne = rs.first() && rs.next();
+        assert !moreThanOne; // per abilitare le asserzioni, avviare la JVM con il parametro -ea
+        // (Run Configurations -> <configurazione utilizzata per l'avvio del server> -> Arguments -> VM Arguments).
+        // N.B. Le asserzioni andrebbero usate solo per test e debug, non per codice in produzione
+
+        // riposizionamento del cursore
+        rs.first();
+
+        // lettura delle colonne "by name"
+        String nome = rs.getString(COLUMN_NOME);
+        String cognome = rs.getString(COLUMN_COGNOME);
+        String usernameLoaded = rs.getString(COLUMN_USERNAME);
+        String passwordLoaded = rs.getString(COLUMN_PASSWORD);
+        Boolean company = rs.getBoolean(COLUMN_COMPANY);
+        Integer id = rs.getInt(COLUMN_ID);
+       
+        Image imgLogo = null;
+        if(Boolean.TRUE.equals(company))
+        {	 Blob logo =rs.getBlob(COLUMN_LOGO);
+        	 InputStream out = logo.getBinaryStream();
+        	 imgLogo = new Image(out);}
+        u = new Utente(usernameLoaded, passwordLoaded, nome, cognome,company,id,imgLogo);
+		return u;
+	}
+
+	public static int getIdByUsername(String username) throws SQLException, ClassNotFoundException {
     	Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
@@ -192,8 +198,8 @@ public class UtenteDao {
     }
     
     
-    public static boolean newCompany(String nome, String username, String password, Boolean company,File logo) {
-   	 Connection conn = null;
+    public static boolean newCompany(String nome, String username, String password, Boolean company,File logo) throws SQLException, ClassNotFoundException, FileNotFoundException, IOException {
+    	Connection conn = null;
         PreparedStatement pst = null;
         try(FileInputStream logoStream = new FileInputStream(logo); ) {
             // STEP 2: loading dinamico del driver mysql
@@ -215,28 +221,7 @@ public class UtenteDao {
             pst.close();
             
             return true;
-            
-        } catch (Exception e) {
-            // Errore nel loading del driver
-       	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-            return false;
-        } finally {
-        	try {
-        		if(pst!=null)
-        			pst.close();
-        	}
-        	catch(Exception e) {	
-        		Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,e);
-        	}
-            
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-           	 Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
-            }
         }
-    	
     	
    }
     
@@ -279,7 +264,7 @@ public class UtenteDao {
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
-        Utente u = null;
+        
        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
@@ -292,31 +277,7 @@ public class UtenteDao {
             String sql = "SELECT nome, username, password, cognome, company, logo, id FROM utenti where id = '"+ id + "';";
             rs = stmt.executeQuery(sql);
 
-            if (!rs.first()) // rs not empty
-                return null;
-
-            boolean moreThanOne = rs.first() && rs.next();
-            assert !moreThanOne; // per abilitare le asserzioni, avviare la JVM con il parametro -ea
-            // (Run Configurations -> <configurazione utilizzata per l'avvio del server> -> Arguments -> VM Arguments).
-            // N.B. Le asserzioni andrebbero usate solo per test e debug, non per codice in produzione
-
-            // riposizionamento del cursore
-            rs.first();
-
-            // lettura delle colonne "by name"
-            String nome = rs.getString(COLUMN_NOME);
-            String cognome = rs.getString(COLUMN_COGNOME);
-            String usernameLoaded = rs.getString(COLUMN_USERNAME);
-            String passwordLoaded = rs.getString(COLUMN_PASSWORD);
-            Boolean company = rs.getBoolean(COLUMN_COMPANY);
-            Integer userId = rs.getInt(COLUMN_ID);
-           
-            Image imgLogo = null;
-            if(Boolean.TRUE.equals(company))
-            {	 Blob logo =rs.getBlob(COLUMN_LOGO);
-            	 InputStream out = logo.getBinaryStream();
-            	 imgLogo = new Image(out);}
-            u = new Utente(usernameLoaded, passwordLoaded, nome, cognome,company,userId,imgLogo);      
+          Utente  u =  getInfo(rs);    
             
             // STEP 6: Clean-up dell'ambiente
             rs.close();

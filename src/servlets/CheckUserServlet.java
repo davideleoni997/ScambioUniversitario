@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/NewInsertionServlet")
-public class NewInsertionServlet extends HttpServlet{
+@WebServlet("/CheckUserServlet")
+public class CheckUserServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	
-	public NewInsertionServlet() {
+	public CheckUserServlet() {
 		super();
 	}
 	
@@ -29,7 +29,13 @@ public class NewInsertionServlet extends HttpServlet{
 		
 		RequestDispatcher disp;
 		if(request.getSession().getAttribute("currentUser") != null) {
-			disp = request.getRequestDispatcher("newInsertion.jsp");
+			if(request.getParameter("page").equals("Orders"))
+				disp = request.getRequestDispatcher("orders.jsp");
+			else
+				if(request.getParameter("page").equals("newIns"))
+					disp = request.getRequestDispatcher("newInsertion.jsp");
+				else
+					disp = request.getRequestDispatcher("messages.jsp");
 		}
 		else {
 			disp = request.getRequestDispatcher("login.jsp");

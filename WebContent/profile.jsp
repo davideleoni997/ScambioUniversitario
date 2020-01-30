@@ -23,11 +23,11 @@
 
 <p> Name : <jsp:getProperty property="nome" name="currentUser"/> </p>
 <p> Surname : <jsp:getProperty property="cognome" name="currentUser"/></p>
-<a href="http://localhost:8080/Dynamic_Scambio/OrdersServlet">View Orders</a>
+<a href="http://localhost:8080/Dynamic_Scambio/CheckUserServlet?page=Orders">View Orders</a>
 <p></p>
 <a href="http://localhost:8080/Dynamic_Scambio/modifyProfile.jsp">Modify profile</a>
 <p></p>
-<a href="http://localhost:8080/Dynamic_Scambio/MessagesServlet">Messages</a>
+<a href="http://localhost:8080/Dynamic_Scambio/CheckUserServlet?page=Messages">Messages</a>
 <p></p>
 <a href="http://localhost:8080/Dynamic_Scambio/LogOutServlet">Log Out</a>
 <p></p>

@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.File;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +28,7 @@ public class RegistrationController {
 			return UtenteDao.newStudent(nome, cognome, username, password, company, matricola);
 		} catch (Exception e) {
 			
-			Logger.getGlobal().log(Level.WARNING, "registra", e);
+			Logger.getGlobal().log(Level.WARNING, "registraUser", e);
 			return false;
 		}
 		
@@ -37,7 +36,14 @@ public class RegistrationController {
 
 	public boolean registraSocieta(String nome,String username,String password,Boolean company,File logo) {
 		
-		return UtenteDao.newCompany(nome, username, password, company, logo);
+		try {
+			return UtenteDao.newCompany(nome, username, password, company, logo);
+		} catch (Exception e) {
+			
+			
+			Logger.getGlobal().log(Level.WARNING, "registraSoc", e);
+			return false;
+		}
 			
 			
 		

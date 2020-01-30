@@ -40,7 +40,7 @@
 
 <p align = center>Or create your own insertion!</p>
 
-<form action ="NewInsertionServlet" name = "myForm" method = "POST">
+<form action ="CheckUserServlet?page=newIns" name = "myForm" method = "POST">
 <button>New Insertion</button>
 </form>
 
