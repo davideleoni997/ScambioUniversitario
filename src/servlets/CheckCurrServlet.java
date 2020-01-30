@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
-@WebServlet("/CheckUserServlet")
-public class CheckUserServlet extends HttpServlet{
+@WebServlet("/CheckCurrServlet")
+public class CheckCurrServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
-	public CheckUserServlet() {
+	public CheckCurrServlet() {
 		super();
 	}
 	
