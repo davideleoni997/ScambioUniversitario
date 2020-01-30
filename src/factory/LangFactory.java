@@ -146,7 +146,7 @@ public class LangFactory implements LanguageFactory {
 		if(language ==1)
 			return "Compratore";
 		else
-		return "Buyer";
+			return "Buyer";
 	}
 
 	@Override

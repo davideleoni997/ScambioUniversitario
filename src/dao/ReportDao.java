@@ -25,13 +25,14 @@ public class ReportDao {
 	
 	public static List<Report> getReports() throws ClassNotFoundException, SQLException {
 		List<Report> reports = new LinkedList<>();
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
+		
 		
 	    ResultSet rs = null;
 	    
 	    
 	    Class.forName(CONNECTOR);
-		
+	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
+	    Statement stmt = conn.createStatement();
 	    
         String sql = "SELECT id, insId, description, reportFrom FROM reports";
                  
@@ -52,12 +53,12 @@ public class ReportDao {
         }
         // STEP 6: Clean-up dell'ambiente
         rs.close();
-        
-    
+        stmt.close();
+        conn.close();
 		
 		
 		return reports;
-		}
+		
 	}
 	
 	private static Report getInfo(ResultSet rs) throws SQLException {
@@ -70,39 +71,44 @@ public class ReportDao {
 	
 	public static boolean newReport(Integer insReported,String desc,Integer reporter) throws SQLException, ClassNotFoundException {
 		
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pst = conn.prepareStatement("INSERT into reports(insId,description,reportFrom) values(?,?,?)")){
+		
     	
        
         
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);          
-           
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            PreparedStatement pst = conn.prepareStatement("INSERT into reports(insId,description,reportFrom) values(?,?,?)");
             
             pst.setInt(1, insReported);
             pst.setString(2, desc);
             pst.setInt(3, reporter);
             
             pst.executeUpdate();
-                      
+            pst.close();
+            conn.close();
        
     	
     	return true;
-		}
+		
 	}
 
 	public static void removeReport(Integer id) throws ClassNotFoundException, SQLException {
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pst = conn.prepareStatement("DELETE from reports where id = ?")){
+		
 			
 	            // STEP 2: loading dinamico del driver mysql
 	            Class.forName(CONNECTOR);
+	            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	            PreparedStatement pst = conn.prepareStatement("DELETE from reports where id = ?");
 	            
 	            pst.setInt(1, id);
 	            
 	            
 	            pst.executeUpdate();
+	            pst.close();
+	            conn.close();
 	            
-	            
-		}
+		
 		
 	}
 }

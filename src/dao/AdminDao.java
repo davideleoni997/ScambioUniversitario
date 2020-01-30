@@ -23,7 +23,7 @@ public class AdminDao {
 	}
 	
 	public static boolean adminLogin(String user, String pass) throws ClassNotFoundException, SQLException {
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);PreparedStatement pst =conn.prepareStatement("SELECT user,pass from admins where user = ? and pass = ?")){// STEP 1: dichiarazioni
+		// STEP 1: dichiarazioni
         ResultSet rs = null;
        
        
@@ -31,9 +31,10 @@ public class AdminDao {
             Class.forName(CONNECTOR);
 
             // STEP 3: apertura connessione
-            
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             // STEP 4: creazione ed esecuzione della query
-          
+            PreparedStatement pst =conn.prepareStatement("SELECT user,pass from admins where user = ? and pass = ?");
+            
             pst.setString(1, user);
             pst.setString(2, pass);
             rs = pst.executeQuery();
@@ -46,15 +47,14 @@ public class AdminDao {
             // (Run Configurations -> <configurazione utilizzata per l'avvio del server> -> Arguments -> VM Arguments).
             // N.B. Le asserzioni andrebbero usate solo per test e debug, non per codice in produzione
 
-            // riposizionamento del cursore
-            rs.first();
             
             // STEP 6: Clean-up dell'ambiente
             rs.close();
-                  
+            pst.close();
+            conn.close();
 
             return true;
 		}
-	}
+	
 	
 }

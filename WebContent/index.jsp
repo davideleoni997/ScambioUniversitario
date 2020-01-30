@@ -35,6 +35,12 @@
 
 <form action ="research.jsp" name = "myForm" method ="POST">
 <input type = "text" id = "research" name = "research">
+	<input type = hidden id ="uni" name = "uni" value ="">
+    <input type = hidden id ="city" name = "city" value ="">
+    <input type = hidden id ="subj" name = "subj" value ="">
+    <input type = hidden name = "book" id = "book" value="yes">
+    <input type = hidden name = "notes" id ="notes" value="yes">
+    <input type = hidden name = "order" id = "order" value="new">
 <input type = "submit" value ="Search">
 </form>
 

@@ -30,7 +30,7 @@ public class MessageDao {
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
 	
     public static Message[] messageList(Integer user) throws SQLException, ClassNotFoundException {
-    	try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
+    	
     	
     	
     		// STEP 1: dichiarazioni
@@ -39,19 +39,20 @@ public class MessageDao {
         
             // STEP 2: loading dinamico del driver mysql
     		Class.forName(CONNECTOR);
-
-           
+    		Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+    		Statement stmt = conn.createStatement();
             
           String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender = '"+ user +"' OR `to` ='"+ user +"' GROUP BY sender ORDER BY `date` DESC;";
           rs = stmt.executeQuery(sql);
 
-            
-           
-        
+          
+           Message[] list = getMessageList(rs);
+           stmt.close();
+           conn.close();
     	
-          return getMessageList(rs);
+          return list;
     	}
-    }
+    
 	
     
     private static Message[] getMessageList(ResultSet rs) throws SQLException {
@@ -88,7 +89,7 @@ public class MessageDao {
 
 
 	public static Message[] conversation(Integer sender) throws SQLException, ClassNotFoundException {
-    	try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
+    	
     	
     	
     	// STEP 1: dichiarazioni
@@ -97,17 +98,19 @@ public class MessageDao {
         
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
-
-            
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt = conn.createStatement();
             
             String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender = '"+ sender +"' OR `to` ='"+ sender +"' ORDER BY `date` ASC;";
             rs = stmt.executeQuery(sql);
 
-            
+            Message[] list = getMessageList(rs);
+            stmt.close();
+            conn.close();
     	
-        return getMessageList(rs);
+        return list;
     	}
-    }
+    
     
  private static Message getInfo(ResultSet rs) throws SQLException {
 	 Integer sender = rs.getInt(COLUMN_SENDER);
@@ -120,12 +123,13 @@ public class MessageDao {
 
 
    public static Boolean newMessage(Integer sender, Integer to, String desc) throws ClassNotFoundException, SQLException {
-	   try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pst = conn.prepareStatement("INSERT into messages(sender,`to`,`desc`,`date`) values(?,?,?,?)")){
+	  
     	
        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
-      
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            PreparedStatement pst = conn.prepareStatement("INSERT into messages(sender,`to`,`desc`,`date`) values(?,?,?,?)");
             
             pst.setInt(1, sender);
             pst.setInt(2, to);
@@ -138,6 +142,6 @@ public class MessageDao {
         
     	
     	return true;
-	   }
+	   
     }
 }

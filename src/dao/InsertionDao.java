@@ -27,6 +27,11 @@ import java.sql.Date;
 public class InsertionDao {
 
 	
+	private static final String NOTES = "notes";
+	private static final String BOOK = "book";
+	private static final String SUBJECT = "subject";
+	private static final String CITY = "city";
+	private static final String UNIVERSITY = "university";
 	private static final String COLUMN_DATA = "data";
 	private static final String COLUMN_DESCR = "descr";
 	private static final String COLUMN_PRICE = "price";
@@ -46,43 +51,27 @@ public class InsertionDao {
         throw new IllegalStateException("Utility class");
       }
     
-    public static List<InsertionBean> getReserach(String research, Filters filters) throws SQLException, ClassNotFoundException {
+    public static List<InsertionBean> getReserach(String research, logic.Filters.Date order) throws SQLException, ClassNotFoundException {
     	LinkedList<InsertionBean> ins = new LinkedList<>();
     	
-    	if (filters == null)
-    		filters = new Filters();
-    	try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
+    	
+    	
         
         
         ResultSet rs = null;
        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
-
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             // STEP 3: apertura connessione
-            
+            Statement stmt = conn.createStatement();
 
             // STEP 4: creazione ed esecuzione della query
           
             
-            String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold FROM insertions where title LIKE '%"+ research + "%' ";
+            String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold, university, city, subject, book, notes FROM insertions where title LIKE '%"+ research + "%' ";
             
-            if(!filters.getUniversity().isEmpty())
-            	sql = sql + "AND university LIKE '%" + filters.getUniversity() + "%' ";
-            
-            if(!filters.getCity().isEmpty())
-            	sql = sql + "AND city LIKE '%" + filters.getCity() + "%' ";
-            
-            if(!filters.getSubject().isEmpty())
-            	sql = sql + "AND subject LIKE '%" + filters.getSubject() + "%' ";
-            
-            if(!filters.getBook())
-            	sql = sql + "AND book = 0 ";
-            
-            if(!filters.getNotes())
-            	sql = sql + "AND notes = 0 ";
-            
-            if (filters.getDate().equals(logic.Filters.Date.NEW))
+            if (order.equals(logic.Filters.Date.NEW))
             	sql = sql + "ORDER BY data desc";
             else
             	sql = sql + "ORDER BY data asc";
@@ -107,11 +96,12 @@ public class InsertionDao {
 
             // STEP 6: Clean-up dell'ambiente
             rs.close();
-            
+            stmt.close();
+            conn.close();
         
             return ins;
     	}
-    }
+    
     
     private static InsertionBean getInfo(ResultSet rs) throws SQLException, ClassNotFoundException {
     	// lettura delle colonne "by name"
@@ -140,15 +130,20 @@ public class InsertionDao {
         		
         	
         }
-        
+       Filters filter = new Filters();
+       filter.setUniversity(rs.getString(UNIVERSITY));
+       filter.setCity(rs.getString(CITY));
+       filter.setSubject(rs.getString(SUBJECT));
+       filter.setBook(rs.getBoolean(BOOK));
+       filter.setNotes(rs.getBoolean(NOTES));
        BasicInformations basic = new BasicInformations(title,desc,date,Integer.parseInt(price));
-       return new InsertionBean(basic,id,imagesList,UtenteDao.getUsernameById(seller),seller,sold);
+       return new InsertionBean(basic,id,imagesList,UtenteDao.getUsernameById(seller),seller,sold,filter);
         
 		
 	}
 
 	public static Insertion getDetail(Integer id) throws SQLException, ClassNotFoundException {
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
+		
     	Insertion ins;
     	
     	// STEP 1: dichiarazioni
@@ -157,10 +152,10 @@ public class InsertionDao {
         
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
-
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt = conn.createStatement();
             
-            
-            String sql = "SELECT title, descr, price, date, image1, image2, image3, seller,sold FROM insertions where id = '"+ id +"');";
+            String sql = "SELECT title, descr, price, date, image1, image2, image3, seller,sold, university, city, subject, book, notes FROM insertions where id = '"+ id +"');";
             rs = stmt.executeQuery(sql);
 
             if (!rs.first()) // rs not empty
@@ -183,26 +178,32 @@ public class InsertionDao {
             Boolean sold = rs.getBoolean("sold");
            
             BasicInformations basic = new BasicInformations(title,desc,date,Integer.parseInt(price));
-            ins = new Insertion(id,basic,images,seller);
+            Filters filter = new Filters();
+            filter.setUniversity(rs.getString(UNIVERSITY));
+            filter.setCity(rs.getString(CITY));
+            filter.setSubject(rs.getString(SUBJECT));
+            filter.setBook(rs.getBoolean(BOOK));
+            filter.setNotes(rs.getBoolean(NOTES));
+            ins = new Insertion(id,basic,images,seller,filter);
             ins.setSold(sold);
             // STEP 6: Clean-up dell'ambiente
             rs.close();
-            
-        
+            stmt.close();
+            conn.close();
     	
         return ins;
 		}
-    }
+    
     
     public static Boolean newInsertion(BasicInformations basic, List<File> pics,Integer seller,Filters filter) throws SQLException, ClassNotFoundException, IOException {
     	
-    	try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller,university,city,subject,book,notes) values(?,?,?,?,?,?,?,?,?,?,?,?,?)")){
+    	
         
         
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
-         
-           
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            PreparedStatement pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller,university,city,subject,book,notes) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
             pst.setString(1, basic.getTitle());
             pst.setString(2, basic.getDesc());
@@ -234,13 +235,14 @@ public class InsertionDao {
             pst.setBoolean(13, filter.getNotes());
             pst.executeUpdate();
             
-            
+            pst.close();
+            conn.close();
 
         
     	
     	return true;
     	}
-    }
+    
 
 	public static void ban(Integer id) throws ClassNotFoundException, SQLException {
 		Connection conn = null;
@@ -258,7 +260,8 @@ public class InsertionDao {
             pst.setInt(1, id);                       
             pst.executeUpdate();
                 
-            
+            pst.close();
+            conn.close();
         
 	}
     

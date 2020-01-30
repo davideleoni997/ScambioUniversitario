@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.scene.image.Image;
 import logic.BasicInformations;
+import logic.Filters;
 
 public class InsertionBean {
 
@@ -14,7 +15,7 @@ public class InsertionBean {
 	private List<Image> images;
 	private String seller;
 	private Integer sellerId;
-	
+	private Filters filter;
 
 	private Boolean sold;
 	
@@ -22,7 +23,7 @@ public class InsertionBean {
 		
 	}
 	
-	public InsertionBean(BasicInformations basic, Integer id, List<Image> images, String seller, Integer sellerId, Boolean sold) {
+	public InsertionBean(BasicInformations basic, Integer id, List<Image> images, String seller, Integer sellerId, Boolean sold,Filters filter) {
 		super();
 		this.basic = basic;
 		this.id = id;
@@ -30,8 +31,17 @@ public class InsertionBean {
 		this.seller = seller;
 		this.sellerId = sellerId;
 		this.sold = sold;
+		this.filter = filter;
 	}
 	
+	public Filters getFilter() {
+		return filter;
+	}
+
+	public void setFilter(Filters filter) {
+		this.filter = filter;
+	}
+
 	public InsertionBean(BasicInformations basic, Integer id, List<Image> images, Integer sellerId,
 			Boolean sold) {
 		super();

@@ -8,6 +8,19 @@ public class Insertion {
 	private Blob[] images;
 	private Integer seller;
 	private Boolean sold;
+	private Filters filter;
+
+	public Filters getFilter() {
+		return filter;
+	}
+
+	public void setFilter(Filters filter) {
+		this.filter = filter;
+	}
+
+	public Boolean getSold() {
+		return sold;
+	}
 
 	public Insertion() {
 		super();
@@ -24,12 +37,13 @@ public class Insertion {
 		this.basic = basic;
 	}
 	
-	public Insertion(Integer id, BasicInformations basic, Blob[] images, Integer seller) {
+	public Insertion(Integer id, BasicInformations basic, Blob[] images, Integer seller, Filters filter) {
 		super();
 		this.id  = id;
 		this.basic = basic;
 		this.images=images;
 		this.seller = seller;
+		this.filter = filter;
 	}
 	
 	public BasicInformations getBasic() {

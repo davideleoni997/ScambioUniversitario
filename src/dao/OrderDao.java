@@ -25,14 +25,14 @@ public class OrderDao {
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";	
 	
 	public static Order[] orderListFromDB(String user) throws SQLException, ClassNotFoundException {
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
+		
 		Order[] order= new Order[100];
 	   
 	    ResultSet rs = null;
 	    
 	    Class.forName(CONNECTOR);
-		
-	    
+	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	    Statement stmt = conn.createStatement();
         
         String sql = "SELECT id FROM utenti where username = '"
                 + user + "';";
@@ -84,16 +84,17 @@ public class OrderDao {
 
         // STEP 6: Clean-up dell'ambiente
         rs.close();
-        
+        stmt.close();
+        conn.close();
 		
 		
 		
 		return order;
-		}
+		
 	}
 	
 	public static Order getOrderInfo(Integer id) throws SQLException, ClassNotFoundException {
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement()){
+		
 		Order order = null;
 			
 	   
@@ -101,7 +102,8 @@ public class OrderDao {
 	   
 	    
 	    Class.forName(CONNECTOR);
-		
+	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	    Statement stmt = conn.createStatement();
 	    
         String sql = "SELECT idOrder, oggetto, prezzo, data, seller, buyer, pagato FROM orders where idOrder = '"
                 + id + "';";
@@ -150,20 +152,21 @@ public class OrderDao {
 
         // STEP 6: Clean-up dell'ambiente
         rs.close();
-       		
-		
+        stmt.close();
+        conn.close();
 		
 		return order;
-		}
+		
 	}
 	
 	public static boolean newOrder(int buyer,int seller, String oggetto, int prezzo) throws ClassNotFoundException, SQLException {
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pst = conn.prepareStatement("INSERT into orders(buyer,seller,data,oggetto,prezzo) values(?,?,?,?,?)")){
+		
         
         
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
-
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            PreparedStatement pst = conn.prepareStatement("INSERT into orders(buyer,seller,data,oggetto,prezzo) values(?,?,?,?,?)");
           
             pst.setInt(1, buyer);
             pst.setInt(2, seller);
@@ -174,10 +177,11 @@ public class OrderDao {
             pst.executeUpdate();
             
             
-        
+        pst.close();
+        conn.close();
     	
     	return true;
-		}
+		
 	}
 	
 	
@@ -237,20 +241,22 @@ public class OrderDao {
 	}
 
 	public static void payOrder(Integer id) throws SQLException, ClassNotFoundException {
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pst = conn.prepareStatement("UPDATE orders SET pagato = 1 WHERE idOrder = ?")){
+		
 		
        
             // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
-
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
        
             // STEP 4: creazione ed esecuzione della query
-          
+            PreparedStatement pst = conn.prepareStatement("UPDATE orders SET pagato = 1 WHERE idOrder = ?");
             pst.setInt(1, id);  
             pst.executeUpdate();
             
+            pst.close();
+            conn.close();
         
-		}
+		
 		
 	}
 	
