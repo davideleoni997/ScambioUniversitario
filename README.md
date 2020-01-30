@@ -1,3 +1,3 @@
 # ScambioUniversitario
 
-Sistema compravendita libri/appunti tra studenti universitari
+Sistema compravendita libri/appunti tra studenti universitari.
