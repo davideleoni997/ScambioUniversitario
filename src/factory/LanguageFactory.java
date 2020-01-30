@@ -2,10 +2,9 @@ package factory;
 
 public interface LanguageFactory {
 	public static LanguageFactory getfactory(int lang) {
-		if(lang==1)
-			return new ITFactory();
-		else
-			return new ENFactory();
+		
+			return new LangFactory(lang);
+		
 	}
 	
 	public abstract String getWelcomeString();
