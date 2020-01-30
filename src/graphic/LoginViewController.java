@@ -61,6 +61,7 @@ public class LoginViewController implements Initializable{
 				lg = LanguageFactory.getfactory(1);
 			
 			lblWelcome.setText(lg.getWelcomeString());
+			btnBack.setText(lg.getBackString());
 		}
 		catch(Exception e) {
 			Logger.getGlobal().log(Level.WARNING,"LogViewController",e);
