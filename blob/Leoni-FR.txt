@@ -4,10 +4,6 @@ The system shall provide the following filters :
 -Subject
 -Type of item : book or notes.
 
-The system shall be able to order search results by distance (closest to furthest) or by date (newest to oldest).
-
-The system shall provide information to a specified user about other users reviews.
-
-The system shall prevent the sign-up of the same user by comparing the e-mail address with the ones in the DB. A popup shall appear on the screen.
+The system shall be able to order search results by date (newest to oldest).
 
 The system shall provide the user information about the article they are buying.

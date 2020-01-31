@@ -1,7 +1,6 @@
 As a student, I want to be able to filter my search, so I can find only what I need.
 
-As a professional seller, I want to be able to be classified as such, so I can be recognized as a company.
+As a professional seller, I want to be able to be classified as such, so I can be recognized.
 
-As a buyer, I want to be able to search for sellers in a specified range near my position, so I can meet with them easily.
+As a buyer, I want to be able to message the seller, so I can ask him about my order
 
-As a user, I want to be able to review other users I interacted with, so the other users know who they are interacting with.
