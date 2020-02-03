@@ -17,12 +17,12 @@ USE `scambio` ;
 -- -----------------------------------------------------
 -- Table `scambio`.`admins`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `scambio`.`admins` (
+CREATE OR REPLACE TABLE IF NOT EXISTS `scambio`.`admins` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `user` VARCHAR(20) NULL DEFAULT NULL,
   `pass` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
@@ -31,7 +31,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `scambio`.`utenti`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `scambio`.`utenti` (
+CREATE OR REPLACE TABLE IF NOT EXISTS `scambio`.`utenti` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `nome` CHAR(20) NULL DEFAULT NULL,
   `username` CHAR(20) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `scambio`.`utenti` (
   `logo` LONGBLOB NULL DEFAULT NULL,
   `matricola` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `id_idx` (`id` ASC) VISIBLE)
+  INDEX `id_idx` (`id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
@@ -50,7 +50,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `scambio`.`insertions`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `scambio`.`insertions` (
+CREATE OR REPLACE TABLE IF NOT EXISTS `scambio`.`insertions` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `title` CHAR(20) NULL DEFAULT NULL,
   `descr` CHAR(200) NULL DEFAULT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `scambio`.`insertions` (
   `book` TINYINT(4) NULL DEFAULT NULL,
   `notes` TINYINT(4) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_insertions_utenti` (`seller` ASC) VISIBLE,
+  INDEX `fk_insertions_utenti` (`seller` ASC),
   CONSTRAINT `fk_insertions_utenti`
     FOREIGN KEY (`seller`)
     REFERENCES `scambio`.`utenti` (`id`)
@@ -81,15 +81,15 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `scambio`.`messages`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `scambio`.`messages` (
+CREATE OR REPLACE TABLE IF NOT EXISTS `scambio`.`messages` (
   `sender` INT(11) NOT NULL,
   `to` INT(11) NOT NULL,
   `desc` VARCHAR(45) NOT NULL,
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `da` (`sender` ASC) VISIBLE,
-  INDEX `a` (`to` ASC) VISIBLE,
+  INDEX `da` (`sender` ASC),
+  INDEX `a` (`to` ASC),
   CONSTRAINT `a`
     FOREIGN KEY (`to`)
     REFERENCES `scambio`.`utenti` (`id`)
@@ -108,7 +108,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `scambio`.`orders`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `scambio`.`orders` (
+CREATE OR REPLACE TABLE IF NOT EXISTS `scambio`.`orders` (
   `idOrder` INT(11) NOT NULL AUTO_INCREMENT,
   `buyer` INT(10) NOT NULL,
   `seller` INT(10) NOT NULL,
@@ -117,8 +117,8 @@ CREATE TABLE IF NOT EXISTS `scambio`.`orders` (
   `prezzo` INT(11) NULL DEFAULT NULL,
   `pagato` TINYINT(4) NULL DEFAULT 0,
   PRIMARY KEY (`idOrder`),
-  INDEX `compratore` (`buyer` ASC) VISIBLE,
-  INDEX `venditore` (`seller` ASC) VISIBLE,
+  INDEX `compratore` (`buyer` ASC),
+  INDEX `venditore` (`seller` ASC),
   CONSTRAINT `compratore`
     FOREIGN KEY (`buyer`)
     REFERENCES `scambio`.`utenti` (`id`)
@@ -137,14 +137,14 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `scambio`.`reports`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `scambio`.`reports` (
+CREATE OR REPLACE TABLE IF NOT EXISTS `scambio`.`reports` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `insId` INT(11) NOT NULL,
   `description` VARCHAR(100) NULL DEFAULT NULL,
   `reportFrom` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `user` (`reportFrom` ASC) VISIBLE,
-  INDEX `insertion` (`insId` ASC) VISIBLE,
+  INDEX `user` (`reportFrom` ASC),
+  INDEX `insertion` (`insId` ASC),
   CONSTRAINT `insertion`
     FOREIGN KEY (`insId`)
     REFERENCES `scambio`.`insertions` (`id`)
