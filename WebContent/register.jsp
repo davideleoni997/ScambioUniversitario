@@ -14,7 +14,7 @@
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="nostroSito">
 <p align = center>Are you a student or a society?</p>
 <form action ="RegisterServlet" name = "myForm" method ="POST">
 <p align = center><input type ="radio" name = "type" id = "type" value="student">Student <input type = "radio" name = "type" id = "type" value ="company">Company</p>

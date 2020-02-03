@@ -127,7 +127,7 @@ public class InsertionDetailController implements Initializable{
 				{
 					alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Already bought");
-					alert.setHeaderText("The item youa re trying to order has already been bought");
+					alert.setHeaderText("The item you are trying to order has already been bought");
 					alert.show();
 					return false;
 				}

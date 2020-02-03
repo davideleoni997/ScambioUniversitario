@@ -21,7 +21,7 @@
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="nostroSito">
 <%for(Message message : messages){
 	if(message!=null){%>
 <p>From : <%= message.getFrom() %>  Date : <%= message.getDate() %></p>

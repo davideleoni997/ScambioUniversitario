@@ -70,6 +70,12 @@
         <path refid="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath"/>
         <pathelement location="WebContent/WEB-INF/lib/junit-4.13.jar"/>
         <path refid="JUnit 5.libraryclasspath"/>
+        <pathelement location="driver/byte-buddy-1.8.15.jar"/>
+        <pathelement location="driver/client-combined-3.141.59.jar"/>
+        <pathelement location="driver/commons-exec-1.3.jar"/>
+        <pathelement location="driver/guava-25.0-jre.jar"/>
+        <pathelement location="driver/okhttp-3.11.0.jar"/>
+        <pathelement location="driver/okio-1.14.0.jar"/>
     </path>
     <target name="init">
         <mkdir dir="build/classes"/>
@@ -130,6 +136,15 @@
             <classpath refid="Dynamic_Scambio.classpath"/>
         </junit>
     </target>
+    <target name="TestCreateOrder">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TestCreateOrder" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </junit>
+    </target>
     <target name="TestInsertionBean">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
@@ -139,11 +154,34 @@
             <classpath refid="Dynamic_Scambio.classpath"/>
         </junit>
     </target>
+    <target name="TestNewInsertion">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TestNewInsertion" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </junit>
+    </target>
     <target name="TestOrderBean (1)">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <test name="test.TestOrderBean" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </junit>
+    </target>
+    <target name="testSelenium">
+        <java classname="test.testSelenium" failonerror="true" fork="yes">
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </java>
+    </target>
+    <target name="TestSendMessage">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TestSendMessage" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="Dynamic_Scambio.classpath"/>
         </junit>
@@ -162,33 +200,6 @@
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <test name="test.TestUtente" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Dynamic_Scambio.classpath"/>
-        </junit>
-    </target>
-    <target name="TestNewInsertion">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.TestNewInsertion" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Dynamic_Scambio.classpath"/>
-        </junit>
-    </target>
-    <target name="TestCreateOrder">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.TestCreateOrder" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Dynamic_Scambio.classpath"/>
-        </junit>
-    </target>
-    <target name="TestSendMessage">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.TestSendMessage" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="Dynamic_Scambio.classpath"/>
         </junit>

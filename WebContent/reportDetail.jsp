@@ -18,7 +18,7 @@
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="nostroSito">
 <p align = right><button type = button onclick="history.back()">Back</button></p>
 <%for(Report report : reports){
 	if(report.getId() == Integer.parseInt(request.getParameter("Id"))){%>

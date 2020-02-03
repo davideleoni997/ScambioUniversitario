@@ -18,7 +18,7 @@
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="nostroSito">
 <p align = center>Your orders : <Button type = "button" onclick="history.back()" >Back</Button></p>
 <%for(Order order : list){
 	if(order != null){%>

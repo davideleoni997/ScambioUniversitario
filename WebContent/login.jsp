@@ -49,8 +49,6 @@
             <div class="col-lg-4 text-center">
                 <input name="login" type="submit"
                        id="login" value="login" class="btn btn-info">
-                <input name="reset" type="reset"
-                       id="reset" class="btn btn-warning">
                 <input name="tipoLogin" type="hidden" value="user"
                        id="tipoLogin" class="btn btn-warning">
             </div>

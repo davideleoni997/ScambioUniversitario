@@ -18,7 +18,7 @@
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="nostroSito">
 <p>Buyer : <%=order.getBuyer() %></p>
 <p>Seller : <%=order.getSeller() %></p>
 <p>Price : <%=order.getItem().getPrezzo() %></p>

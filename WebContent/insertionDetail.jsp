@@ -26,7 +26,7 @@
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="nostroSito">
 
 <%for(InsertionBean inser : list){ 
 	if(inser.getId() == Integer.parseInt(request.getParameter("Id"))){%>
@@ -41,6 +41,7 @@
 <input type = "hidden" name ="object" value ="<%=inser.getBasic().getTitle() %>">
 <input type = "hidden" name ="insertion" value ="<%=inser.getId()%>">
 <input type = "hidden" name ="price" value ="<%=inser.getBasic().getPrice() %>">
+<input type = "hidden" name ="research" value ="<%=request.getParameter("research") %>">
 <button>Buy</button>
 </form>
 <form action="report.jsp?Id=<%=request.getParameter("Id")%>" method = "POST" name ="myform">
@@ -48,6 +49,6 @@
 </form>
 <%} }}%>
 <Button type = Button onclick="history.back()">Back</Button>
-
+<%= request.getParameter("err") %>
 </body>
 </html>

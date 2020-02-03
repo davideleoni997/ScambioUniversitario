@@ -1,0 +1,394 @@
+{
+  "id": "6966ddcc-e170-4ee6-a136-3a416e1c9454",
+  "version": "2.0",
+  "name": "Scambio",
+  "url": "http://localhost:8080/Dynamic_Scambio/index.jsp",
+  "tests": [{
+    "id": "d100ac62-5fb3-4c4c-af42-a4ac4be1f477",
+    "name": "New Message",
+    "commands": [{
+      "id": "dcba5224-69ad-4094-ae3c-2f88df3505cd",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b9a022c5-e3ec-426d-87f0-4a27b7c7519a",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(3) > button",
+      "targets": [
+        ["css=form:nth-child(3) > button", "css:finder"],
+        ["xpath=//form[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Log In')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "835e0403-3377-4a82-bd96-93a268c0a6a3",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c01d792-713d-43ac-a9a7-a591edcaa01f",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "kew"
+    }, {
+      "id": "9e8f9c7e-59c9-46b9-a3c4-7cdbdb77d8c8",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "pass"
+    }, {
+      "id": "73afecc9-aeac-46bf-a147-c2e96ebf0743",
+      "comment": "",
+      "command": "click",
+      "target": "id=login",
+      "targets": [
+        ["id=login", "id"],
+        ["name=login", "name"],
+        ["css=#login", "css:finder"],
+        ["xpath=//input[@id='login']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6254f61e-2754-47c8-bc03-c5ebd214d490",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Messages",
+      "targets": [
+        ["linkText=Messages", "linkText"],
+        ["css=a:nth-child(7)", "css:finder"],
+        ["xpath=//a[contains(text(),'Messages')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/Dynamic_Scambio/CheckCurrServlet?page=Messages']", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Messages')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "be9e350a-3a0e-455a-a784-fb4ff2a05a62",
+      "comment": "",
+      "command": "click",
+      "target": "css=form > button",
+      "targets": [
+        ["css=form > button", "css:finder"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Details')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0eb06ffb-2db0-46dc-b857-a93c17e5cae1",
+      "comment": "",
+      "command": "click",
+      "target": "id=newmsg",
+      "targets": [
+        ["id=newmsg", "id"],
+        ["name=newmsg", "name"],
+        ["css=#newmsg", "css:finder"],
+        ["xpath=//input[@id='newmsg']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d5325bd8-0abd-422d-a103-c2a2088e7ec8",
+      "comment": "",
+      "command": "type",
+      "target": "id=newmsg",
+      "targets": [
+        ["id=newmsg", "id"],
+        ["name=newmsg", "name"],
+        ["css=#newmsg", "css:finder"],
+        ["xpath=//input[@id='newmsg']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "New message"
+    }, {
+      "id": "70fe650e-5ef7-49dc-8e6b-550dcf1403df",
+      "comment": "",
+      "command": "click",
+      "target": "css=p:nth-child(3) > button",
+      "targets": [
+        ["css=p:nth-child(3) > button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "d6758cc1-1cbb-4609-82e6-f1efa8f4983b",
+    "name": "ViewOrder",
+    "commands": [{
+      "id": "4e7d158d-d0b6-4177-b49f-b47fd281fd09",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "50b0124e-d351-4442-94fd-6c6773f154e3",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(3) > button",
+      "targets": [
+        ["css=form:nth-child(3) > button", "css:finder"],
+        ["xpath=//form[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Log In')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bef0b05b-de2e-4ee1-883e-5d41030ab4b5",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d0fd6f08-32b8-4a73-83b3-dacb14f7f660",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "kew"
+    }, {
+      "id": "2107b078-cd1e-40d8-b8c4-1970ab32d17c",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "pass"
+    }, {
+      "id": "53bf689b-0a45-40c7-9848-0f937c2b6fc9",
+      "comment": "",
+      "command": "click",
+      "target": "id=login",
+      "targets": [
+        ["id=login", "id"],
+        ["name=login", "name"],
+        ["css=#login", "css:finder"],
+        ["xpath=//input[@id='login']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a9f4cae-5fb2-42a9-aa6f-bb376096dd4c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=View Orders",
+      "targets": [
+        ["linkText=View Orders", "linkText"],
+        ["css=a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'View Orders')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/Dynamic_Scambio/CheckCurrServlet?page=Orders']", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'View Orders')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d18345fb-13ea-42c4-8c26-49113654a0e0",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(21) > button",
+      "targets": [
+        ["css=form:nth-child(21) > button", "css:finder"],
+        ["xpath=//form[10]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a554d7f4-38af-4144-99cd-bcdd7b1f4dd5",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(8)",
+      "targets": [
+        ["css=button:nth-child(8)", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//body/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "748f1588-f5dd-4000-af50-1d760db49d42",
+      "comment": "",
+      "command": "click",
+      "target": "css=p:nth-child(1)",
+      "targets": [
+        ["css=p:nth-child(1)", "css:finder"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Your orders : Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e0213220-88b7-4257-b1a3-1dbf8de6a640",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > button",
+      "targets": [
+        ["css=p > button", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "60e61f7e-939e-434b-83b0-d78f6989c53c",
+    "name": "View Report",
+    "commands": [{
+      "id": "6bd720d4-8818-49fc-bc02-2613dc880962",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0bd09e53-51e4-424d-ba85-df54995af0a4",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(1) > button",
+      "targets": [
+        ["css=form:nth-child(1) > button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Admin Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2eddce9a-763e-4512-b5a9-8b0b44f32782",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2a59f24-4215-4d2c-9dae-a21735858276",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "admin"
+    }, {
+      "id": "7550e238-6cf4-4e52-9481-faafd79e7b40",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "admin"
+    }, {
+      "id": "ffa5759e-23f0-4a99-b67f-2eb01781dbe4",
+      "comment": "",
+      "command": "click",
+      "target": "id=login",
+      "targets": [
+        ["id=login", "id"],
+        ["name=login", "name"],
+        ["css=#login", "css:finder"],
+        ["xpath=//input[@id='login']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "30d14428-4f0c-4b03-9b0a-bdc31ff8e21e",
+      "comment": "",
+      "command": "click",
+      "target": "css=form > p > button",
+      "targets": [
+        ["css=form > p > button", "css:finder"],
+        ["xpath=//form[2]/p/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Details')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8827cc3f-df20-42c3-b294-3ebd838430ab",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(1)",
+      "targets": [
+        ["css=button:nth-child(1)", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8cc17057-c006-4183-9215-4207906a4f2e",
+      "comment": "",
+      "command": "click",
+      "target": "css=form > button",
+      "targets": [
+        ["css=form > button", "css:finder"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Log Out')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "743a383b-859b-4290-8282-399a00bc7c3d",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["d100ac62-5fb3-4c4c-af42-a4ac4be1f477"]
+  }],
+  "urls": ["http://localhost:8080/Dynamic_Scambio/index.jsp"],
+  "plugins": []
+}

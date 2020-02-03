@@ -37,11 +37,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <!-- linked CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-   
-
+   	<script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	<link href="css/style.css" rel="stylesheet" type="text/css">
  
 </head>
-<body>
+<body class="nostroSito">
 
 <p>
 <form action ="research.jsp" method = "POST" name ="myform">
@@ -109,6 +110,7 @@ Search : <input type= text id = "research" name = "research">
 <p>Title : <%= inser.getBasic().getTitle()%> Price : <%= inser.getBasic().getPrice() %> Seller : <%= inser.getSeller() %> Data : <%=inser.getBasic().getDate() %></p>
 <form action="insertionDetail.jsp?Id=<%=inser.getId() %>" method = "POST" name ="myform">
 <input type= hidden id = "research" name = "research" value ="<%= request.getParameter("research")%>"> 
+<input type= hidden id = "err" name = "err" value =""> 
 <Button>Details</Button>
 </form>
 <%} %>

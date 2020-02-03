@@ -17,7 +17,7 @@
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="nostroSito">
 <form action="ModifyProfileServlet" name="myform" method="POST">
 <p>Name : <%=ub.getNome() %></p>
 <p>Surname : <%=ub.getCognome() %></p>

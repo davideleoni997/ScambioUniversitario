@@ -30,15 +30,17 @@ public class InsertionDetailServlet extends HttpServlet{
 			throws ServletException, IOException {
 		
 		
-		RequestDispatcher disp;
-		if(request.getSession().getAttribute("currentUser") != null) {
-			OrderController.newOrder(Integer.parseInt(request.getParameter("buyer")), Integer.parseInt(request.getParameter("seller")), request.getParameter("object"), Integer.parseInt(request.getParameter("insertion")), Integer.parseInt(request.getParameter("price")));
-			disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter("buyer"));
-		}
-		else {
-			disp = request.getRequestDispatcher("login.jsp");
+			RequestDispatcher disp;
+		
 			
-		}
+			if(OrderController.newOrder(Integer.parseInt(request.getParameter("buyer")), Integer.parseInt(request.getParameter("seller")), request.getParameter("object"), Integer.parseInt(request.getParameter("insertion")), Integer.parseInt(request.getParameter("price")))) {
+			
+				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter("insertion") +"&research=" + request.getParameter("research") +"&err=");
+			}
+			else
+		
+				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter("insertion") +"&research=" + request.getParameter("research") +"&err=L'oggetto e' gia' stato comprato");
+				
 			disp.forward(request, response);
 	}
 }

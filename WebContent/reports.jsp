@@ -17,8 +17,11 @@
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<p align = center>Available reports <button type = button onclick="history.back()">Back</button></p>
+<body class="nostroSito">
+<p align = center>Available reports <button type = button onclick="history.back()">Back</button>
+<form action="http://localhost:8080/Dynamic_Scambio/LogOutServlet" name="myform" method="POST">
+<button>Log Out</button>
+</form>
 
 <%for(Report report : reports){ %>
 <p>Id Number :<%= report.getId() %> From : <%= report.getReporter() %> Reported : <%= report.getInsId() %></p>

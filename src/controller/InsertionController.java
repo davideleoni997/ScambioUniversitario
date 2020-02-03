@@ -44,6 +44,8 @@ public class InsertionController {
 	public List<InsertionBean> getResearchResults(String research, Filters filters) {
 			
 			try {
+				if(filters == null)
+					filters = new Filters();
 				FiltroUni uni = new FiltroUni(filters.getUniversity());
 				FiltroCity city = new FiltroCity(filters.getCity());
 				

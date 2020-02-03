@@ -15,7 +15,7 @@
     <link href="css/style.css" rel="stylesheet" type="text/css">
     
 </head>
-<body>
+<body class="nostroSito">
 
 <form action="AdminLoginServlet" name="myform" method="POST">
 <button>Admin Login</button>
