@@ -172,11 +172,6 @@
             <classpath refid="Dynamic_Scambio.classpath"/>
         </junit>
     </target>
-    <target name="testSelenium">
-        <java classname="test.testSelenium" failonerror="true" fork="yes">
-            <classpath refid="Dynamic_Scambio.classpath"/>
-        </java>
-    </target>
     <target name="TestSendMessage">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
@@ -203,6 +198,11 @@
             <jvmarg line="-ea"/>
             <classpath refid="Dynamic_Scambio.classpath"/>
         </junit>
+    </target>
+    <target name="TestSelenium">
+        <java classname="test.TestSelenium" failonerror="true" fork="yes">
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </java>
     </target>
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">

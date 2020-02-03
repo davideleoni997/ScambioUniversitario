@@ -13,6 +13,7 @@ import controller.OrderController;
 
 @WebServlet("/InsertionDetailServlet")
 public class InsertionDetailServlet extends HttpServlet{
+	private static final String INSERTION = "insertion";
 	private static final long serialVersionUID = 1L;
 
 	
@@ -33,13 +34,13 @@ public class InsertionDetailServlet extends HttpServlet{
 			RequestDispatcher disp;
 		
 			
-			if(OrderController.newOrder(Integer.parseInt(request.getParameter("buyer")), Integer.parseInt(request.getParameter("seller")), request.getParameter("object"), Integer.parseInt(request.getParameter("insertion")), Integer.parseInt(request.getParameter("price")))) {
+			if(OrderController.newOrder(Integer.parseInt(request.getParameter("buyer")), Integer.parseInt(request.getParameter("seller")), request.getParameter("object"), Integer.parseInt(request.getParameter(INSERTION)), Integer.parseInt(request.getParameter("price")))) {
 			
-				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter("insertion") +"&research=" + request.getParameter("research") +"&err=");
+				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter(INSERTION) +"&research=" + request.getParameter("research") +"&err=");
 			}
 			else
 		
-				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter("insertion") +"&research=" + request.getParameter("research") +"&err=L'oggetto e' gia' stato comprato");
+				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter(INSERTION) +"&research=" + request.getParameter("research") +"&err=L'oggetto e' gia' stato comprato");
 				
 			disp.forward(request, response);
 	}

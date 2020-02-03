@@ -2,16 +2,19 @@ package test;
 
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 
-public class testSelenium {
+public class TestSelenium {
 	public static void main(String[] args) {
 		
-		//Simple test to check the new Insertion menu;
+		//Simple test to check the new Insertion menu
 		//First you log in and go back to main page
 		//You create a new insertion with test data
 		//You search again for the insertion using the title
@@ -56,7 +59,7 @@ public class testSelenium {
 		//Insertion detail page
 		WebElement txtBoxContent = driver.findElement(By.xpath("/html/body/p[1]"));
 		
-		System.out.println(txtBoxContent.getText());
+		Logger.getGlobal().log(Level.INFO, txtBoxContent.getText());
 		
 		driver.close();
 		
