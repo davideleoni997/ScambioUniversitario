@@ -63,10 +63,9 @@ public class OrderController {
 			
 			}
 			
-			if(list!=null)
-				this.setLength(this.list.length);
-			else
-				this.setLength(0);
+			
+			this.setLength(this.list.length);
+			
 			
 			return this.list;
 			

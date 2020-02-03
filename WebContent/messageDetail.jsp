@@ -2,10 +2,11 @@
     pageEncoding="ISO-8859-1"
     import="controller.MessageController"
     import="logic.Message"
-    import="bean.UserBean"%>
+    import="bean.UserBean"
+    import="java.util.List"%>
     <%MessageController mc = new MessageController(); 
     UserBean ub = (UserBean) request.getSession().getAttribute("currentUser");
-    Message[] messages = mc.getConversation(Integer.parseInt(request.getParameter("Id")));%>
+    List<Message> messages = mc.getConversation(Integer.parseInt(request.getParameter("Id")));%>
 <!DOCTYPE html>
 <html>
 <head>

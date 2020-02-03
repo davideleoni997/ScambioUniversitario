@@ -1,6 +1,7 @@
 package graphic;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,21 +55,18 @@ public class MessageDetailController implements Initializable{
 		this.lb=lb;
 		
 		MessageController mc = new MessageController();
-		Message[] conv = mc.getConversation(id);
-		if(conv!=null)
-			for(int i=0;i<conv.length;i++) {
-				if(conv[i]!=null) {
+		List<Message> conv = mc.getConversation(id);
+		for(Message conver : conv) {
 					
 					FXMLLoader fl = new FXMLLoader();
 					fl.setLocation(getClass().getResource("MessageDetailAdapter.fxml"));
 					Pane root = (Pane) fl.load();
 					MessageDetailAdapter mda = fl.getController();
-					mda.setAdapter(conv[i]);
+					mda.setAdapter(conver);
 					
 					listMessages.getItems().add(root);
 					
 				}
-			}
 		
 		}
 	catch(Exception e) {

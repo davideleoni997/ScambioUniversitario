@@ -1,6 +1,7 @@
 package graphic;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,34 +49,27 @@ public class MessageMenuController implements Initializable{
 	
 	public void update(UserBean lb) {
 		try {
-		Message[] list = null;
 		
 		
 		
 		MessageController mc = new MessageController();
 		
-		list = 	mc.getMessageList(lb);	
-		if(list != null)
-			for(int i=0; i<list.length;i++)
-			{
-			if(list[i]!=null) {
+		List<Message> list = mc.getMessageList(lb);	
+		for(Message msg : list){
 				
 				FXMLLoader fl = new FXMLLoader();
 				
 				fl.setLocation(getClass().getResource("ConversationAdapter.fxml"));
 				Pane root = (Pane) fl.load();
 				ConversationListAdapter ca =fl.getController();	
-				ca.setAdapter(lb, list[i]);
+				ca.setAdapter(lb, msg);
 			
 			
 				listMessages.getItems().add(root);
 			}
-		}
+		}		
 		
-		else {
-			//NO Messages
-		}
-		}
+		
 		catch(Exception e) {
 			Logger.getGlobal().log(Level.WARNING,"MessageMenuController" ,e);
 		}

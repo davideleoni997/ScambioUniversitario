@@ -158,12 +158,7 @@ public class UtenteDao {
 
          return username;
     }
-    
-    public static Utente findByNameAndPasswordMockup(String username, String password) {
-        if ("myusername".equals(username) && "mypassword".equals(password))
-            return new Utente("myusername", "", "Tizio","Caio");
-        else return null;
-    }
+   
     
     public static boolean update(Integer id,String nome, String cognome, String username, String password) throws SQLException, ClassNotFoundException {
     	 Connection conn = null;

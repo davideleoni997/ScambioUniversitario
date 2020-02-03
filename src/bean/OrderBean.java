@@ -17,10 +17,9 @@ public class OrderBean {
 
 	public void setList(Order[] list) {
 		this.list = list;
-		if(list!=null)
+		
 			this.setLength(this.getList().length);
-		else
-			this.setLength(0);
+	
 	}
 
 

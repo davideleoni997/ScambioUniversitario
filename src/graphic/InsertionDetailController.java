@@ -99,11 +99,12 @@ public class InsertionDetailController implements Initializable{
 	}
 	
 	@FXML
-	public void buy() {
+	public boolean buy() {
 		Property prop = new Property();
 		if(prop.loadProperty(USER_ID).equals("0")) {
 			vc.getScenes().push(btnBuy.getScene());
 			vc.createLoginMenu("Buy");
+			return false;
 		}
 		else {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -115,11 +116,24 @@ public class InsertionDetailController implements Initializable{
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonConf){
-				OrderController.newOrder(Integer.parseInt(prop.loadProperty(USER_ID)), ib.getSellerId(), ib.getBasic().getTitle(), ib.getId(), ib.getBasic().getPrice());
+				
+				if(OrderController.newOrder(Integer.parseInt(prop.loadProperty(USER_ID)), ib.getSellerId(), ib.getBasic().getTitle(), ib.getId(), ib.getBasic().getPrice())) {
 				MessageController mc = new MessageController();
 				mc.newMessage(Integer.parseInt(prop.loadProperty(USER_ID)), ib.getSellerId(), "I have bought your item :"+ ib.getBasic().getTitle());
+				vc.createOrderMenu(prop.loadProperty(USER_ID));
+				return true;
+				}
+				else
+				{
+					alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Already bought");
+					alert.setHeaderText("The item youa re trying to order has already been bought");
+					alert.show();
+					return false;
+				}
 			} 
 			}
+		return false;
 	}
 	
 	public void setInsertion(InsertionBean ib) {

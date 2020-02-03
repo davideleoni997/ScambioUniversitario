@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
 import logic.Message;
 
@@ -29,7 +31,7 @@ public class MessageDao {
     private static final String USER = "root";
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
 	
-    public static Message[] messageList(Integer user) throws SQLException, ClassNotFoundException {
+    public static List<Message> messageList(Integer user) throws SQLException, ClassNotFoundException {
     	
     	
     	
@@ -46,7 +48,7 @@ public class MessageDao {
           rs = stmt.executeQuery(sql);
 
           
-           Message[] list = getMessageList(rs);
+           List<Message> list = getMessageList(rs);
            stmt.close();
            conn.close();
     	
@@ -55,30 +57,24 @@ public class MessageDao {
     
 	
     
-    private static Message[] getMessageList(ResultSet rs) throws SQLException {
-    	Message[] messages = new Message[100];
+    private static List<Message> getMessageList(ResultSet rs) throws SQLException {
+    	List<Message> messages = new LinkedList<>();
     	
     	if (!rs.first()) // rs not empty
-            return new Message[0];
+            return messages;
     	
     	
 
         // riposizionamento del cursore
         rs.first();
-
-        int i=0;
-
-        Message msg = getInfo(rs);
+      
         
-        messages[i] = msg;
-        i++;
+        messages.add(getInfo(rs));
         
         while(rs.next()) {
         	
         	
-            msg = getInfo(rs);
-            messages[i] = msg;
-            i++;
+        	messages.add(getInfo(rs));
         }
 
         // STEP 6: Clean-up dell'ambiente
@@ -88,7 +84,7 @@ public class MessageDao {
 	}
 
 
-	public static Message[] conversation(Integer sender) throws SQLException, ClassNotFoundException {
+	public static List<Message> conversation(Integer sender) throws SQLException, ClassNotFoundException {
     	
     	
     	
@@ -104,7 +100,7 @@ public class MessageDao {
             String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender = '"+ sender +"' OR `to` ='"+ sender +"' ORDER BY `date` ASC;";
             rs = stmt.executeQuery(sql);
 
-            Message[] list = getMessageList(rs);
+            List<Message> list = getMessageList(rs);
             stmt.close();
             conn.close();
     	

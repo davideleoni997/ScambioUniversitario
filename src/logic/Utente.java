@@ -15,12 +15,7 @@ public class Utente {
     private Integer id;
     private Image logo;
 
-    public Utente(String username, String password, String nome, String cognome) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.username = username;
-        this.password = password;
-    }
+    
 
 	public Utente(String username, String password, String nome, String cognome, boolean company, Integer id,
 			Image logo) {

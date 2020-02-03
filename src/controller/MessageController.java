@@ -1,6 +1,8 @@
 package controller;
 
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,23 +17,23 @@ public class MessageController {
 		//Costruttore vuoto
 	}
 	
-	public Message[] getMessageList(UserBean ub) {
+	public List<Message> getMessageList(UserBean ub) {
 		try {
 			return MessageDao.messageList(ub.getId());
 		} catch (Exception e) {
 			
 		Logger.getGlobal().log(Level.WARNING, "getMessage", e);
-		return new Message[0];
+		return new LinkedList<>();
 		}	
 	}
 	
-	public Message[] getConversation(Integer sender) {
+	public List<Message> getConversation(Integer sender) {
 		try {
 			return MessageDao.conversation(sender);
 		} catch (Exception e) {
 			
 			Logger.getGlobal().log(Level.WARNING, "getConv", e);
-			return new Message[0];
+			return new LinkedList<>();
 		
 		}
 	}

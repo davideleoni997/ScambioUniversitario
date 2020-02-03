@@ -234,6 +234,7 @@ public class OrderDao {
                     conn.close();
             } catch (SQLException se) {
             	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
+            	return false;
             }
         }
     	
