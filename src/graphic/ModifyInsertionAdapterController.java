@@ -22,23 +22,23 @@ public class ModifyInsertionAdapterController implements Initializable{
 	@FXML
 	private ImageView imgMain;
 	@FXML
-	private Label lblTitle;
+	private Label modLblTitle;
 	@FXML
-	private Label txtTitle;
+	private Label modTxtTitle;
 	@FXML
-	private Label lblPrice;
+	private Label modLblPrice;
 	@FXML
-	private Label txtPrice;
+	private Label modTxtPrice;
 	@FXML
-	private Label lblSeller;
+	private Label modLblSeller;
 	@FXML
-	private Label txtSeller;
+	private Label modTxtSeller;
 	@FXML
-	private Label lblDate;
+	private Label modLblDate;
 	@FXML
-	private Label txtDate;
+	private Label modTxtDate;
 	@FXML
-	private Button btnDetails;
+	private Button modBtnDetails;
 	
 	public ModifyInsertionAdapterController() {
 		vc = ViewController.getInstance();
@@ -57,27 +57,27 @@ public class ModifyInsertionAdapterController implements Initializable{
 	
 	public void setData(InsertionBean ib) {
 		this.ib = ib;
-		txtTitle.setText(ib.getBasic().getTitle());
-		txtPrice.setText(ib.getBasic().getPrice() + "Euros");
-		txtSeller.setText(ib.getSeller());
-		txtDate.setText(ib.getBasic().getDate().toString());
+		modTxtTitle.setText(ib.getBasic().getTitle());
+		modTxtPrice.setText(ib.getBasic().getPrice() + "Euros");
+		modTxtSeller.setText(ib.getSeller());
+		modTxtDate.setText(ib.getBasic().getDate().toString());
 		if(ib.getImages().size() > 0)
 			imgMain.setImage(ib.getImages().get(0));
 	}
 	
 	@FXML
 	public void details() {
-		vc.getScenes().push(btnDetails.getScene());
+		vc.getScenes().push(modBtnDetails.getScene());
 		vc.createModifyInsertionDetailMenu(ib);
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		lblTitle.setText(lg.getTitleString());
-		lblPrice.setText(lg.getPriceString());
-		lblSeller.setText(lg.getSellerString());
-		lblDate.setText(lg.getDateString());
-		btnDetails.setText(lg.getModifyString());
+		modLblTitle.setText(lg.getTitleString());
+		modLblPrice.setText(lg.getPriceString());
+		modLblSeller.setText(lg.getSellerString());
+		modLblDate.setText(lg.getDateString());
+		modBtnDetails.setText(lg.getModifyString());
 		try {
 			Image img = new Image(getClass().getResourceAsStream(("No-Image-Available.png")));
 			imgMain.setImage(img);
