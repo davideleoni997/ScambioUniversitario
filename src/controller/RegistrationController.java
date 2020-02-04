@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dao.UtenteDao;
+import external.MockupUniDB;
 
 public class RegistrationController {
 
@@ -25,7 +26,11 @@ public class RegistrationController {
 	
 	public boolean registraUtente(String nome,String cognome,String username,String password,Boolean company,String matricola) {
 		try {
-			return UtenteDao.newStudent(nome, cognome, username, password, company, matricola);
+			if(MockupUniDB.isUserInDB(matricola, nome, cognome)) {
+				return UtenteDao.newStudent(nome, cognome, username, password, company, matricola);
+			}
+			else
+				return false;
 		} catch (Exception e) {
 			
 			Logger.getGlobal().log(Level.WARNING, "registraUser", e);

@@ -32,69 +32,69 @@ public class ModifyInsertionDetailController implements Initializable{
 	private InsertionBean ib;
 	
 	@FXML
-	private ImageView img1;
+	private ImageView modImg1;
 	
 	@FXML
-	private ImageView img2;
+	private ImageView modImg2;
 	
 	@FXML
-	private ImageView img3;
+	private ImageView modImg3;
 	
 	@FXML
-	private Label lblTitle;
+	private Label modLblTitle;
 	
 	@FXML
-	private TextField txtTitle;
+	private TextField modTxtTitle;
 	
 	@FXML
-	private Label lblSeller;
+	private Label modLblSeller;
 	
 	@FXML
-	private Label txtSeller;
+	private Label modTxtSeller;
 	
 	@FXML
-	private Label lblPrice;
+	private Label modLblPrice;
 	
 	@FXML
-	private TextField txtPrice;
+	private TextField modTxtPrice;
 	
 	@FXML
-	private Label lblDate;
+	private Label modLblDate;
 	
 	@FXML
-	private Label txtDate;
+	private Label modTxtDate;
 	
 	@FXML
-	private Label lblDescription;
+	private Label modLblDescription;
 	
 	@FXML
-	private TextArea txtDescription;
+	private TextArea modTxtDescription;
 	
 	@FXML
-	private Label lblSubj;
+	private Label modLblSubj;
 	
 	@FXML
-	private TextField txtSubj;
+	private TextField modTxtSubj;
 	
 	@FXML
-	private Label lblCity;
+	private Label modLblCity;
 	
 	@FXML
-	private TextField txtCity;
+	private TextField modTxtCity;
 	
 	@FXML
-	private Label lblUni;
+	private Label modLblUni;
 	
 	@FXML
-	private TextField txtUni;
-	
-	
-	@FXML
-	private RadioButton txtBook;
+	private TextField modTxtUni;
 	
 	
 	@FXML
-	private RadioButton txtNotes;
+	private RadioButton modTxtBook;
+	
+	
+	@FXML
+	private RadioButton modTxtNotes;
 	
 	@FXML
 	private Button btnBack;
@@ -146,16 +146,16 @@ public class ModifyInsertionDetailController implements Initializable{
 	public void modify() {
 		InsertionController ic = InsertionController.getInstance();
 		BasicInformations basic = new BasicInformations();
-		basic.setTitle(txtTitle.getText());
-		basic.setDesc(txtDescription.getText());
-		basic.setPrice(Integer.parseInt(txtPrice.getText()));
+		basic.setTitle(modTxtTitle.getText());
+		basic.setDesc(modTxtDescription.getText());
+		basic.setPrice(Integer.parseInt(modTxtPrice.getText()));
 		ib.setBasic(basic);
 		Filters filter = new Filters();
-		filter.setBook(txtBook.isSelected());
-		filter.setNotes(txtNotes.isSelected());
-		filter.setCity(txtCity.getText());
-		filter.setSubject(txtSubj.getText());
-		filter.setUniversity(txtUni.getText());
+		filter.setBook(modTxtBook.isSelected());
+		filter.setNotes(modTxtNotes.isSelected());
+		filter.setCity(modTxtCity.getText());
+		filter.setSubject(modTxtSubj.getText());
+		filter.setUniversity(modTxtUni.getText());
 		ib.setFilter(filter);
 		ic.modify(ib);
 		vc.goBack();
@@ -166,45 +166,45 @@ public class ModifyInsertionDetailController implements Initializable{
 		this.ib = ib;
 		
 		if(ib.getImages().size() > 0)
-			img1.setImage(ib.getImages().get(0));
+			modImg1.setImage(ib.getImages().get(0));
 		
 		if(ib.getImages().size() > 1)
-			img2.setImage(ib.getImages().get(1));
+			modImg2.setImage(ib.getImages().get(1));
 		
 		if(ib.getImages().size() > 2)
-			img3.setImage(ib.getImages().get(2));
+			modImg3.setImage(ib.getImages().get(2));
 		
-		txtTitle.setText(ib.getBasic().getTitle());
-		txtSeller.setText(ib.getSeller());
-		txtPrice.setText(ib.getBasic().getPrice()+" Euros");
-		txtDate.setText(ib.getBasic().getDate().toString());
-		txtDescription.setText(ib.getBasic().getDesc());
-		txtUni.setText(ib.getFilter().getUniversity());
-		txtCity.setText(ib.getFilter().getCity());
-		txtSubj.setText(ib.getFilter().getSubject());
-		txtBook.setSelected(ib.getFilter().getBook());
-		txtBook.setText(lg.getBooksString());
-		txtNotes.setSelected(ib.getFilter().getNotes());
-		txtNotes.setText(lg.getNotesString());
+		modTxtTitle.setText(ib.getBasic().getTitle());
+		modTxtSeller.setText(ib.getSeller());
+		modTxtPrice.setText(ib.getBasic().getPrice()+" Euros");
+		modTxtDate.setText(ib.getBasic().getDate().toString());
+		modTxtDescription.setText(ib.getBasic().getDesc());
+		modTxtUni.setText(ib.getFilter().getUniversity());
+		modTxtCity.setText(ib.getFilter().getCity());
+		modTxtSubj.setText(ib.getFilter().getSubject());
+		modTxtBook.setSelected(ib.getFilter().getBook());
+		modTxtBook.setText(lg.getBooksString());
+		modTxtNotes.setSelected(ib.getFilter().getNotes());
+		modTxtNotes.setText(lg.getNotesString());
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		lblTitle.setText(lg.getTitleString());
-		lblSeller.setText(lg.getSellerString());
-		lblPrice.setText(lg.getPriceString());
-		lblDate.setText(lg.getDateString());
-		lblDescription.setText(lg.getDescriptionString());
-		lblUni.setText(lg.getUniversityString());
-		lblCity.setText(lg.getCityString());
-		lblSubj.setText(lg.getSubjectString());
+		modLblTitle.setText(lg.getTitleString());
+		modLblSeller.setText(lg.getSellerString());
+		modLblPrice.setText(lg.getPriceString());
+		modLblDate.setText(lg.getDateString());
+		modLblDescription.setText(lg.getDescriptionString());
+		modLblUni.setText(lg.getUniversityString());
+		modLblCity.setText(lg.getCityString());
+		modLblSubj.setText(lg.getSubjectString());
 		btnBack.setText(lg.getBackString());
 		btnModify.setText(lg.getModifyString());
 		btnDelete.setText(lg.getDeleteInsertionString());
 		
 		try {
 			Image img = new Image(getClass().getResourceAsStream(("No-Image-Available.png")));
-			img1.setImage(img);
+			modImg1.setImage(img);
 		}
 		catch(Exception e) {
 			Logger.getGlobal().log(Level.WARNING,"Image loading",e);
