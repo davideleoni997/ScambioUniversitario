@@ -50,8 +50,9 @@ public class OrderMenuViewController implements Initializable{
 		list = oc.getOrdersInfo(user);
 		
 		for(Order or : list) {
+			
 					FXMLLoader fl = new FXMLLoader();
-				
+					
 					fl.setLocation(getClass().getResource("TextButtonAdapter.fxml"));
 					VBox root = (VBox) fl.load();
 					TextButtonListAdapter tbla =fl.getController();

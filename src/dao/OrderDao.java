@@ -27,7 +27,7 @@ public class OrderDao {
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";	
 	
 	public static List<Order> orderListFromDB(String user) throws SQLException, ClassNotFoundException {
-		
+		 List<Order> order = new LinkedList<>();
 		
 	   
 	    ResultSet rs = null;
@@ -36,81 +36,67 @@ public class OrderDao {
 	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	    Statement stmt = conn.createStatement();
         
-	    int id = getId(stmt,user);
-	    
-        if(id != -1) {
-	        String sql = "SELECT idOrder, oggetto, prezzo FROM orders where buyer = '"
-	                + id + "' OR SELLER = '"+ id +"';";
-	        rs = stmt.executeQuery(sql);
-	        List<Order> order;
-	        order = getOrderList(rs);        
-	
-	        // STEP 6: Clean-up dell'ambiente
-	        rs.close();
-	        stmt.close();
-	        conn.close();
-			
-			
-			
-			return order;
-        }
-        else
-        	return new LinkedList<>();
-	}
-	
-	private static int getId(Statement stmt,String user) throws SQLException {
-		ResultSet rs;
+	   
 		String sql = "SELECT id FROM utenti where username = '"
 	            + user + "';";
 	    rs = stmt.executeQuery(sql);
 	    
 	    if(!rs.first()) {
-	    	return -1;
+	    	return new LinkedList<>();
 	    }
+	    
+	    
 	    int id = rs.getInt("id");
-	    rs.close();
-	    return id;
+	   
+	    sql = "SELECT idOrder, oggetto, prezzo FROM orders where buyer = '"
+	                + id + "' OR SELLER = '"+ id +"';";
+	    rs = stmt.executeQuery(sql);
+	       
+
+	    if (!rs.first()) // rs not empty
+	        return new LinkedList<>();
+
+	        // riposizionamento del cursore
+	     rs.first();
+	     
+	        // lettura delle colonne "by name"
+	     id = rs.getInt(COLUMN_IDORDER);
+	     String nome = rs.getString(COLUMN_OGGETTO);
+	     int prezzo = rs.getInt(COLUMN_PREZZO);
+	        
+	     Item item = new Item(nome,prezzo);
+	     Order or = new Order(item);
+	     or.setId(id);
+	     order.add(or);
+	        
+	     while (rs.next())
+	      {       	 
+	        	
+
+	            // lettura delle colonne "by name"
+	            id = rs.getInt(COLUMN_IDORDER);
+	            nome = rs.getString(COLUMN_OGGETTO);
+	            prezzo = rs.getInt(COLUMN_PREZZO);
+	            
+	            
+	            
+	            item = new Item(nome,prezzo);
+	            or = new Order(item);
+	            or.setId(id);      
+	            order.add(or);
+	        }
+	              
+	        
+	
+	        // STEP 6: Clean-up dell'ambiente
+	     rs.close();
+	     stmt.close();
+	     conn.close();
+		
+		 return order;
+        
 	}
 
-	
-	
-	private static List<Order> getOrderList(ResultSet rs) throws SQLException {
-		List<Order> order = new LinkedList<>();
-		
-		order.add(getInfo(rs));
-        
-        
-        while (rs.next())
-        {       	 
-             order.add(getInfo(rs));       
-             
-        }
-        return order;
-	}
-
-	private static Order getInfo(ResultSet rs) throws SQLException {
-		Order order = new Order();
-		
-		if (!rs.first()) // rs not empty
-            return order;
-
-        // riposizionamento del cursore
-        rs.first();
-
-        // lettura delle colonne "by name"
-        Integer id = rs.getInt(COLUMN_IDORDER);
-        String nome = rs.getString(COLUMN_OGGETTO);
-        int prezzo = rs.getInt(COLUMN_PREZZO);
-        
-        
-        
-        Item item = new Item(nome,prezzo);
-        Order or = new Order(item);
-        or.setId(id);
-        
-        
-        return order;
-}
 
 	public static Order getOrderInfo(Integer id) throws SQLException, ClassNotFoundException {
 		
