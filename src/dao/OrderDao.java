@@ -28,7 +28,7 @@ public class OrderDao {
 	
 	public static List<Order> orderListFromDB(String user) throws SQLException, ClassNotFoundException {
 		
-		List<Order> order = new LinkedList<>();
+		
 	   
 	    ResultSet rs = null;
 	    
@@ -36,24 +36,14 @@ public class OrderDao {
 	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	    Statement stmt = conn.createStatement();
         
-	    int id = getId(conn,stmt,user);
+	    int id = getId(stmt,user);
 	    
         if(id != -1) {
 	        String sql = "SELECT idOrder, oggetto, prezzo FROM orders where buyer = '"
 	                + id + "' OR SELLER = '"+ id +"';";
 	        rs = stmt.executeQuery(sql);
-	
-	        
-	        order.add(getInfo(rs));
-	        
-	        while (rs.next())
-	        {
-	        	 
-	            order.add(getInfo(rs));
-	             
-	             
-	        }
-	        
+	        List<Order> order;
+	        order = getOrderList(rs);        
 	
 	        // STEP 6: Clean-up dell'ambiente
 	        rs.close();
@@ -68,7 +58,7 @@ public class OrderDao {
         	return new LinkedList<>();
 	}
 	
-	private static int getId(Connection conn, Statement stmt,String user) throws SQLException {
+	private static int getId(Statement stmt,String user) throws SQLException {
 		ResultSet rs;
 		String sql = "SELECT id FROM utenti where username = '"
 	            + user + "';";
@@ -84,7 +74,7 @@ public class OrderDao {
 
 	public static List<Order> myOrderFromDB(String user) throws SQLException, ClassNotFoundException {
 		
-		List<Order> order = new LinkedList<>();
+		
 	   
 	    ResultSet rs = null;
 	    
@@ -92,23 +82,15 @@ public class OrderDao {
 	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	    Statement stmt = conn.createStatement();
         
-	    int id = getId(conn,stmt,user);
+	    int id = getId(stmt,user);
 	    
         if(id != -1) {
         
         	String sql = "SELECT idOrder, oggetto, prezzo FROM orders where SELLER = '"+ id +"';";
 	        rs = stmt.executeQuery(sql);
-	
+	        List<Order> order;
 	        
-	        order.add(getInfo(rs));
-	        
-	        
-	        while (rs.next())
-	        {       	 
-	             order.add(getInfo(rs));       
-	             
-	        }
-	        
+	        order = getOrderList(rs);	        
 	
 	        // STEP 6: Clean-up dell'ambiente
 	        rs.close();
@@ -122,6 +104,20 @@ public class OrderDao {
         	return new LinkedList<>();
 	}
 	
+	private static List<Order> getOrderList(ResultSet rs) throws SQLException {
+		List<Order> order = new LinkedList<>();
+		
+		order.add(getInfo(rs));
+        
+        
+        while (rs.next())
+        {       	 
+             order.add(getInfo(rs));       
+             
+        }
+        return order;
+	}
+
 	private static Order getInfo(ResultSet rs) throws SQLException {
 		Order order = new Order();
 		
