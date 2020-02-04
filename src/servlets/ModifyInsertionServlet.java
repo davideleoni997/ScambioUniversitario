@@ -1,9 +1,6 @@
 package servlets;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,17 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.UserBean;
+import bean.InsertionBean;
+
 import controller.InsertionController;
+
 import logic.BasicInformations;
 import logic.Filters;
 
-@WebServlet("/NewInsertionAddServlet")
-public class NewInsertionAddServlet extends HttpServlet{
+@WebServlet("/ModifyInsertionServlet")
+public class ModifyInsertionServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	
-	public NewInsertionAddServlet() {
+	public ModifyInsertionServlet() {
 		super();
 	}
 	
@@ -35,43 +34,42 @@ public class NewInsertionAddServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		
 		InsertionController ic = InsertionController.getInstance();
-		UserBean ub = (UserBean)request.getSession().getAttribute("currentUser");
-		List<File> images = new LinkedList<>();
-		if(!request.getParameter("img1").isEmpty())
-			images.add(new File(request.getParameter("img1")));
-		
-		if(!request.getParameter("img2").isEmpty())
-			images.add(new File(request.getParameter("img2")));
-		
-		if(!request.getParameter("img3").isEmpty())
-			images.add(new File(request.getParameter("img3")));
-		
+		if(request.getParameter("op").equals("modify")) {
+		InsertionBean ib = new InsertionBean();
+		ib.setId(Integer.parseInt(request.getParameter("Id")));
 		BasicInformations basic = new BasicInformations();
-		basic.setTitle(request.getParameter("title"));
-		basic.setDesc(request.getParameter("desc"));
-		basic.setPrice(Integer.parseInt(request.getParameter("price")));
 		Filters filter = new Filters();
+		basic.setDesc(request.getParameter("desc"));
+		basic.setTitle(request.getParameter("object"));
+		basic.setPrice(Integer.parseInt(request.getParameter("price")));
 		filter.setUniversity(request.getParameter("uni"));
-		filter.setCity(request.getParameter("city"));
 		filter.setSubject(request.getParameter("subj"));
+		filter.setCity(request.getParameter("city"));
 		if(request.getParameter("book")!=null)
-			filter.setBook(request.getParameter("book").equalsIgnoreCase("yes"));
-		else 
+			filter.setBook(request.getParameter("book").equals("yes"));
+		else
 			filter.setBook(false);
 		if(request.getParameter("notes")!=null)
-			filter.setNotes(request.getParameter("notes").equalsIgnoreCase("yes"));
+			filter.setNotes(request.getParameter("notes").equals("yes"));
 		else
 			filter.setNotes(false);
-			
+		ib.setBasic(basic);
+		ib.setFilter(filter);
 		
-		ic.newInsertion(basic, images, ub.getId(), filter);
+		ic.modify(ib);
+		}
+		else {
+			//Delete
+			ic.delete(Integer.parseInt(request.getParameter("Id")));
+		}
+		
 		
 		RequestDispatcher disp;
 		
 		disp = request.getRequestDispatcher("index.jsp");
 			
-		
 		disp.forward(request, response);
 	}
 }

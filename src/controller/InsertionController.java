@@ -78,10 +78,45 @@ public class InsertionController {
 			
 	}
 	
-public InsertionBean getDetail(Integer id) {
+	public List<InsertionBean> myInsertions(Integer user) {
+		
+		try {
+			
+			return InsertionDao.getMyInsertions(user);
+		} catch (Exception e) {
+			Logger.getGlobal().log(Level.WARNING, "ClassNotFound", e);
+			return new LinkedList<>();
+		} 
+		
+		
+}
+	
+	public InsertionBean getDetail(Integer id) {
 				
 			Insertion ins = new Insertion();
 			ins.setId(id);
 			return ins.getDetail();		
+	}
+
+	public void delete(Integer id) {
+		try {
+			InsertionDao.ban(id);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "Delete", e);
+		
+		}
+		
+	}
+
+	public void modify(InsertionBean ib) {
+		try {
+			InsertionDao.update(ib);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "Delete", e);
+		
+		}
+		
 	}
 }

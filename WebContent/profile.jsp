@@ -27,6 +27,8 @@
 <p></p>
 <a href="http://localhost:8080/Dynamic_Scambio/modifyProfile.jsp">Modify profile</a>
 <p></p>
+<a href="http://localhost:8080/Dynamic_Scambio/modifyInsertions.jsp">Modify Insertions</a>
+<p></p>
 <a href="http://localhost:8080/Dynamic_Scambio/CheckCurrServlet?page=Messages">Messages</a>
 <p></p>
 <a href="http://localhost:8080/Dynamic_Scambio/LogOutServlet">Log Out</a>

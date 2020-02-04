@@ -136,4 +136,12 @@ public interface LanguageFactory {
 	public abstract String getNoAction();
 
 	public abstract String getDeleteInsertionString();
+	
+	public abstract String getModifyInsertionString();
+
+	public abstract String getYourInsertionsString();
+
+	public abstract String getModifyString();
+
+	public abstract String getDeleteConfirm();
 }

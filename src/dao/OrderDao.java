@@ -72,37 +72,7 @@ public class OrderDao {
 	    return id;
 	}
 
-	public static List<Order> myOrderFromDB(String user) throws SQLException, ClassNotFoundException {
-		
-		
-	   
-	    ResultSet rs = null;
-	    
-	    Class.forName(CONNECTOR);
-	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-	    Statement stmt = conn.createStatement();
-        
-	    int id = getId(stmt,user);
-	    
-        if(id != -1) {
-        
-        	String sql = "SELECT idOrder, oggetto, prezzo FROM orders where SELLER = '"+ id +"';";
-	        rs = stmt.executeQuery(sql);
-	        List<Order> order;
-	        
-	        order = getOrderList(rs);	        
 	
-	        // STEP 6: Clean-up dell'ambiente
-	        rs.close();
-	        stmt.close();
-	        conn.close();
-					
-			
-			return order;
-        }
-        else
-        	return new LinkedList<>();
-	}
 	
 	private static List<Order> getOrderList(ResultSet rs) throws SQLException {
 		List<Order> order = new LinkedList<>();

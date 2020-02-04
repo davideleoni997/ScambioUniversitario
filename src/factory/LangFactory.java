@@ -538,4 +538,36 @@ public class LangFactory implements LanguageFactory {
 		else
 			return "Delete Insertion";
 	}
+
+	@Override
+	public String getModifyInsertionString() {
+		if(language ==1)
+			return "Modifica Inserzioni";
+		else
+			return "Modify Insertions";
+	}
+
+	@Override
+	public String getYourInsertionsString() {
+		if(language ==1)
+			return "Le tue Inserzioni :";
+		else
+			return "Your Insertions :";
+	}
+
+	@Override
+	public String getModifyString() {
+		if(language ==1)
+			return "Modifica";
+		else
+			return "Modify";
+	}
+
+	@Override
+	public String getDeleteConfirm() {
+		if(language ==1)
+			return "Vuoi eliminare l'inserzione?";
+		else
+			return "Do you want to delete the insertion?";
+	}
 }

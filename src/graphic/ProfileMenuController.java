@@ -49,6 +49,9 @@ public class ProfileMenuController implements Initializable{
 	private Button btnBack;
 	
 	@FXML
+	private Button btnModifyOrders;
+	
+	@FXML
 	private ImageView imgLogo;
 	
 	public ProfileMenuController() {
@@ -85,6 +88,12 @@ public class ProfileMenuController implements Initializable{
 	}
 	
 	@FXML
+	public void modifyInsertions() {
+		vc.getScenes().push(txtname.getScene());
+		vc.createModifyInsertionMenu(ub.getId());
+	}
+	
+	@FXML
 	public void logOut() {
 		Property prop = new Property();
 		prop.setProperty("user_id", "0");
@@ -114,6 +123,6 @@ public class ProfileMenuController implements Initializable{
 		btnMod.setText(lg.getModifyProfile());
 		btnMsg.setText(lg.getMessagesString());
 		btnBack.setText(lg.getBackString());
-					
+		btnModifyOrders.setText(lg.getModifyInsertionString());
 	}
 }

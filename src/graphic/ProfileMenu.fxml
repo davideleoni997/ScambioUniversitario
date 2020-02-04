@@ -17,5 +17,6 @@
       <Button fx:id="btnLogOut" layoutX="17.0" layoutY="188.0" mnemonicParsing="false" onAction="#logOut" text="LogOut" />
       <ImageView fx:id="imgLogo" fitHeight="113.0" fitWidth="150.0" layoutX="332.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" visible="false" />
       <Button fx:id="btnBack" layoutX="17.0" layoutY="228.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+      <Button fx:id="btnModifyOrders" layoutX="137.0" layoutY="106.0" mnemonicParsing="false" onAction="#modifyInsertions" text="Modify Orders" />
    </children>
 </Pane>

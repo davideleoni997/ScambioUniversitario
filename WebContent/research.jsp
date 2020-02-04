@@ -107,7 +107,6 @@ Search : <input type= text id = "research" name = "research">
 
 <p>Title : <%= inser.getBasic().getTitle()%> Price : <%= inser.getBasic().getPrice() %> Seller : <%= inser.getSeller() %> Data : <%=inser.getBasic().getDate() %></p>
 <form action="insertionDetail.jsp?Id=<%=inser.getId() %>" method = "POST" name ="myform">
-<input type= hidden id = "research" name = "research" value ="<%= request.getParameter("research")%>"> 
 <input type= hidden id = "err" name = "err" value =""> 
 <Button>Details</Button>
 </form>

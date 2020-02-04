@@ -271,6 +271,87 @@ public class InsertionDao {
             conn.close();
         
 	}
+
+	public static List<InsertionBean> getMyInsertions(Integer user) throws SQLException, ClassNotFoundException {
+		LinkedList<InsertionBean> ins = new LinkedList<>();
+    	
+    	
+    	
+        
+        
+        	ResultSet rs = null;
+       
+            // STEP 2: loading dinamico del driver mysql
+            Class.forName(CONNECTOR);
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            // STEP 3: apertura connessione
+            
+
+            // STEP 4: creazione ed esecuzione della query
+          
+            
+            String sql = "SELECT title, descr, price, data, id, image1, image2, image3, sold, university, city, subject,seller, book, notes FROM insertions where seller =?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            
+           	pst.setInt(1, user);
+           	rs = pst.executeQuery();
+     
+            if (!rs.first()) // rs not empty
+                return ins;
+
+   
+            // riposizionamento del cursore
+            rs.first();
+
+            ins.add(getInfo(rs));
+            
+            while(rs.next()) {
+            	
+            ins.add(getInfo(rs));
+            }
+
+            // STEP 6: Clean-up dell'ambiente
+            rs.close();
+            pst.close();
+            conn.close();
+        
+            return ins;
+	}
+
+	public static void update(InsertionBean ib) throws SQLException, ClassNotFoundException {
+		ResultSet rs = null;
+	       
+        // STEP 2: loading dinamico del driver mysql
+        Class.forName(CONNECTOR);
+        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        // STEP 3: apertura connessione
+        
+
+        // STEP 4: creazione ed esecuzione della query
+      
+        
+        String sql = "UPDATE insertions SET title =?, descr =?, price =?, data =?, university=?, city =?, subject = ?, book =?, notes =? where id = ?";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        
+       	pst.setString(1,ib.getBasic().getTitle());
+       	pst.setString(2, ib.getBasic().getDesc());
+       	pst.setInt(3, ib.getBasic().getPrice());
+       	pst.setDate(4,java.sql.Date.valueOf(LocalDate.now()) );
+       	pst.setString(5, ib.getFilter().getUniversity());
+       	pst.setString(6, ib.getFilter().getCity());
+       	pst.setString(7, ib.getFilter().getSubject());
+       	pst.setBoolean(8, ib.getFilter().getBook());
+       	pst.setBoolean(9, ib.getFilter().getNotes());
+       	pst.setInt(10, ib.getId());
+       	
+       	rs = pst.executeQuery();
+
+        // STEP 6: Clean-up dell'ambiente
+        rs.close();
+        pst.close();
+        conn.close();
+		
+	}
     
     
 }
