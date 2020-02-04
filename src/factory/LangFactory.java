@@ -570,4 +570,12 @@ public class LangFactory implements LanguageFactory {
 		else
 			return "Do you want to delete the insertion?";
 	}
+
+	@Override
+	public String getAlreadyExistingString() {
+		if(language ==1)
+			return "Username esistente";
+		else
+			return "Username already exists";
+	}
 }

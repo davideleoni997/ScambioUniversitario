@@ -29,7 +29,6 @@
         	 filter.setDate(Date.OLD);
          
          List<InsertionBean> list = ic.getResearchResults(request.getParameter("research"),filter);%>
-         
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,8 +42,8 @@
  
 </head>
 <body class="nostroSito">
-
 <p>
+
 <form action ="research.jsp" method = "POST" name ="myform">
 
 Search : <input type= text id = "research" name = "research"> 
@@ -57,7 +56,7 @@ Search : <input type= text id = "research" name = "research">
 <input type = submit value = "New Research">
 </form>
 
-<form action ="research.jsp" method = "POST" name ="myform">
+<form action ="research.jsp?research=<%= request.getParameter("research") %>" method = "POST" name ="myform">
 <div class="dropdown">
   <button class="dropbtn">Filters</button>
   <div class="dropdown-content">
@@ -83,7 +82,7 @@ Search : <input type= text id = "research" name = "research">
      <input type ="radio" name = "notes" id = "notes" value="no" <% if(request.getParameter("notes").equals("no")){
     %> checked  <%} %>>No
      <a></a>
-     <button>Apply</button>
+     <input type = submit value = "Apply">
   </div>
 </div>
 
@@ -96,7 +95,7 @@ Search : <input type= text id = "research" name = "research">
      <input type ="radio" name = "order" id = "order" value="old" <% if(request.getParameter("order").equals("old")){
     %> checked  <%} %>>Oldest
      <a></a>
-     <button>Apply</button>
+     <input type = submit value = "Apply">
   </div>
 </div>
 

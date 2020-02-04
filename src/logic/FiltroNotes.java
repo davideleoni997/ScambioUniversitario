@@ -17,7 +17,7 @@ Boolean notes;
 		List<InsertionBean> appunti = new LinkedList<>();
 		
 		for(InsertionBean ins : inserzioni) {
-			if(ins.getFilter().getBook().equals(notes))
+			if(ins.getFilter().getNotes().equals(notes))
 				appunti.add(ins);
 		}
 		return appunti;

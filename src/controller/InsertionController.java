@@ -56,6 +56,8 @@ public class InsertionController {
 			try {
 				if(filters == null)
 					filters = new Filters();
+
+				
 				FiltroUni uni = new FiltroUni(filters.getUniversity());
 				FiltroCity city = new FiltroCity(filters.getCity());
 				

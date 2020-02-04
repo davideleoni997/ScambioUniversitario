@@ -140,15 +140,37 @@ public class RegisterMenuController implements Initializable{
 			RadioButton selected = (RadioButton) tgStud.getSelectedToggle();
 			if(selected.getText().equals(lg.getStudString())) {
 				if(MockupUniDB.isUserInDB(txtEnroll.getText(), txtName.getText(), txtSurname.getText()))
-					rc.registraUtente(txtName.getText(), txtSurname.getText(), txtUser.getText(), txtPsw.getText(), false, txtEnroll.getText());
-				else
-					lblError.setText(lg.getEnrollErrorString());
+					if(!rc.registraUtente(txtName.getText(), txtSurname.getText(), txtUser.getText(), txtPsw.getText(), false, txtEnroll.getText())) {
+						Runnable update = () -> {
+							lblError.setText(lg.getAlreadyExistingString());
+						};
+						Platform.runLater(update);
+					}
+					else {
+						Runnable update = () -> {
+							lblError.setText("Okay");
+						};
+						Platform.runLater(update);
+					}
+						
+				else {
+					Runnable update = () -> {
+						lblError.setText(lg.getEnrollErrorString());
+					};
+					Platform.runLater(update);
+					
+				}
 			}
 			else
 				rc.registraSocieta(txtName.getText(), txtUser.getText(), txtPsw.getText(), true, logo);
 		}
-		else
-			lblError.setText(lg.getCheckError());
+		else {
+			Runnable update = () -> {
+				lblError.setText(lg.getCheckError());
+			};
+			Platform.runLater(update);
+		}
+			
 		
 	}
 	

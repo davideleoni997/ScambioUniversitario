@@ -144,4 +144,6 @@ public interface LanguageFactory {
 	public abstract String getModifyString();
 
 	public abstract String getDeleteConfirm();
+
+	public abstract String getAlreadyExistingString();
 }
