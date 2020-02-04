@@ -18,19 +18,29 @@ import logic.FiltroCity;
 import logic.FiltroNotes;
 import logic.FiltroSubj;
 import logic.FiltroUni;
+import logic.Insertion;
 
 
 public class InsertionController {
 
-	public InsertionController() {
+	private static InsertionController instance;
+	
+	public static InsertionController getInstance() {
+        if (instance == null)
+            instance = new InsertionController();
+        return instance;
+    }
+	
+	private InsertionController() {
 		//Costruttore
 	}
 	
 	public boolean newInsertion(BasicInformations basic, List<File> images, Integer seller, Filters filter) {
 		
 		try {
+			Insertion ins = new Insertion(-1,basic,images,seller,filter);
+			ins.newInsertion();
 			
-			InsertionDao.newInsertion(basic, images, seller, filter);
 		}
 		
 		
@@ -66,5 +76,12 @@ public class InsertionController {
 			} 
 			
 			
+	}
+	
+public InsertionBean getDetail(Integer id) {
+				
+			Insertion ins = new Insertion();
+			ins.setId(id);
+			return ins.getDetail();		
 	}
 }

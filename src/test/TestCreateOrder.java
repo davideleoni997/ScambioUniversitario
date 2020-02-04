@@ -24,7 +24,7 @@ class TestCreateOrder {
 		//Creator : Davide Leoni
 		final Integer INS_NUMBER = 3;
 		
-		InsertionController ic = new InsertionController();
+		InsertionController ic = InsertionController.getInstance();
 		Filters filters = new Filters();
 		List<InsertionBean> list = ic.getResearchResults("", filters);
 		

@@ -2,6 +2,8 @@ package dao;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,9 +26,9 @@ public class OrderDao {
     private static final String USER = "root";
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";	
 	
-	public static Order[] orderListFromDB(String user) throws SQLException, ClassNotFoundException {
+	public static List<Order> orderListFromDB(String user) throws SQLException, ClassNotFoundException {
 		
-		Order[] order= new Order[100];
+		List<Order> order = new LinkedList<>();
 	   
 	    ResultSet rs = null;
 	    
@@ -39,7 +41,7 @@ public class OrderDao {
         rs = stmt.executeQuery(sql);
         
         if(!rs.first()) {
-        	return new Order[0];
+        	return new LinkedList<>();
         }
         int id = rs.getInt("id");
         rs.close();
@@ -58,14 +60,14 @@ public class OrderDao {
         id = rs.getInt(COLUMN_IDORDER);
         String nome = rs.getString(COLUMN_OGGETTO);
         int prezzo = rs.getInt(COLUMN_PREZZO);
-        int i=0;
+        
         
         
         Item item = new Item(nome,prezzo);
-        order[0]= new Order(item);
-        order[0].setId(id);
+        Order or = new Order(item);
+        or.setId(id);
+        order.add(or);
         
-        i++;
         while (rs.next())
         {
         	 
@@ -74,9 +76,9 @@ public class OrderDao {
              item = new Item(nome,prezzo);
              
              id = rs.getInt(COLUMN_IDORDER);
-             order[i]=new Order(item);
-             order[i].setId(id);
-             i++;
+             or = new Order(item);
+             or.setId(id);
+             order.add(or);
              
              
         }

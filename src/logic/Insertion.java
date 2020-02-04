@@ -1,11 +1,20 @@
 package logic;
 
-import java.sql.Blob;
+import java.io.File;
+import java.io.IOException;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import bean.InsertionBean;
+import dao.InsertionDao;
 
 public class Insertion {
 	private BasicInformations basic;
 	private Integer id;
-	private Blob[] images;
+	private List<File> images;
 	private Integer seller;
 	private Boolean sold;
 	private Filters filter;
@@ -33,7 +42,7 @@ public class Insertion {
 		this.basic = basic;
 	}
 	
-	public Insertion(Integer id, BasicInformations basic, Blob[] images, Integer seller, Filters filter) {
+	public Insertion(Integer id, BasicInformations basic, List<File> images, Integer seller, Filters filter) {
 		super();
 		this.id  = id;
 		this.basic = basic;
@@ -42,6 +51,7 @@ public class Insertion {
 		this.filter = filter;
 	}
 	
+
 	public BasicInformations getBasic() {
 		return basic;
 	}
@@ -58,11 +68,11 @@ public class Insertion {
 		this.id = id;
 	}
 
-	public Blob[] getImages() {
+	public List<File> getImages() {
 		return images;
 	}
 
-	public void setImages(Blob[] images) {
+	public void setImages(List<File> images) {
 		this.images = images;
 	}
 
@@ -81,6 +91,20 @@ public class Insertion {
 	public void setSold(Boolean sold) {
 		this.sold = sold;
 	}
+
+	public void newInsertion() throws ClassNotFoundException, SQLException, IOException {
+		InsertionDao.newInsertion(basic, images, seller, filter);
+		
+	}
 	
-	
+	public InsertionBean getDetail() {
+		try {
+			return InsertionDao.getDetail(this.id);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "getDetail", e);
+		
+		}
+		return new InsertionBean();
+	}
 }

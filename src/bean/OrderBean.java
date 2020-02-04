@@ -1,5 +1,7 @@
 package bean;
 
+import java.util.List;
+
 import controller.OrderController;
 import logic.Order;
 
@@ -7,18 +9,18 @@ import logic.Order;
 //Rivedere per singolo ordine, non lista
 public class OrderBean {
 	private Integer length;
-	private Order[] list;
+	private List<Order> list;
 	private String user;
 	private Integer id;
 	
-	public Order[] getList() {
+	public List<Order> getList() {
 		return list;
 	}
 
-	public void setList(Order[] list) {
+	public void setList(List<Order> list) {
 		this.list = list;
 		
-			this.setLength(this.getList().length);
+			this.setLength(this.getLength());
 	
 	}
 
@@ -43,7 +45,7 @@ public class OrderBean {
 
 	public void setUser(String user) {
 		this.user = user;
-		OrderController oC = new OrderController(this.user);
+		OrderController oC = new OrderController();
 		this.setList(oC.getOrdersInfo(this.user));
 		
 	}

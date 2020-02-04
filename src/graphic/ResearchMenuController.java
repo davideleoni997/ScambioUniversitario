@@ -231,7 +231,7 @@ public class ResearchMenuController implements Initializable{
 	public void search() {
 		
 		
-		InsertionController ic = new InsertionController();
+		InsertionController ic = InsertionController.getInstance();
 		List<InsertionBean> results = ic.getResearchResults(research, filters);
 		update(results);
 		

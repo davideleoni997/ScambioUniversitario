@@ -35,7 +35,7 @@ public class NewInsertionAddServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		InsertionController ic = new InsertionController();
+		InsertionController ic = InsertionController.getInstance();
 		UserBean ub = (UserBean)request.getSession().getAttribute("currentUser");
 		List<File> images = new LinkedList<>();
 		if(!request.getParameter("img1").isEmpty())

@@ -1,6 +1,8 @@
 package controller;
 
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,38 +10,9 @@ import dao.OrderDao;
 import logic.Order;
 
 public class OrderController {
-	private Integer length;
-	private Order[] list;
-	
-	public Order[] getList() {
-		return list;
-	}
-
-	public void setList(Order[] list) {
-		this.list = list;
-	}
-
-	public OrderController(Order[] list) {
-		super();
-		length = list.length;
-		this.list = list;
-	}
-
-	public OrderController(String user) {
-		this.length = 0;
-		this.getOrdersInfo(user);
-	}
-	
-	public Integer getLength() {
-		return length;
-	}
-
-	public void setLength(Integer length) {
-		this.length = length;
-	}
 	
 	public OrderController() {
-		list = new Order[0];
+		
 	}
 	
 	public void payOrder(Integer id) {
@@ -52,22 +25,21 @@ public class OrderController {
 		}
 	}
 	
-	public Order[] getOrdersInfo(String user) {
+	public List<Order> getOrdersInfo(String user) {
 			
 			
 			try {
-				this.setList(OrderDao.orderListFromDB(user));
+				return OrderDao.orderListFromDB(user);
 			} catch (Exception e) {
 				
 				Logger.getGlobal().log(Level.WARNING, "getOrders", e);
 			
 			}
 			
+			return new LinkedList<>();
 			
-			this.setLength(this.list.length);
 			
 			
-			return this.list;
 			
 		}
 	
@@ -85,6 +57,7 @@ public class OrderController {
 		}
 		
 		public static boolean newOrder(int buyer,int seller,String oggetto,Integer inserzione, int prezzo) {
+			
 			return OrderDao.buyBook(buyer, seller,inserzione, oggetto, prezzo);
 		}
 }

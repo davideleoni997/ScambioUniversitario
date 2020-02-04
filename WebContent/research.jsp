@@ -6,7 +6,7 @@
          import = "logic.Filters"
          import = "logic.Filters.Date"%>
          
-         <%InsertionController ic = new InsertionController();     
+         <%InsertionController ic = InsertionController.getInstance();    
          Filters filter = new Filters();
          if(!request.getParameter("uni").isEmpty())
         	 filter.setUniversity(request.getParameter("uni"));
@@ -58,8 +58,6 @@ Search : <input type= text id = "research" name = "research">
 </form>
 
 <form action ="research.jsp" method = "POST" name ="myform">
-<input type= hidden id = "research" name = "research" value= "<%= request.getParameter("research")%>"> 
-<!-- Aggiungere filtri e ordinamento -->
 <div class="dropdown">
   <button class="dropbtn">Filters</button>
   <div class="dropdown-content">

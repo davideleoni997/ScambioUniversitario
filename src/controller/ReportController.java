@@ -19,7 +19,9 @@ public class ReportController {
 	
 	public void newReport(Integer insReported, String desc, Integer reporter) {
 		try {
-			ReportDao.newReport(insReported, desc, reporter);
+			Report rep = new Report(0,insReported,desc,reporter);
+			rep.newReport();
+			
 		} catch (Exception e) {
 			
 			Logger.getGlobal().log(Level.WARNING, "newReport", e);

@@ -36,11 +36,11 @@ public class InsertionDetailServlet extends HttpServlet{
 			
 			if(OrderController.newOrder(Integer.parseInt(request.getParameter("buyer")), Integer.parseInt(request.getParameter("seller")), request.getParameter("object"), Integer.parseInt(request.getParameter(INSERTION)), Integer.parseInt(request.getParameter("price")))) {
 			
-				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter(INSERTION) +"&research=" + request.getParameter("research") +"&err=");
+				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter(INSERTION) +"&err=");
 			}
 			else
 		
-				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter(INSERTION) +"&research=" + request.getParameter("research") +"&err=L'oggetto e' gia' stato comprato");
+				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter(INSERTION) +"&err=L'oggetto e' gia' stato comprato");
 				
 			disp.forward(request, response);
 	}

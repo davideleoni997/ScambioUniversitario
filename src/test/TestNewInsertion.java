@@ -20,7 +20,7 @@ class TestNewInsertion {
 
 	@Test
 	void testgetResult() {
-		InsertionController ic = new InsertionController();
+		InsertionController ic = InsertionController.getInstance();
 		BasicInformations basic = new BasicInformations();
 		basic.setTitle("TestTitle");
 		basic.setDesc("TestDesc");

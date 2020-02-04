@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,35 +43,27 @@ public class OrderMenuViewController implements Initializable{
 	
 	public void updateOrders(String user) {
 		try{
-			Order[] list = null;
+		List<Order> list;
 		
 	
-		OrderController oc = new OrderController(user);
+		OrderController oc = new OrderController();
 		list = oc.getOrdersInfo(user);
 		
-		if(list != null)
-			for(int i=0; i<list.length;i++)
-			{
-			
-			
-				if(list[i]!=null) {
+		for(Order or : list) {
 					FXMLLoader fl = new FXMLLoader();
 				
 					fl.setLocation(getClass().getResource("TextButtonAdapter.fxml"));
 					VBox root = (VBox) fl.load();
 					TextButtonListAdapter tbla =fl.getController();
 					OrderBean ob = new OrderBean();
-					ob.setId(list[i].getId());
-					ob.setUser(list[i].getSeller());
+					ob.setId(or.getId());
+					ob.setUser(or.getSeller());
 					tbla.setOrder(ob);
 			
 					listOrders.getItems().add(root);		
 		
 				}
-		}
-		else {
-			//No orders
-		}
+		
 		}
 		catch(Exception e) {
 			Logger.getGlobal().log(Level.WARNING,"ViewController:Login",e);

@@ -2,10 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" 
          import ="bean.UserBean"
-         import ="logic.Order"%>
+         import ="logic.Order"
+         import ="java.util.List"%>
          <%UserBean ub = (UserBean) request.getSession().getAttribute("currentUser"); %>
          <%OrderController oc = new OrderController(); 
-         Order[] list = oc.getOrdersInfo(ub.getUsername());%>
+         List<Order> list = oc.getOrdersInfo(ub.getUsername());%>
 <!DOCTYPE html>
 <html>
 <head>

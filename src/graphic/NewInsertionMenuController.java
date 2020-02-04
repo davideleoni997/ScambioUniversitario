@@ -181,7 +181,7 @@ public class NewInsertionMenuController implements Initializable{
 	@FXML
 	public void insert() {
 		Property prop = new Property();
-		InsertionController ic = new InsertionController();
+		InsertionController ic = InsertionController.getInstance();
 		BasicInformations basic = new BasicInformations();
 		basic.setTitle(txtTitle.getText());
 		basic.setDesc(txtDescription.getText());

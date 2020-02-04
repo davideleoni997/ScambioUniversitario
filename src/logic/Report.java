@@ -1,5 +1,9 @@
 package logic;
 
+import java.sql.SQLException;
+
+import dao.ReportDao;
+
 public class Report {
 	private Integer id;
 	private Integer insId;
@@ -44,6 +48,11 @@ public class Report {
 
 	public void setReporter(Integer reporter) {
 		this.reporter = reporter;
+	}
+
+	public void newReport() throws ClassNotFoundException, SQLException {
+		ReportDao.newReport(insId, desc, reporter);
+		
 	}
 	
 	
