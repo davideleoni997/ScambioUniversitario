@@ -185,16 +185,20 @@ public class NewInsertionMenuController implements Initializable{
 		BasicInformations basic = new BasicInformations();
 		basic.setTitle(txtTitle.getText());
 		basic.setDesc(txtDescription.getText());
-		basic.setPrice(Integer.parseInt(txtPrice.getText()));
+		if(txtPrice.getText().matches("[0-9]+"))
+			basic.setPrice(Integer.parseInt(txtPrice.getText()));
 		Filters filter = new Filters();
 		filter.setUniversity(txtUni.getText());
 		filter.setCity(txtCity.getText());
 		filter.setSubject(txtSubj.getText());
 		filter.setBook(radioBook.isSelected());
 		filter.setNotes(radioNotes.isSelected());
-		ic.newInsertion(basic,images,Integer.parseInt(prop.loadProperty("user_id")),filter);
-		
-		vc.goBack();
+		if(txtPrice.getText().matches("[0-9]+")) {
+			ic.newInsertion(basic,images,Integer.parseInt(prop.loadProperty("user_id")),filter);
+			vc.goBack();
+		}
+		else
+			txtPrice.setText("Insert a proper number");
 	}
 	
 }

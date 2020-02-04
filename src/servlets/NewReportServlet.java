@@ -32,7 +32,7 @@ public class NewReportServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		ReportController rc = new ReportController();
+		ReportController rc = ReportController.getInstance();
 		RequestDispatcher disp;
 		UserBean ub = (UserBean)request.getSession().getAttribute("currentUser");
 		if(request.getSession().getAttribute("currentUser") != null) {

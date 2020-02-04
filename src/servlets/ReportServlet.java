@@ -28,7 +28,7 @@ public class ReportServlet extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ReportController rc = new ReportController();
+		ReportController rc = ReportController.getInstance();
 		String id = request.getParameter("Id");
 		if(request.getParameter("op").equals("ban")) {
 			rc.ban(Integer.parseInt(request.getParameter("InsId")), Integer.parseInt(id));

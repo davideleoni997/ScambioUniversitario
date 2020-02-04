@@ -42,7 +42,7 @@ public class AdminMenuController {
 	public void update(UserBean lb) {
 		
 		txtUser.setText(lb.getUsername());
-		ReportController rc = new ReportController();
+		ReportController rc = ReportController.getInstance();
 		List<Report> list = rc.getReport();
 		for(Report report : list) {
 			try{

@@ -11,9 +11,16 @@ import dao.MessageDao;
 import logic.Message;
 
 public class MessageController {
-
 	
-	public MessageController() {
+	private static MessageController instance;
+
+    public static MessageController getInstance() {
+        if (instance == null)
+            instance = new MessageController();
+        return instance;
+    }
+	
+	private MessageController() {
 		//Costruttore vuoto
 	}
 	

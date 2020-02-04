@@ -4,7 +4,7 @@
     import="logic.Message"
     import="bean.UserBean"
     import="java.util.List"%>
-    <%MessageController mc = new MessageController(); 
+    <%MessageController mc = MessageController.getInstance();
     UserBean ub = (UserBean) request.getSession().getAttribute("currentUser");
     List<Message> messages = mc.getConversation(Integer.parseInt(request.getParameter("Id")));%>
 <!DOCTYPE html>

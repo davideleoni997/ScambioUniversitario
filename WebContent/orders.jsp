@@ -5,7 +5,7 @@
          import ="logic.Order"
          import ="java.util.List"%>
          <%UserBean ub = (UserBean) request.getSession().getAttribute("currentUser"); %>
-         <%OrderController oc = new OrderController(); 
+         <%OrderController oc = OrderController.getInstance(); 
          List<Order> list = oc.getOrdersInfo(ub.getUsername());%>
 <!DOCTYPE html>
 <html>

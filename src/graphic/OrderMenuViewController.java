@@ -46,7 +46,7 @@ public class OrderMenuViewController implements Initializable{
 		List<Order> list;
 		
 	
-		OrderController oc = new OrderController();
+		OrderController oc = OrderController.getInstance();
 		list = oc.getOrdersInfo(user);
 		
 		for(Order or : list) {

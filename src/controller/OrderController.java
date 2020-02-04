@@ -11,7 +11,15 @@ import logic.Order;
 
 public class OrderController {
 	
-	public OrderController() {
+	private static OrderController instance;
+
+    public static OrderController getInstance() {
+        if (instance == null)
+            instance = new OrderController();
+        return instance;
+    }
+	
+	private OrderController() {
 		//Constructor OrderController
 	}
 	

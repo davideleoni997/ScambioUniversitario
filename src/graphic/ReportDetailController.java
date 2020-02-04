@@ -56,7 +56,7 @@ public class ReportDetailController implements Initializable{
 	
 	@FXML
 	public void noAction() {
-		ReportController rc = new ReportController();
+		ReportController rc = ReportController.getInstance();
 		rc.removeReport(rep.getId());
 		vc.getScenes().pop();
 		vc.createAdminMenu(lb);
@@ -64,7 +64,7 @@ public class ReportDetailController implements Initializable{
 	
 	@FXML
 	public void ban() {
-		ReportController rc = new ReportController();
+		ReportController rc = ReportController.getInstance();
 		rc.ban(rep.getId(), rep.getInsId());
 		vc.getScenes().pop();
 		vc.createAdminMenu(lb);

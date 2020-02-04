@@ -43,7 +43,8 @@ public class ModifyInsertionServlet extends HttpServlet{
 		Filters filter = new Filters();
 		basic.setDesc(request.getParameter("desc"));
 		basic.setTitle(request.getParameter("object"));
-		basic.setPrice(Integer.parseInt(request.getParameter("price")));
+		if(request.getParameter("price").matches("[0-9]+"))
+			basic.setPrice(Integer.parseInt(request.getParameter("price")));
 		filter.setUniversity(request.getParameter("uni"));
 		filter.setSubject(request.getParameter("subj"));
 		filter.setCity(request.getParameter("city"));
@@ -57,8 +58,10 @@ public class ModifyInsertionServlet extends HttpServlet{
 			filter.setNotes(false);
 		ib.setBasic(basic);
 		ib.setFilter(filter);
+		if(request.getParameter("price").matches("[0-9]+")) {
+			ic.modify(ib);
+		}
 		
-		ic.modify(ib);
 		}
 		else {
 			//Delete

@@ -13,10 +13,20 @@ import logic.Report;
 
 public class ReportController {
 
-	public ReportController() {
-		//Per instanziare report
-	}
+	private static ReportController instance;
+
+    public static ReportController getInstance() {
+        if (instance == null)
+            instance = new ReportController();
+        return instance;
+    }
 	
+    private ReportController() {
+    	//Constructor reports
+    	}
+    
+    
+    
 	public void newReport(Integer insReported, String desc, Integer reporter) {
 		try {
 			Report rep = new Report(0,insReported,desc,reporter);

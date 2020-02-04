@@ -54,7 +54,7 @@ public class NewReportController implements Initializable{
 	@FXML
 	public void submit() {
 		Property prop = new Property();
-		ReportController rc = new ReportController();
+		ReportController rc = ReportController.getInstance();
 		rc.newReport(insId, txtDescription.getText(), Integer.parseInt(prop.loadProperty("user_id")));
 	}
 	

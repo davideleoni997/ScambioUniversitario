@@ -50,7 +50,8 @@ public class NewInsertionAddServlet extends HttpServlet{
 		BasicInformations basic = new BasicInformations();
 		basic.setTitle(request.getParameter("title"));
 		basic.setDesc(request.getParameter("desc"));
-		basic.setPrice(Integer.parseInt(request.getParameter("price")));
+		if(request.getParameter("price").matches("[0-9]+"))
+			basic.setPrice(Integer.parseInt(request.getParameter("price")));
 		Filters filter = new Filters();
 		filter.setUniversity(request.getParameter("uni"));
 		filter.setCity(request.getParameter("city"));
@@ -64,14 +65,18 @@ public class NewInsertionAddServlet extends HttpServlet{
 		else
 			filter.setNotes(false);
 			
-		
-		ic.newInsertion(basic, images, ub.getId(), filter);
+		if(request.getParameter("price").matches("[0-9]+")) {
+			ic.newInsertion(basic, images, ub.getId(), filter);
+		}
 		
 		RequestDispatcher disp;
 		
 		disp = request.getRequestDispatcher("index.jsp");
 			
-		
 		disp.forward(request, response);
+		
+		
+		
+		
 	}
 }

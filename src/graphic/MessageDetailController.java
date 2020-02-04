@@ -54,7 +54,7 @@ public class MessageDetailController implements Initializable{
 		this.id = id;
 		this.lb=lb;
 		
-		MessageController mc = new MessageController();
+		MessageController mc = MessageController.getInstance();
 		List<Message> conv = mc.getConversation(id);
 		for(Message conver : conv) {
 					
@@ -76,7 +76,7 @@ public class MessageDetailController implements Initializable{
 	
 	@FXML
 	public void submit() {
-		MessageController mc = new MessageController();
+		MessageController mc = MessageController.getInstance();
 		mc.newMessage(lb.getId(), id, txtNewMessage.getText());
 		listMessages.getItems().clear();
 		this.update(lb,id);

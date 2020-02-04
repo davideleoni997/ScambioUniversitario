@@ -32,7 +32,7 @@ public class MessageSendServlet extends HttpServlet{
 		
 		String newmsg = request.getParameter("newmsg");
 		Integer to = Integer.parseInt(request.getParameter("to"));
-		MessageController mc = new MessageController();
+		MessageController mc = MessageController.getInstance();
 		UserBean ub = (UserBean) request.getSession().getAttribute("currentUser");
 		
 		RequestDispatcher disp;

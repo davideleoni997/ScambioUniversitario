@@ -148,7 +148,7 @@ public class InsertionDetailController implements Initializable{
 			if (result.get() == buttonConf){
 				
 				if(OrderController.newOrder(Integer.parseInt(prop.loadProperty(USER_ID)), ib.getSellerId(), ib.getBasic().getTitle(), ib.getId(), ib.getBasic().getPrice())) {
-				MessageController mc = new MessageController();
+				MessageController mc = MessageController.getInstance();
 				mc.newMessage(Integer.parseInt(prop.loadProperty(USER_ID)), ib.getSellerId(), "I have bought your item :"+ ib.getBasic().getTitle());
 				vc.createOrderMenu(prop.loadProperty(USER_ID));
 				return true;

@@ -17,7 +17,7 @@ class TestSendMessage {
 		//if the user does not exists; if the user exists we get the last message description and see if it is equals to "Hello"
 		//Creator : Davide Leoni
 		
-		MessageController mc = new MessageController();
+		MessageController mc = MessageController.getInstance();
 		mc.newMessage(3, 3, "Hello");
 		List<Message> message = mc.getConversation(3);
 		assertEquals("Hello",message.get(message.size()-1).getDesc());

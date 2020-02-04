@@ -45,7 +45,7 @@ public class OrderBean {
 
 	public void setUser(String user) {
 		this.user = user;
-		OrderController oC = new OrderController();
+		OrderController oC = OrderController.getInstance();
 		this.setList(oC.getOrdersInfo(this.user));
 		
 	}

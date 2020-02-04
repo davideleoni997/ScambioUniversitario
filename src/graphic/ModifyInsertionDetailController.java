@@ -150,7 +150,8 @@ public class ModifyInsertionDetailController implements Initializable{
 		BasicInformations basic = new BasicInformations();
 		basic.setTitle(modTxtTitle.getText());
 		basic.setDesc(modTxtDescription.getText());
-		basic.setPrice(Integer.parseInt(modTxtPrice.getText()));
+		if(modTxtPrice.getText().matches("[0-9]+"))
+			basic.setPrice(Integer.parseInt(modTxtPrice.getText()));
 		ib.setBasic(basic);
 		Filters filter = new Filters();
 		filter.setBook(modTxtBook.isSelected());
@@ -159,8 +160,11 @@ public class ModifyInsertionDetailController implements Initializable{
 		filter.setSubject(modTxtSubj.getText());
 		filter.setUniversity(modTxtUni.getText());
 		ib.setFilter(filter);
-		ic.modify(ib);
-		vc.goBack();
+		if(modTxtPrice.getText().matches("[0-9]+")) {
+			ic.modify(ib);
+			vc.goBack();}
+		else
+			modTxtPrice.setText("Insert a proper number");
 	}
 	
 

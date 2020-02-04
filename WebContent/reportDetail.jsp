@@ -3,7 +3,7 @@
     import = "controller.ReportController"
     import = "logic.Report"
     import = "java.util.List"%>
-    <%ReportController rc = new ReportController();
+    <%ReportController rc = ReportController.getInstance();
     List<Report> reports = rc.getReport();
     %>
 <!DOCTYPE html>

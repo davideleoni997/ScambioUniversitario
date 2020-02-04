@@ -52,7 +52,7 @@ public class MessageMenuController implements Initializable{
 		
 		
 		
-		MessageController mc = new MessageController();
+		MessageController mc = MessageController.getInstance();
 		
 		List<Message> list = mc.getMessageList(lb);	
 		for(Message msg : list){
