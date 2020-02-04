@@ -36,44 +36,53 @@ public class OrderDao {
 	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	    Statement stmt = conn.createStatement();
         
-        String sql = "SELECT id FROM utenti where username = '"
-                + user + "';";
-        rs = stmt.executeQuery(sql);
-        
-        if(!rs.first()) {
+	    int id = getId(conn,stmt,user);
+	    
+        if(id != -1) {
+	        String sql = "SELECT idOrder, oggetto, prezzo FROM orders where buyer = '"
+	                + id + "' OR SELLER = '"+ id +"';";
+	        rs = stmt.executeQuery(sql);
+	
+	        
+	        order.add(getInfo(rs));
+	        
+	        while (rs.next())
+	        {
+	        	 
+	            order.add(getInfo(rs));
+	             
+	             
+	        }
+	        
+	
+	        // STEP 6: Clean-up dell'ambiente
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+			
+			
+			
+			return order;
+        }
+        else
         	return new LinkedList<>();
-        }
-        int id = rs.getInt("id");
-        rs.close();
-        
-        sql = "SELECT idOrder, oggetto, prezzo FROM orders where buyer = '"
-                + id + "' OR SELLER = '"+ id +"';";
-        rs = stmt.executeQuery(sql);
-
-        
-        order.add(getInfo(rs));
-        
-        while (rs.next())
-        {
-        	 
-            order.add(getInfo(rs));
-             
-             
-        }
-        
-
-        // STEP 6: Clean-up dell'ambiente
-        rs.close();
-        stmt.close();
-        conn.close();
-		
-		
-		
-		return order;
-		
 	}
 	
-public static List<Order> myOrderFromDB(String user) throws SQLException, ClassNotFoundException {
+	private static int getId(Connection conn, Statement stmt,String user) throws SQLException {
+		ResultSet rs;
+		String sql = "SELECT id FROM utenti where username = '"
+	            + user + "';";
+	    rs = stmt.executeQuery(sql);
+	    
+	    if(!rs.first()) {
+	    	return -1;
+	    }
+	    int id = rs.getInt("id");
+	    rs.close();
+	    return id;
+	}
+
+	public static List<Order> myOrderFromDB(String user) throws SQLException, ClassNotFoundException {
 		
 		List<Order> order = new LinkedList<>();
 	   
@@ -83,38 +92,34 @@ public static List<Order> myOrderFromDB(String user) throws SQLException, ClassN
 	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	    Statement stmt = conn.createStatement();
         
-        String sql = "SELECT id FROM utenti where username = '"
-                + user + "';";
-        rs = stmt.executeQuery(sql);
+	    int id = getId(conn,stmt,user);
+	    
+        if(id != -1) {
         
-        if(!rs.first()) {
+        	String sql = "SELECT idOrder, oggetto, prezzo FROM orders where SELLER = '"+ id +"';";
+	        rs = stmt.executeQuery(sql);
+	
+	        
+	        order.add(getInfo(rs));
+	        
+	        
+	        while (rs.next())
+	        {       	 
+	             order.add(getInfo(rs));       
+	             
+	        }
+	        
+	
+	        // STEP 6: Clean-up dell'ambiente
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+					
+			
+			return order;
+        }
+        else
         	return new LinkedList<>();
-        }
-        int id = rs.getInt("id");
-        rs.close();
-        
-        sql = "SELECT idOrder, oggetto, prezzo FROM orders where SELLER = '"+ id +"';";
-        rs = stmt.executeQuery(sql);
-
-        
-        order.add(getInfo(rs));
-        
-        
-        while (rs.next())
-        {       	 
-             order.add(getInfo(rs));       
-             
-        }
-        
-
-        // STEP 6: Clean-up dell'ambiente
-        rs.close();
-        stmt.close();
-        conn.close();
-				
-		
-		return order;
-		
 	}
 	
 	private static Order getInfo(ResultSet rs) throws SQLException {

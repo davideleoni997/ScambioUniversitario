@@ -17,9 +17,6 @@ public class Message {
 		this.date = date;
 	}
 
-	public Integer getFrom() {
-		return sender;
-	}
 
 	public void setFrom(Integer from) {
 		this.sender = from;

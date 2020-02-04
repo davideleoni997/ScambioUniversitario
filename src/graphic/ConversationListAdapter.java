@@ -44,7 +44,7 @@ public class ConversationListAdapter implements Initializable{
 	@FXML
 	public void messageDetail() {
 		vc.getScenes().push(btndetail.getScene());
-		vc.createMessageDetailMenu(lb, msg.getFrom());
+		vc.createMessageDetailMenu(lb, msg.getSender());
 	}
 
 	@Override

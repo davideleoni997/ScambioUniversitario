@@ -43,7 +43,7 @@ public class OrderController {
 			
 		}
 	
-	public List<Order> MyOrders(String user) {
+	public List<Order> myOrders(String user) {
 		
 		
 		try {
