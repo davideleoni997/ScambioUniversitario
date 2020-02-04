@@ -55,6 +55,12 @@ public class ModifyInsertionAdapterController implements Initializable{
 		}
 	}
 	
+	@FXML
+	public void details() {
+		vc.getScenes().push(modBtnDetails.getScene());
+		vc.createModifyInsertionDetailMenu(ib);
+	}
+	
 	public void setData(InsertionBean ib) {
 		this.ib = ib;
 		modTxtTitle.setText(ib.getBasic().getTitle());
@@ -65,11 +71,7 @@ public class ModifyInsertionAdapterController implements Initializable{
 			imgMain.setImage(ib.getImages().get(0));
 	}
 	
-	@FXML
-	public void details() {
-		vc.getScenes().push(modBtnDetails.getScene());
-		vc.createModifyInsertionDetailMenu(ib);
-	}
+	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

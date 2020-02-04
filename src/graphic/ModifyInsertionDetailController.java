@@ -121,11 +121,6 @@ public class ModifyInsertionDetailController implements Initializable{
 	}
 	
 	@FXML
-	public void goBack() {
-		vc.goBack();
-	}
-	
-	@FXML
 	public void delete() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(lg.getDeleteInsertionString());
@@ -141,6 +136,13 @@ public class ModifyInsertionDetailController implements Initializable{
 		vc.goBack();
 		}
 	}
+	
+	@FXML
+	public void goBack() {
+		vc.goBack();
+	}
+	
+	
 	
 	@FXML
 	public void modify() {
