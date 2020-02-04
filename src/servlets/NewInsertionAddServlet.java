@@ -19,6 +19,7 @@ import logic.Filters;
 
 @WebServlet("/NewInsertionAddServlet")
 public class NewInsertionAddServlet extends HttpServlet{
+	private static final String PRICE = "price";
 	private static final long serialVersionUID = 1L;
 
 	
@@ -50,8 +51,8 @@ public class NewInsertionAddServlet extends HttpServlet{
 		BasicInformations basic = new BasicInformations();
 		basic.setTitle(request.getParameter("title"));
 		basic.setDesc(request.getParameter("desc"));
-		if(request.getParameter("price").matches("[0-9]+"))
-			basic.setPrice(Integer.parseInt(request.getParameter("price")));
+		if(request.getParameter(PRICE).matches("[0-9]+"))
+			basic.setPrice(Integer.parseInt(request.getParameter(PRICE)));
 		Filters filter = new Filters();
 		filter.setUniversity(request.getParameter("uni"));
 		filter.setCity(request.getParameter("city"));
@@ -65,7 +66,7 @@ public class NewInsertionAddServlet extends HttpServlet{
 		else
 			filter.setNotes(false);
 			
-		if(request.getParameter("price").matches("[0-9]+")) {
+		if(request.getParameter(PRICE).matches("[0-9]+")) {
 			ic.newInsertion(basic, images, ub.getId(), filter);
 		}
 		

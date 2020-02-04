@@ -2,7 +2,7 @@ package graphic;
 
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Locale;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,17 +43,7 @@ public class ViewController {
 			return vc;
 	}
 	
-	public void changeLanguage(int lang) { //Metodo cambio lingua
-		if(lang ==0) {
-			Locale.setDefault(new Locale("en"));
-			System.setProperty("user.language", "en");
-		}
-		else
-		{
-			Locale.setDefault(new Locale("it"));
-			System.setProperty("user.language", "it");
-		}
-	}
+	
 	
 	public Stage getPrimaryStage() {
 		return primaryStage;
