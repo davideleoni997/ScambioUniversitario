@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controller.MessageController;
 import controller.OrderController;
 
 @WebServlet("/InsertionDetailServlet")
@@ -35,7 +36,9 @@ public class InsertionDetailServlet extends HttpServlet{
 		
 			
 			if(OrderController.newOrder(Integer.parseInt(request.getParameter("buyer")), Integer.parseInt(request.getParameter("seller")), request.getParameter("object"), Integer.parseInt(request.getParameter(INSERTION)), Integer.parseInt(request.getParameter("price")))) {
-			
+				MessageController mc = new MessageController();
+				mc.newMessage(Integer.parseInt(request.getParameter("buyer")), Integer.parseInt(request.getParameter("seller")), "I have bought your item :"+ request.getParameter("object"));
+				
 				disp = request.getRequestDispatcher("insertionDetail.jsp?Id="+ request.getParameter(INSERTION) +"&err=");
 			}
 			else

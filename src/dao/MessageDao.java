@@ -57,7 +57,7 @@ public class MessageDao {
     
 	
     
-    private static List<Message> getMessageList(ResultSet rs) throws SQLException {
+    private static List<Message> getMessageList(ResultSet rs) throws SQLException, ClassNotFoundException {
     	List<Message> messages = new LinkedList<>();
     	
     	if (!rs.first()) // rs not empty
@@ -108,13 +108,14 @@ public class MessageDao {
     	}
     
     
- private static Message getInfo(ResultSet rs) throws SQLException {
+ private static Message getInfo(ResultSet rs) throws SQLException, ClassNotFoundException {
 	 Integer sender = rs.getInt(COLUMN_SENDER);
      Integer to = rs.getInt(COLUMN_TO);
      String desc = rs.getString(COLUMN_DESC);
      Date date = rs.getDate(COLUMN_DATE);
-		
-     return new Message(sender,to,desc,date);
+     Message msg = new Message(sender,to,desc,date);
+     msg.setSenderName(UtenteDao.getUsernameById(sender));
+     return msg;
 	}
 
 

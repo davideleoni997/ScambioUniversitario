@@ -27,6 +27,8 @@
 <p>Paid : <%=order.getPaid() %></p>
 <%if(!order.getPaid()){ %>
 	<form action="PaymentServlet?Id=<%= order.getId()%>" name="myform" method="POST">
+	<input type = hidden id ="seller" name = "seller" value =<%=order.getSeller() %>>
+	
 	<Button>Pay</Button>
 	</form>
 <%} %>

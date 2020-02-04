@@ -7,6 +7,7 @@ public class Message {
 	private Integer to;
 	private String desc;
 	private Date date;
+	private String senderName;
 	
 	public Message(Integer from, Integer to, String desc, Date date) {
 		super();
@@ -46,6 +47,22 @@ public class Message {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Integer getSender() {
+		return sender;
+	}
+
+	public void setSender(Integer sender) {
+		this.sender = sender;
+	}
+
+	public String getSenderName() {
+		return senderName;
+	}
+
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
 	}
 	
 	

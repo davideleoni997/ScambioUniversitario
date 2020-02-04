@@ -50,35 +50,13 @@ public class OrderDao {
                 + id + "' OR SELLER = '"+ id +"';";
         rs = stmt.executeQuery(sql);
 
-        if (!rs.first()) // rs not empty
-            return order;
-
-        // riposizionamento del cursore
-        rs.first();
-
-        // lettura delle colonne "by name"
-        id = rs.getInt(COLUMN_IDORDER);
-        String nome = rs.getString(COLUMN_OGGETTO);
-        int prezzo = rs.getInt(COLUMN_PREZZO);
         
-        
-        
-        Item item = new Item(nome,prezzo);
-        Order or = new Order(item);
-        or.setId(id);
-        order.add(or);
+        order.add(getInfo(rs));
         
         while (rs.next())
         {
         	 
-             nome = rs.getString(COLUMN_OGGETTO);
-             prezzo = rs.getInt(COLUMN_PREZZO);
-             item = new Item(nome,prezzo);
-             
-             id = rs.getInt(COLUMN_IDORDER);
-             or = new Order(item);
-             or.setId(id);
-             order.add(or);
+            order.add(getInfo(rs));
              
              
         }
@@ -95,6 +73,74 @@ public class OrderDao {
 		
 	}
 	
+public static List<Order> myOrderFromDB(String user) throws SQLException, ClassNotFoundException {
+		
+		List<Order> order = new LinkedList<>();
+	   
+	    ResultSet rs = null;
+	    
+	    Class.forName(CONNECTOR);
+	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	    Statement stmt = conn.createStatement();
+        
+        String sql = "SELECT id FROM utenti where username = '"
+                + user + "';";
+        rs = stmt.executeQuery(sql);
+        
+        if(!rs.first()) {
+        	return new LinkedList<>();
+        }
+        int id = rs.getInt("id");
+        rs.close();
+        
+        sql = "SELECT idOrder, oggetto, prezzo FROM orders where SELLER = '"+ id +"';";
+        rs = stmt.executeQuery(sql);
+
+        
+        order.add(getInfo(rs));
+        
+        
+        while (rs.next())
+        {       	 
+             order.add(getInfo(rs));       
+             
+        }
+        
+
+        // STEP 6: Clean-up dell'ambiente
+        rs.close();
+        stmt.close();
+        conn.close();
+				
+		
+		return order;
+		
+	}
+	
+	private static Order getInfo(ResultSet rs) throws SQLException {
+		Order order = new Order();
+		
+		if (!rs.first()) // rs not empty
+            return order;
+
+        // riposizionamento del cursore
+        rs.first();
+
+        // lettura delle colonne "by name"
+        Integer id = rs.getInt(COLUMN_IDORDER);
+        String nome = rs.getString(COLUMN_OGGETTO);
+        int prezzo = rs.getInt(COLUMN_PREZZO);
+        
+        
+        
+        Item item = new Item(nome,prezzo);
+        Order or = new Order(item);
+        or.setId(id);
+        
+        
+        return order;
+}
+
 	public static Order getOrderInfo(Integer id) throws SQLException, ClassNotFoundException {
 		
 		Order order = null;

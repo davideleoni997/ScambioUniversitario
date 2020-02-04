@@ -3,8 +3,6 @@ package graphic;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import controller.LoginController;
-import controller.MessageController;
 import controller.OrderController;
 
 import external.MockupPayment;
@@ -14,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import logic.Order;
-import util.Property;
 
 public class OrderDetailController implements Initializable{
 	private LanguageFactory lg;
@@ -116,10 +113,6 @@ public class OrderDetailController implements Initializable{
 			OrderController oc = new OrderController();
 			oc.payOrder(order.getId());
 			vc.createOrderDetailMenu(order.getId());
-			MessageController mc = new MessageController();
-			Property prop = new Property();
-			LoginController lc = LoginController.getInstance();
-			mc.newMessage(Integer.parseInt(prop.loadProperty("user_id")), lc.getIdFromUsername(order.getSeller()), "I have paid the order :"+ order.getId());
 			
 		}
 		else {

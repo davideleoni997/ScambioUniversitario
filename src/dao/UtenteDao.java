@@ -106,6 +106,7 @@ public class UtenteDao {
             stmt = conn.createStatement();
             String sql = "SELECT id FROM utenti where username = '"
                     + username +"';";
+        
             rs = stmt.executeQuery(sql);
 
             if (!rs.first()) // rs not empty

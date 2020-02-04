@@ -36,7 +36,7 @@ public class MessageDetailAdapter implements Initializable{
 	
 	public void setAdapter(Message msg) {
 		
-		txtsender.setText(String.valueOf(msg.getFrom()));
+		txtsender.setText(msg.getSenderName());
 	
 		lblmsg.setText(msg.getDesc());
 	}

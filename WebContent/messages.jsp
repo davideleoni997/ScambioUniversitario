@@ -27,7 +27,7 @@
 <%for(Message message : messages){
 if(message!=null){%>
 
-<p>From : <%= message.getFrom()%></p>
+<p>From : <%= message.getSenderName()%></p>
 <form action="MessageDetailServlet?Id=<%= message.getFrom() %>" name="myform" method="POST">
 <button>Details</button>
 </form>

@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphic.InsertionDetailController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphic.InsertionDetailController">
    <children>
       <ImageView fx:id="img1" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="img2" fitHeight="61.0" fitWidth="66.0" layoutX="14.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
@@ -23,5 +23,15 @@
       <Button fx:id="btnBack" layoutX="521.0" layoutY="19.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
       <Button fx:id="btnBuy" layoutX="515.0" layoutY="275.0" mnemonicParsing="false" onAction="#buy" text="Buy" />
       <Button fx:id="btnReport" layoutX="524.0" layoutY="318.0" mnemonicParsing="false" onAction="#report" text="Report" />
+      <Label fx:id="lblSubj" layoutX="398.0" layoutY="40.0" text="Subject" />
+      <Label fx:id="txtSubj" layoutX="451.0" layoutY="40.0" />
+      <Label fx:id="lblCity" layoutX="398.0" layoutY="66.0" text="City :" />
+      <Label fx:id="txtCity" layoutX="424.0" layoutY="66.0" />
+      <Label fx:id="lblUni" layoutX="397.0" layoutY="89.0" text="University:" />
+      <Label fx:id="txtUni" layoutX="459.0" layoutY="89.0" />
+      <Label fx:id="lblBook" layoutX="331.0" layoutY="125.0" text="Book :" />
+      <Label fx:id="txtBook" layoutX="370.0" layoutY="125.0" />
+      <Label fx:id="lblNotes" layoutX="423.0" layoutY="125.0" text="Notes:" />
+      <Label fx:id="txtNotes" layoutX="465.0" layoutY="125.0" />
    </children>
 </Pane>

@@ -69,6 +69,36 @@ public class InsertionDetailController implements Initializable{
 	private Label txtDescription;
 	
 	@FXML
+	private Label lblSubj;
+	
+	@FXML
+	private Label txtSubj;
+	
+	@FXML
+	private Label lblCity;
+	
+	@FXML
+	private Label txtCity;
+	
+	@FXML
+	private Label lblUni;
+	
+	@FXML
+	private Label txtUni;
+	
+	@FXML
+	private Label lblBook;
+	
+	@FXML
+	private Label txtBook;
+	
+	@FXML
+	private Label lblNotes;
+	
+	@FXML
+	private Label txtNotes;
+	
+	@FXML
 	private Button btnBack;
 	
 	@FXML
@@ -153,6 +183,17 @@ public class InsertionDetailController implements Initializable{
 		txtPrice.setText(ib.getBasic().getPrice()+" Euros");
 		txtDate.setText(ib.getBasic().getDate().toString());
 		txtDescription.setText(ib.getBasic().getDesc());
+		txtUni.setText(ib.getFilter().getUniversity());
+		txtCity.setText(ib.getFilter().getCity());
+		txtSubj.setText(ib.getFilter().getSubject());
+		if(ib.getFilter().getBook())
+			txtBook.setText(lg.getYesString());
+		else
+			txtBook.setText(lg.getNoString());
+		if(ib.getFilter().getNotes())
+			txtNotes.setText(lg.getYesString());
+		else
+			txtNotes.setText(lg.getNoString());
 	}
 
 	@Override
@@ -162,6 +203,11 @@ public class InsertionDetailController implements Initializable{
 		lblPrice.setText(lg.getPriceString());
 		lblDate.setText(lg.getDateString());
 		lblDescription.setText(lg.getDescriptionString());
+		lblUni.setText(lg.getUniversityString());
+		lblCity.setText(lg.getCityString());
+		lblSubj.setText(lg.getSubjectString());
+		lblBook.setText(lg.getBooksString());
+		lblNotes.setText(lg.getNotesString());
 		btnBack.setText(lg.getBackString());
 		btnBuy.setText(lg.getBuyString());
 		try {

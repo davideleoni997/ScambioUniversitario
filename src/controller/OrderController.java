@@ -12,7 +12,7 @@ import logic.Order;
 public class OrderController {
 	
 	public OrderController() {
-		
+		//Constructor OrderController
 	}
 	
 	public void payOrder(Integer id) {
@@ -42,6 +42,24 @@ public class OrderController {
 			
 			
 		}
+	
+	public List<Order> MyOrders(String user) {
+		
+		
+		try {
+			return OrderDao.myOrderFromDB(user);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "getOrders", e);
+		
+		}
+		
+		return new LinkedList<>();
+		
+		
+		
+		
+	}
 	
 	
 	public static Order getOrderDetail(Integer id) {

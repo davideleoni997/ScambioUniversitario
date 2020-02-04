@@ -29,8 +29,9 @@
 <body class="nostroSito">
 
 <p>Title : <%= inser.getBasic().getTitle()%> Price : <%= inser.getBasic().getPrice() %> Seller : <%= inser.getSeller() %> Data : <%=inser.getBasic().getDate() %></p>
-<p>Description : <%=inser.getBasic().getDesc() %> Sold : <%= inser.getSold() %>
-
+<p>Description : <%=inser.getBasic().getDesc() %> 
+<p>Sold : <%= inser.getSold()%> Subject : <%= inser.getFilter().getSubject()%> City : <%=inser.getFilter().getCity() %>
+<p>University : <%=inser.getFilter().getUniversity()%> Book : <%=inser.getFilter().getBook() %> Notes : <%=inser.getFilter().getNotes() %>
 <!-- Trovare modo di convertire imgs -->
 <form action ="InsertionDetailServlet" method = "POST" name = "myform">
 <input type = "hidden" name ="buyer" value ="<%= ub.getId()%>">

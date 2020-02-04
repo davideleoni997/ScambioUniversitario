@@ -38,7 +38,7 @@ public class ConversationListAdapter implements Initializable{
 	public void setAdapter(UserBean lb,Message msg) {
 		this.lb=lb;
 		this.msg = msg;
-		txtsender.setText(String.valueOf(msg.getFrom()));
+		txtsender.setText(msg.getSenderName());
 	}
 	
 	@FXML

@@ -34,8 +34,10 @@ public class PaymentServlet extends HttpServlet{
 		RequestDispatcher disp;
 		if(request.getSession().getAttribute("currentUser") != null) {
 			if(MockupPayment.payment()) {
+				
 				OrderController oc = new OrderController();
 				oc.payOrder(Integer.parseInt(request.getParameter("Id")));
+				
 				}
 			disp = request.getRequestDispatcher("orderDetail.jsp?Id="+ request.getParameter("Id"));
 		}
