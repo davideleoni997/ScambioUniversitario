@@ -304,7 +304,7 @@ public class UtenteDao {
             if (!rs.first()) // rs not empty
                 return false;
             
-            Boolean ret = rs.getBoolean("company");    
+            Boolean ret = rs.getBoolean(COLUMN_COMPANY);    
             
             // STEP 6: Clean-up dell'ambiente
             rs.close();
