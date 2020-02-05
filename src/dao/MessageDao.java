@@ -83,10 +83,20 @@ public class MessageDao {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = conn.createStatement();
             
-            String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender IN ('"+ sender +"','"+to +"') AND `to` IN ('"+ sender +"','"+to +"') ORDER BY `date` ASC;";
+            String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender ='"+ sender +"'AND `to` ='"+to +"' ORDER BY `date` ASC;";
             rs = stmt.executeQuery(sql);
 
             List<Message> list = getMessageList(rs);
+            rs.close();
+            
+            if(sender != to) {
+            sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender ='"+ to +"'AND `to` ='"+ sender +"' ORDER BY `date` ASC;";
+            rs = stmt.executeQuery(sql);
+            list.addAll(getMessageList(rs));
+            list.sort((m1,m2) -> m1.getDate().compareTo(m2.getDate()));
+
+            rs.close();
+            }
             stmt.close();
             conn.close();
     	
@@ -118,7 +128,8 @@ public class MessageDao {
             pst.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
             
             pst.executeUpdate();    
-    	
+            pst.close();
+            conn.close();
     	return true;
 	   
     }

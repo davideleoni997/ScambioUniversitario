@@ -204,8 +204,8 @@ public class OrderDao {
             pst.executeUpdate();
             pst.close();
             if(res == 0) {
-            if(!newOrder(buyer,seller,oggetto,prezzo)) //Method to create a order in the DB
-            	return false;}
+            newOrder(buyer,seller,oggetto,prezzo); //Method to create a order in the DB
+            return true;}
             else
              return false;
             
@@ -232,7 +232,6 @@ public class OrderDao {
             }
         }
     	
-    	return true;
 	}
 
 	public static void payOrder(Integer id) throws SQLException, ClassNotFoundException {
