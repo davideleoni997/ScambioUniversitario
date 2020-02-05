@@ -283,5 +283,71 @@ public class UtenteDao {
         return u.tobean();
 	}
 
+	public static boolean isCompany(String seller) throws SQLException, ClassNotFoundException {
+		// STEP 1: dichiarazioni
+        Statement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        
+       
+            // STEP 2: loading dinamico del driver mysql
+            Class.forName(CONNECTOR);
+
+            // STEP 3: apertura connessione
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // STEP 4: creazione ed esecuzione della query
+            stmt = conn.createStatement();
+            String sql = "SELECT company FROM utenti where username = '"+ seller + "';";
+            rs = stmt.executeQuery(sql);
+
+            if (!rs.first()) // rs not empty
+                return false;
+            
+            Boolean ret = rs.getBoolean("company");    
+            
+            // STEP 6: Clean-up dell'ambiente
+            rs.close();
+            stmt.close();
+            conn.close();
+       
+
+        return ret;
+	}
+
+	public static Image getLogo(String seller) throws SQLException, ClassNotFoundException {
+		// STEP 1: dichiarazioni
+        Statement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        
+       
+            // STEP 2: loading dinamico del driver mysql
+            Class.forName(CONNECTOR);
+
+            // STEP 3: apertura connessione
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // STEP 4: creazione ed esecuzione della query
+            stmt = conn.createStatement();
+            String sql = "SELECT logo FROM utenti where username = '"+ seller + "';";
+            rs = stmt.executeQuery(sql);
+
+            if (!rs.first()) // rs not empty
+                throw new SQLException();
+            
+            Blob ret = rs.getBlob("logo");
+            InputStream in = ret.getBinaryStream();
+            Image img = new Image(in);
+            
+            // STEP 6: Clean-up dell'ambiente
+            rs.close();
+            stmt.close();
+            conn.close();
+       
+
+        return img;
+	}
+
 	
 }

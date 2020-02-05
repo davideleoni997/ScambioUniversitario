@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 
 import bean.InsertionBean;
 import dao.InsertionDao;
+import dao.UtenteDao;
+import javafx.scene.image.Image;
 import logic.BasicInformations;
 import logic.Filters;
 import logic.FiltroAnd;
@@ -120,5 +122,25 @@ public class InsertionController {
 		
 		}
 		
+	}
+	
+	public boolean isCompany(String seller) {
+		try {
+			return UtenteDao.isCompany(seller);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "isCompany", e);
+		 return false;
+		}
+	}
+
+	public Image getLogo(String seller) {
+		try {
+			return UtenteDao.getLogo(seller);
+		} catch (Exception e) {
+			
+			Logger.getGlobal().log(Level.WARNING, "isCompany", e);
+		 return new Image(getClass().getResourceAsStream(("No-Image-Available.png")));
+		}
 	}
 }

@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bean.InsertionBean;
+import controller.InsertionController;
 import controller.MessageController;
 import controller.OrderController;
 import factory.LanguageFactory;
@@ -28,6 +29,9 @@ public class InsertionDetailController implements Initializable{
 	private LanguageFactory lg;
 	private ViewController vc;
 	private InsertionBean ib;
+	
+	@FXML
+	private ImageView imgLogo;
 	
 	@FXML
 	private ImageView img1;
@@ -180,6 +184,14 @@ public class InsertionDetailController implements Initializable{
 		
 		txtTitle.setText(ib.getBasic().getTitle());
 		txtSeller.setText(ib.getSeller());
+		
+		InsertionController ic = InsertionController.getInstance();
+		
+		if(ic.isCompany(ib.getSeller())) {
+			imgLogo.setImage(ic.getLogo(ib.getSeller()));
+			imgLogo.setVisible(true);
+		}
+		
 		txtPrice.setText(ib.getBasic().getPrice()+" Euros");
 		txtDate.setText(ib.getBasic().getDate().toString());
 		txtDescription.setText(ib.getBasic().getDesc());
