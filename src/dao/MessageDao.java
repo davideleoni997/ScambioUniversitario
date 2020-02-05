@@ -6,13 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
 import logic.Message;
 
-import java.sql.Date;
 
 public class MessageDao {
 	
@@ -109,7 +109,7 @@ public class MessageDao {
 	 Integer sender = rs.getInt(COLUMN_SENDER);
      Integer to = rs.getInt(COLUMN_TO);
      String desc = rs.getString(COLUMN_DESC);
-     Date date = rs.getDate(COLUMN_DATE);
+     Timestamp date = rs.getTimestamp(COLUMN_DATE);
      Message msg = new Message(sender,to,desc,date);
      msg.setSenderName(UtenteDao.getUsernameById(sender));
      return msg;
@@ -125,8 +125,7 @@ public class MessageDao {
             pst.setInt(1, sender);
             pst.setInt(2, to);
             pst.setString(3, desc);
-            pst.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
-            
+            pst.setTimestamp(4, java.sql.Timestamp.valueOf(LocalDateTime.now()));
             pst.executeUpdate();    
             pst.close();
             conn.close();

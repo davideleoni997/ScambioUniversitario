@@ -24,7 +24,7 @@
 <body class="nostroSito">
 <%for(Message message : messages){
 	if(message!=null){%>
-<p>From : <%= message.getSenderName() %>  Date : <%= message.getDate() %></p>
+<p>From : <%= message.getSenderName() %>  Date : <%= message.getDate().toString() %></p>
 <p>Message : <%= message.getDesc() %> </p>
 	
 <%}} %>

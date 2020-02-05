@@ -1,15 +1,15 @@
 package logic;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Message {
 	private Integer sender;
 	private Integer to;
 	private String desc;
-	private Date date;
+	private Timestamp date;
 	private String senderName;
 	
-	public Message(Integer from, Integer to, String desc, Date date) {
+	public Message(Integer from, Integer to, String desc, Timestamp date) {
 		super();
 		this.sender = from;
 		this.to = to;
@@ -38,11 +38,11 @@ public class Message {
 		this.desc = desc;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 
