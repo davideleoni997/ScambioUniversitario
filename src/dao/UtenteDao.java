@@ -30,27 +30,21 @@ public class UtenteDao {
       }
 
     public static Utente findByNameAndPassword(String username, String password) throws SQLException, ClassNotFoundException {
-        // STEP 1: dichiarazioni
+        //Check if a username and password matches a user and return an instance of it
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
        
-        
-            // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
             String sql = "SELECT nome, username, password, cognome, company, logo, id FROM utenti where username = '"
                     + username + "' AND password = '" + password + "';";
             rs = stmt.executeQuery(sql);
          Utente u = getInfo(rs);
             
-            
-            // STEP 6: Clean-up dell'ambiente
             rs.close();
             stmt.close();
             conn.close();
@@ -60,20 +54,17 @@ public class UtenteDao {
     }
     
     private static Utente getInfo(ResultSet rs) throws SQLException {
+    	//return a user from a result set
     	 Utente u = null;
 
         if (!rs.first()) // rs not empty
             return null;
 
         boolean moreThanOne = rs.first() && rs.next();
-        assert !moreThanOne; // per abilitare le asserzioni, avviare la JVM con il parametro -ea
-        // (Run Configurations -> <configurazione utilizzata per l'avvio del server> -> Arguments -> VM Arguments).
-        // N.B. Le asserzioni andrebbero usate solo per test e debug, non per codice in produzione
+        assert !moreThanOne;
 
-        // riposizionamento del cursore
         rs.first();
 
-        // lettura delle colonne "by name"
         String nome = rs.getString(COLUMN_NOME);
         String cognome = rs.getString(COLUMN_COGNOME);
         String usernameLoaded = rs.getString(COLUMN_USERNAME);
@@ -91,18 +82,16 @@ public class UtenteDao {
 	}
 
 	public static int getIdByUsername(String username) throws SQLException, ClassNotFoundException {
+		//Get the id of a user using its username
     	Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
         int id = -1;
         
-            // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
             String sql = "SELECT id FROM utenti where username = '"
                     + username +"';";
@@ -112,32 +101,26 @@ public class UtenteDao {
             if (!rs.first()) // rs not empty
                 return -1;
 
-            // lettura delle colonne "by name"
             id = rs.getInt(COLUMN_ID);           
             
-            // STEP 6: Clean-up dell'ambiente
             rs.close();
             stmt.close();
-            conn.close();
-            
-       
+            conn.close();     
 
          return id;
     }
 
     public static String getUsernameById(Integer id) throws SQLException, ClassNotFoundException {
+    	//method to return a user's username using its id
     	PreparedStatement pst = null;
         Connection conn = null;
         ResultSet rs = null;
         String username = "";
         
-            // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            // STEP 4: creazione ed esecuzione della query
             pst = conn.prepareStatement("SELECT username FROM utenti where id = ?");
             
             pst.setInt(1, id);
@@ -147,35 +130,27 @@ public class UtenteDao {
             if (!rs.first()) // rs not empty
                 return username;
 
-            // lettura delle colonne "by name"
             username = rs.getString(COLUMN_USERNAME);           
             
-            // STEP 6: Clean-up dell'ambiente
             rs.close();
             pst.close();
-            conn.close();
-            
-        
+            conn.close();     
 
          return username;
     }
    
     
     public static boolean update(Integer id,String nome, String cognome, String username, String password) throws SQLException, ClassNotFoundException {
-    	 Connection conn = null;
-         PreparedStatement pst = null;
+    		//method to update an existing user in the db
+    		Connection conn = null;
+    		PreparedStatement pst = null;
          
-             // STEP 2: loading dinamico del driver mysql
              Class.forName(CONNECTOR);
 
-             // STEP 3: apertura connessione
              conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             // STEP 4: creazione ed esecuzione della query
-             //!!!RICORDA ID AUTOINCREMENT!!!
+
              pst = conn.prepareStatement("UPDATE utenti set nome = ?,cognome = ?,username = ?,password = ? where id = ?");
-             
-            
-             
+                        
              pst.setString(1, nome);
              pst.setString(2, cognome);
              pst.setString(3, username);
@@ -185,25 +160,21 @@ public class UtenteDao {
              pst.executeUpdate();
              pst.close();
              
-             return true;
-             
-        
-     	
-     	
+             return true;  	
     }
     
     
     public static boolean newCompany(String nome, String username, String password, Boolean company,File logo) throws SQLException, ClassNotFoundException, IOException {
+    	//Method to create a new user of type company in the DB
     	Connection conn = null;
         PreparedStatement pst = null;
         try(FileInputStream logoStream = new FileInputStream(logo); ) {
-            // STEP 2: loading dinamico del driver mysql
+            
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
+            
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            // STEP 4: creazione ed esecuzione della query
-            //!!!RICORDA ID AUTOINCREMENT!!!
+           
             pst = conn.prepareStatement("INSERT into utenti(nome,username,password,company,logo,matricola) VALUES(?,?,?,?,?,?)");
             pst.setString(1, nome);
             pst.setString(2, username);
@@ -222,20 +193,16 @@ public class UtenteDao {
     
     
     public static boolean newStudent(String nome, String cognome, String username, String password, Boolean company,String matricola) throws SQLException, ClassNotFoundException {
-      	 Connection conn = null;
-           PreparedStatement pst = null;
-           
-               // STEP 2: loading dinamico del driver mysql
+      	 	//method to create a new user of the type student
+    		Connection conn = null;
+      	 	PreparedStatement pst = null;
+
                Class.forName(CONNECTOR);
 
-               // STEP 3: apertura connessione
                conn = DriverManager.getConnection(DB_URL, USER, PASS);
-               // STEP 4: creazione ed esecuzione della query
-               //!!!RICORDA ID AUTOINCREMENT!!!
+
                pst = conn.prepareStatement("INSERT into utenti(nome,cognome,username,password,company,logo,matricola) VALUES(?,?,?,?,?,?,?)");
-               
-        
-              
+                          
                pst.setString(1, nome);
                pst.setString(2, cognome);
                pst.setString(3, username);
@@ -247,56 +214,42 @@ public class UtenteDao {
                pst.executeUpdate();
                pst.close();
                
-               return true;
-               
-           
-       	
-       	
+               return true;    	
       }
 
 	public static UserBean userFromId(Integer id) throws SQLException, ClassNotFoundException {
-		// STEP 1: dichiarazioni
+		//method that returns a bean using a user id
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
         
-       
-            // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
             String sql = "SELECT nome, username, password, cognome, company, logo, id FROM utenti where id = '"+ id + "';";
             rs = stmt.executeQuery(sql);
 
           Utente  u =  getInfo(rs);    
-            
-            // STEP 6: Clean-up dell'ambiente
+
             rs.close();
             stmt.close();
             conn.close();
        
-
         return u.tobean();
 	}
 
 	public static boolean isCompany(String seller) throws SQLException, ClassNotFoundException {
-		// STEP 1: dichiarazioni
+		//Method that returns true if the username matches a company
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
-        
-       
-            // STEP 2: loading dinamico del driver mysql
+
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
             String sql = "SELECT company FROM utenti where username = '"+ seller + "';";
             rs = stmt.executeQuery(sql);
@@ -306,29 +259,23 @@ public class UtenteDao {
             
             Boolean ret = rs.getBoolean(COLUMN_COMPANY);    
             
-            // STEP 6: Clean-up dell'ambiente
             rs.close();
             stmt.close();
             conn.close();
        
-
         return ret;
 	}
 
 	public static Image getLogo(String seller) throws SQLException, ClassNotFoundException {
-		// STEP 1: dichiarazioni
+		//method that returns the logo of a company, only used if the user is a company
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
-        
-       
-            // STEP 2: loading dinamico del driver mysql
+
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            // STEP 4: creazione ed esecuzione della query
             stmt = conn.createStatement();
             String sql = "SELECT logo FROM utenti where username = '"+ seller + "';";
             rs = stmt.executeQuery(sql);
@@ -340,14 +287,11 @@ public class UtenteDao {
             InputStream in = ret.getBinaryStream();
             Image img = new Image(in);
             
-            // STEP 6: Clean-up dell'ambiente
             rs.close();
             stmt.close();
-            conn.close();
-       
+            conn.close();   
 
         return img;
 	}
-
 	
 }

@@ -11,7 +11,7 @@ import dao.MessageDao;
 import logic.Message;
 
 public class MessageController {
-	
+	//Singleton controller with the responsability of communicating with the Message entity
 	private static MessageController instance;
 
     public static MessageController getInstance() {
@@ -21,11 +21,13 @@ public class MessageController {
     }
 	
 	private MessageController() {
-		//Costruttore vuoto
+		//Constructor private since it is a singleton
 	}
 	
 	public List<Message> getMessageList(UserBean ub) {
+		//Method to retrieve a list of messages corresponding to a user represented by the bean
 		try {
+			//retrieve the messages of a user using its id
 			return MessageDao.messageList(ub.getId());
 		} catch (Exception e) {
 			
@@ -34,9 +36,10 @@ public class MessageController {
 		}	
 	}
 	
-	public List<Message> getConversation(Integer sender) {
+	public List<Message> getConversation(Integer sender, Integer to) {
+		//Get a list of messages exchanged between two users using their id
 		try {
-			return MessageDao.conversation(sender);
+			return MessageDao.conversation(sender,to);
 		} catch (Exception e) {
 			
 			Logger.getGlobal().log(Level.WARNING, "getConv", e);
@@ -46,6 +49,7 @@ public class MessageController {
 	}
 	
 	public void newMessage(Integer sender,Integer to,String desc) {
+		//method to create a new message
 		try {
 			MessageDao.newMessage(sender, to, desc);
 		} catch (Exception e) {

@@ -10,11 +10,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Property {
+	//Class to write and read property to a file
+	
 	String resourceFilePath = "project.properties";
 	Properties data;
 	
 	public Property() {
-		
+		//Create a properties object and open the property file
 		data = new Properties();
 		try {
 		   //Stream associato al file di proprieta'
@@ -28,11 +30,12 @@ public class Property {
 	}
 	
 	public String loadProperty(String prop) {
-		
+		//return the property value corresponding to the key prop
 		return data.getProperty(prop);
 	}
 
 	public void setProperty(String key, String value) {
+		//write the property key with the value "value" to the file
 		try {
 			URL url = Thread.currentThread().getContextClassLoader().getResource("util/project.properties");
 			File file = new File(url.toURI().getPath());

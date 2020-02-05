@@ -51,49 +51,46 @@ public class InsertionDao {
       }
     
     public static List<InsertionBean> getReserach(String research, logic.Filters.Date order) throws SQLException, ClassNotFoundException {
-    	LinkedList<InsertionBean> ins = new LinkedList<>();
-    	
-    	
-    	
-        
-        
-        ResultSet rs = null;
+    		//method to get a list of isnertions ordered by Date ASC or DESC 
+    		LinkedList<InsertionBean> ins = new LinkedList<>();
+  
+    		ResultSet rs = null;
        
-            // STEP 2: loading dinamico del driver mysql
+           
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            // STEP 3: apertura connessione
+          
             Statement stmt = conn.createStatement();
 
-            // STEP 4: creazione ed esecuzione della query
+           
           
             
             String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold, university, city, subject, book, notes FROM insertions where title LIKE '%"+ research + "%' ";
             
-            if (order.equals(logic.Filters.Date.NEW))
+            if (order.equals(logic.Filters.Date.NEW))// ordered by date depending on order kind
             	sql = sql + "ORDER BY data desc";
             else
             	sql = sql + "ORDER BY data asc";
             
             
-            rs = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql); //execute
            
      
             if (!rs.first()) // rs not empty
                 return ins;
 
    
-            // riposizionamento del cursore
+            //cursor on the first result
             rs.first();
 
-            ins.add(getInfo(rs));
+            ins.add(getInfo(rs)); //insert a new insertionBean in the list
             
-            while(rs.next()) {
+            while(rs.next()) {//Continue looking for results of the select until null 
             	
             ins.add(getInfo(rs));
             }
 
-            // STEP 6: Clean-up dell'ambiente
+            
             rs.close();
             stmt.close();
             conn.close();
@@ -103,7 +100,9 @@ public class InsertionDao {
     
     
     private static InsertionBean getInfo(ResultSet rs) throws SQLException, ClassNotFoundException {
-    	// lettura delle colonne "by name"
+    	//Method to retrieve info about an insertion from a result set
+    	
+    	// read columns "by name"
         String title = rs.getString(COLUMN_TITLE);
         String desc = rs.getString(COLUMN_DESCR);
         String price = rs.getString(COLUMN_PRICE);
@@ -120,7 +119,7 @@ public class InsertionDao {
         Integer seller = rs.getInt(COLUMN_SELLER);
         Boolean sold = rs.getBoolean(COLUMN_SOLD);
         LinkedList<Image> imagesList = new LinkedList<>();
-       
+       //Convert blob into images
         for(Blob img : images) {
         		
         		InputStream imgIn = img.getBinaryStream();
@@ -129,12 +128,14 @@ public class InsertionDao {
         		
         	
         }
+        //Set the filters of the insertion
        Filters filter = new Filters();
        filter.setUniversity(rs.getString(UNIVERSITY));
        filter.setCity(rs.getString(CITY));
        filter.setSubject(rs.getString(SUBJECT));
        filter.setBook(rs.getBoolean(BOOK));
        filter.setNotes(rs.getBoolean(NOTES));
+       //Set the basic info of the isnertion
        BasicInformations basic = new BasicInformations(title,desc,date,Integer.parseInt(price));
        return new InsertionBean(basic,id,imagesList,UtenteDao.getUsernameById(seller),seller,sold,filter);
         
@@ -142,29 +143,24 @@ public class InsertionDao {
 	}
 
 	public static InsertionBean getDetail(Integer id) throws SQLException, ClassNotFoundException {
-		
-    	InsertionBean ins;
-    	
-    	// STEP 1: dichiarazioni
-        
-        ResultSet rs = null;
-        
-            // STEP 2: loading dinamico del driver mysql
+			//method to get a specific insertion using the id
+    		InsertionBean ins;
+   
+    		ResultSet rs = null;
+                 
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = conn.createStatement();
             
             String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold, university, city, subject, book, notes FROM insertions where id = '"+ id +"';";
-            rs = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql); //Execute
 
             if (!rs.first()) // rs not empty
-                return null;  //Should never happen
+                return null;  
 
-   
-            // riposizionamento del cursore
             rs.first();
 
-            // lettura delle colonne "by name"
+            // read columns "by name"
             String title = rs.getString(COLUMN_TITLE);
             String desc = rs.getString(COLUMN_DESCR);
             String price = rs.getString(COLUMN_PRICE);
@@ -193,7 +189,7 @@ public class InsertionDao {
             filter.setBook(rs.getBoolean(BOOK));
             filter.setNotes(rs.getBoolean(NOTES));
             ins = new InsertionBean(basic,id,images,UtenteDao.getUsernameById(id),seller,sold,filter);
-            // STEP 6: Clean-up dell'ambiente
+            
             rs.close();
             stmt.close();
             conn.close();
@@ -203,15 +199,12 @@ public class InsertionDao {
     
     
     public static Boolean newInsertion(BasicInformations basic, List<File> pics,Integer seller,Filters filter) throws SQLException, ClassNotFoundException, IOException {
-    	
-    	
-        
-        
-            // STEP 2: loading dinamico del driver mysql
+    		//Method to create a new insertion
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             PreparedStatement pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller,university,city,subject,book,notes) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
+            //Set-up the statement parameters
             pst.setString(1, basic.getTitle());
             pst.setString(2, basic.getDesc());
             pst.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
@@ -240,6 +233,7 @@ public class InsertionDao {
             pst.setString(11, filter.getSubject());
             pst.setBoolean(12, filter.getBook());
             pst.setBoolean(13, filter.getNotes());
+            //execute
             pst.executeUpdate();
             
             pst.close();
@@ -252,16 +246,14 @@ public class InsertionDao {
     
 
 	public static void ban(Integer id) throws ClassNotFoundException, SQLException {
-		Connection conn = null;
-        PreparedStatement pst = null;
+			//method to delete an insertion using the id
+			Connection conn = null;
+			PreparedStatement pst = null;
        
-            // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            // STEP 4: creazione ed esecuzione della query
-            //!!!RICORDA ID AUTOINCREMENT!!!
+
             pst = conn.prepareStatement("DELETE from insertions where id = ?");            
            
             pst.setInt(1, id);                       
@@ -274,21 +266,12 @@ public class InsertionDao {
 
 	public static List<InsertionBean> getMyInsertions(Integer user) throws SQLException, ClassNotFoundException {
 		LinkedList<InsertionBean> ins = new LinkedList<>();
-    	
-    	
-    	
-        
+    		//method that returns the insertions in the DB of a single user       
         
         	ResultSet rs = null;
        
-            // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            // STEP 3: apertura connessione
-            
-
-            // STEP 4: creazione ed esecuzione della query
-          
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);          
             
             String sql = "SELECT title, descr, price, data, id, image1, image2, image3, sold, university, city, subject,seller, book, notes FROM insertions where seller =?";
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -299,8 +282,6 @@ public class InsertionDao {
             if (!rs.first()) // rs not empty
                 return ins;
 
-   
-            // riposizionamento del cursore
             rs.first();
 
             ins.add(getInfo(rs));
@@ -310,7 +291,6 @@ public class InsertionDao {
             ins.add(getInfo(rs));
             }
 
-            // STEP 6: Clean-up dell'ambiente
             rs.close();
             pst.close();
             conn.close();
@@ -319,16 +299,11 @@ public class InsertionDao {
 	}
 
 	public static void update(InsertionBean ib) throws SQLException, ClassNotFoundException {
+		//method to modify an insertion in the DB
 		ResultSet rs = null;
 	       
-        // STEP 2: loading dinamico del driver mysql
         Class.forName(CONNECTOR);
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        // STEP 3: apertura connessione
-        
-
-        // STEP 4: creazione ed esecuzione della query
-      
+        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);     
         
         String sql = "UPDATE insertions SET title =?, descr =?, price =?, data =?, university=?, city =?, subject = ?, book =?, notes =? where id = ?";
         PreparedStatement pst = conn.prepareStatement(sql);
@@ -346,7 +321,6 @@ public class InsertionDao {
        	
        	rs = pst.executeQuery();
 
-        // STEP 6: Clean-up dell'ambiente
         rs.close();
         pst.close();
         conn.close();

@@ -9,7 +9,7 @@ import external.MockupUniDB;
 
 public class RegistrationController {
 
-	
+	//Singleton of instance controller, has responsability on the use case Registration
 	 private static RegistrationController instance;
 
 	    public static RegistrationController getInstance() {
@@ -19,14 +19,18 @@ public class RegistrationController {
 	    }
 
 	    private RegistrationController() {
-	    	//Istanziare controller
+	    	//constructor
 	    }
 	
 	
 	
 	public boolean registraUtente(String nome,String cognome,String username,String password,Boolean company,String matricola) {
+		//Method to register a user of the kind "student"
 		try {
+			//Method representing an external DB checking if the enrollment number exists
+			//In this case it is a black box
 			if(MockupUniDB.isUserInDB(matricola, nome, cognome)) {
+				//If everything goes fine returns true otherwise false
 				return UtenteDao.newStudent(nome, cognome, username, password, company, matricola);
 			}
 			else
@@ -40,8 +44,9 @@ public class RegistrationController {
 	}
 
 	public boolean registraSocieta(String nome,String username,String password,Boolean company,File logo) {
-		
+		//method to register a user of the kind "company"
 		try {
+			//No mockup method since a company has no enrollment number
 			return UtenteDao.newCompany(nome, username, password, company, logo);
 		} catch (Exception e) {
 			

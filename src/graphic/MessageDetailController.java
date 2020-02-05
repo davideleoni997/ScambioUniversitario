@@ -55,7 +55,7 @@ public class MessageDetailController implements Initializable{
 		this.lb=lb;
 		
 		MessageController mc = MessageController.getInstance();
-		List<Message> conv = mc.getConversation(id);
+		List<Message> conv = mc.getConversation(id,lb.getId());
 		for(Message conver : conv) {
 					
 					FXMLLoader fl = new FXMLLoader();

@@ -27,6 +27,7 @@ public class OrderDao {
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";	
 	
 	public static List<Order> orderListFromDB(String user) throws SQLException, ClassNotFoundException {
+		//method to get a list of orders using a username
 		 List<Order> order = new LinkedList<>();
 		
 	   
@@ -36,7 +37,7 @@ public class OrderDao {
 	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	    Statement stmt = conn.createStatement();
         
-	   
+	   //Need to get the id of the user first
 		String sql = "SELECT id FROM utenti where username = '"
 	            + user + "';";
 	    rs = stmt.executeQuery(sql);
@@ -48,6 +49,7 @@ public class OrderDao {
 	    
 	    int id = rs.getInt("id");
 	   
+	    //using the id we get the orders
 	    sql = "SELECT idOrder, oggetto, prezzo FROM orders where buyer = '"
 	                + id + "' OR SELLER = '"+ id +"';";
 	    rs = stmt.executeQuery(sql);
@@ -55,11 +57,10 @@ public class OrderDao {
 
 	    if (!rs.first()) // rs not empty
 	        return new LinkedList<>();
-
-	        // riposizionamento del cursore
+	     
 	     rs.first();
 	     
-	        // lettura delle colonne "by name"
+	    
 	     id = rs.getInt(COLUMN_IDORDER);
 	     String nome = rs.getString(COLUMN_OGGETTO);
 	     int prezzo = rs.getInt(COLUMN_PREZZO);
@@ -72,23 +73,15 @@ public class OrderDao {
 	     while (rs.next())
 	      {       	 
 	        	
-
-	            // lettura delle colonne "by name"
 	            id = rs.getInt(COLUMN_IDORDER);
 	            nome = rs.getString(COLUMN_OGGETTO);
-	            prezzo = rs.getInt(COLUMN_PREZZO);
-	            
-	            
-	            
+	            prezzo = rs.getInt(COLUMN_PREZZO);	            
 	            item = new Item(nome,prezzo);
 	            or = new Order(item);
 	            or.setId(id);      
 	            order.add(or);
 	        }
 	              
-	        
-	
-	        // STEP 6: Clean-up dell'ambiente
 	     rs.close();
 	     stmt.close();
 	     conn.close();
@@ -99,12 +92,10 @@ public class OrderDao {
 
 
 	public static Order getOrderInfo(Integer id) throws SQLException, ClassNotFoundException {
-		
-		Order order = null;
-			
+		//method to get the info of a specific order
+		Order order = null;			
 	   
-	    ResultSet rs = null;
-	   
+	    ResultSet rs = null;	   
 	    
 	    Class.forName(CONNECTOR);
 	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -117,10 +108,8 @@ public class OrderDao {
         if (!rs.first()) // rs not empty
             return order;
 
-        // riposizionamento del cursore
         rs.first();
 
-        // lettura delle colonne "by name"
         order = new Order();
         
         String nome = rs.getString(COLUMN_OGGETTO);
@@ -155,7 +144,7 @@ public class OrderDao {
         
         order.setSeller(rs.getString("nome"));
 
-        // STEP 6: Clean-up dell'ambiente
+
         rs.close();
         stmt.close();
         conn.close();
@@ -165,10 +154,8 @@ public class OrderDao {
 	}
 	
 	public static boolean newOrder(int buyer,int seller, String oggetto, int prezzo) throws ClassNotFoundException, SQLException {
-		
+			//method to create a new order       
         
-        
-            // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             PreparedStatement pst = conn.prepareStatement("INSERT into orders(buyer,seller,data,oggetto,prezzo) values(?,?,?,?,?)");
@@ -191,17 +178,18 @@ public class OrderDao {
 	
 	
 	public static boolean buyBook(int buyer,int seller, int inserzione,String oggetto, Integer prezzo) {
+		//method used to buy a book(create a order) using the stored procedure compra
+		//The procedure is a transaction that throws an exception if the object has already been bought
+		//The transaction also helps with concurrency since if two users try to buy the same item
+		//One will find that the item has been bought before creating the order and a SQLexception will be thrown
 		Connection conn = null;
         CallableStatement pst = null;
         try {
-            // STEP 2: loading dinamico del driver mysql
+
             Class.forName(CONNECTOR);
 
-            // STEP 3: apertura connessione
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            // STEP 4: creazione ed esecuzione della query
-            //!!!RICORDA ID AUTOINCREMENT!!!
             pst = conn.prepareCall("call compra(?,?,?,?,?)");
             
             Integer res = 0;
@@ -216,7 +204,7 @@ public class OrderDao {
             pst.executeUpdate();
             pst.close();
             if(res == 0) {
-            if(!newOrder(buyer,seller,oggetto,prezzo))
+            if(!newOrder(buyer,seller,oggetto,prezzo)) //Method to create a order in the DB
             	return false;}
             else
              return false;
@@ -238,6 +226,7 @@ public class OrderDao {
                 if (conn != null)
                     conn.close();
             } catch (SQLException se) {
+            	//Item has already been bought, will return false
             	Logger.getGlobal().log(Level.WARNING,ERROR_CLASS,se);
             	return false;
             }
@@ -247,14 +236,11 @@ public class OrderDao {
 	}
 
 	public static void payOrder(Integer id) throws SQLException, ClassNotFoundException {
-		
-		
-       
-            // STEP 2: loading dinamico del driver mysql
+			//Method used to pay the order after using a payment system
+			//The payment system, being a black box, will just be a mockup
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
        
-            // STEP 4: creazione ed esecuzione della query
             PreparedStatement pst = conn.prepareStatement("UPDATE orders SET pagato = 1 WHERE idOrder = ?");
             pst.setInt(1, id);  
             pst.executeUpdate();

@@ -3,6 +3,8 @@ package bean;
 import javafx.scene.image.Image;
 
 public class UserBean {
+	//bean representing a user, it identifies both a student or a company by using the attribute company
+	//only companies may have the attribute logo != null
 	private String username;
 	private String password;
 	private String nome;

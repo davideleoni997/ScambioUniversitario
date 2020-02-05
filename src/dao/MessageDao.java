@@ -32,20 +32,15 @@ public class MessageDao {
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/scambio";
 	
     public static List<Message> messageList(Integer user) throws SQLException, ClassNotFoundException {
-    	
-    	
-    	
-    		// STEP 1: dichiarazioni
+    	//Method to retrieve a list of messages where the user is the sender or the recipient
     		ResultSet rs = null;
         
-        
-            // STEP 2: loading dinamico del driver mysql
     		Class.forName(CONNECTOR);
     		Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
     		Statement stmt = conn.createStatement();
             
-          String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender = '"+ user +"' OR `to` ='"+ user +"' GROUP BY sender ORDER BY `date` DESC;";
-          rs = stmt.executeQuery(sql);
+    		String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender = '"+ user +"' OR `to` ='"+ user +"' GROUP BY sender ORDER BY `date` DESC;";
+    		rs = stmt.executeQuery(sql);
 
           
            List<Message> list = getMessageList(rs);
@@ -58,46 +53,37 @@ public class MessageDao {
 	
     
     private static List<Message> getMessageList(ResultSet rs) throws SQLException, ClassNotFoundException {
+    	//method that returns a list of messages from a resultSet
     	List<Message> messages = new LinkedList<>();
     	
     	if (!rs.first()) // rs not empty
             return messages;
     	
-    	
-
-        // riposizionamento del cursore
-        rs.first();
-      
+        rs.first();     
         
         messages.add(getInfo(rs));
         
-        while(rs.next()) {
-        	
+        while(rs.next()) {       	
         	
         	messages.add(getInfo(rs));
         }
 
-        // STEP 6: Clean-up dell'ambiente
         rs.close();
 		
         return messages;
 	}
 
 
-	public static List<Message> conversation(Integer sender) throws SQLException, ClassNotFoundException {
-    	
-    	
-    	
-    	// STEP 1: dichiarazioni
+	public static List<Message> conversation(Integer sender,Integer to) throws SQLException, ClassNotFoundException {
+    	//Method to get a conversation between two users
        
         ResultSet rs = null;
         
-            // STEP 2: loading dinamico del driver mysql
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = conn.createStatement();
             
-            String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender = '"+ sender +"' OR `to` ='"+ sender +"' ORDER BY `date` ASC;";
+            String sql = "SELECT sender, `to`, `desc`, `date` FROM messages where sender IN ('"+ sender +"','"+to +"') AND `to` IN ('"+ sender +"','"+to +"') ORDER BY `date` ASC;";
             rs = stmt.executeQuery(sql);
 
             List<Message> list = getMessageList(rs);
@@ -109,6 +95,7 @@ public class MessageDao {
     
     
  private static Message getInfo(ResultSet rs) throws SQLException, ClassNotFoundException {
+	 // returns a message from a resultSet
 	 Integer sender = rs.getInt(COLUMN_SENDER);
      Integer to = rs.getInt(COLUMN_TO);
      String desc = rs.getString(COLUMN_DESC);
@@ -120,10 +107,7 @@ public class MessageDao {
 
 
    public static Boolean newMessage(Integer sender, Integer to, String desc) throws ClassNotFoundException, SQLException {
-	  
-    	
-       
-            // STEP 2: loading dinamico del driver mysql
+	  //Method to create a new message
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             PreparedStatement pst = conn.prepareStatement("INSERT into messages(sender,`to`,`desc`,`date`) values(?,?,?,?)");
@@ -133,10 +117,7 @@ public class MessageDao {
             pst.setString(3, desc);
             pst.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
             
-            pst.executeUpdate();
-                
-         
-        
+            pst.executeUpdate();    
     	
     	return true;
 	   

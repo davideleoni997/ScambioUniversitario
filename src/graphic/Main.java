@@ -1,13 +1,8 @@
 package graphic;
 
-
-
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import util.Property;
-
-
 
 public class Main extends Application {
 	

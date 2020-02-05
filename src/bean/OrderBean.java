@@ -6,7 +6,8 @@ import controller.OrderController;
 import logic.Order;
 
 
-//Rivedere per singolo ordine, non lista
+//Bean that contains the list of the orders to be displayed 
+//In the orders' window
 public class OrderBean {
 	private Integer length;
 	private List<Order> list;
@@ -44,6 +45,7 @@ public class OrderBean {
 	}
 
 	public void setUser(String user) {
+		//Method to retrieve the info about the orders of a user by using his Username
 		this.user = user;
 		OrderController oC = OrderController.getInstance();
 		this.setList(oC.getOrdersInfo(this.user));

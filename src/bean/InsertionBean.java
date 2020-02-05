@@ -9,7 +9,9 @@ import logic.BasicInformations;
 import logic.Filters;
 
 public class InsertionBean {
-
+	//Bean for the info regarding an insertion
+	//Informations are splitted in two classes : Basic and Filter, filter is also used to filter the research
+	//BasicInformations is used for the info to display in the research
 	private BasicInformations basic;
 	private Integer id;
 	private List<Image> images;

@@ -12,7 +12,7 @@ import dao.ReportDao;
 import logic.Report;
 
 public class ReportController {
-
+	//Singleton of a report controller, has responsabilities over the entity Report
 	private static ReportController instance;
 
     public static ReportController getInstance() {
@@ -22,15 +22,16 @@ public class ReportController {
     }
 	
     private ReportController() {
-    	//Constructor reports
+    	//Constructor reportController
     	}
     
     
     
 	public void newReport(Integer insReported, String desc, Integer reporter) {
+		//Method to create a new report
 		try {
-			Report rep = new Report(0,insReported,desc,reporter);
-			rep.newReport();
+			Report rep = new Report(0,insReported,desc,reporter);//Create an instance of the entity report
+			rep.newReport();//Call its method to save it to DB
 			
 		} catch (Exception e) {
 			
@@ -40,6 +41,7 @@ public class ReportController {
 	}
 	
 	public List<Report> getReport() {
+		//Get the list of reports at the moment in the system
 		try {
 			return ReportDao.getReports();
 		} catch (Exception e) {
@@ -51,6 +53,8 @@ public class ReportController {
 	}
 	
 	public void ban(Integer repId,Integer id) {
+		//Method to execute the ban action on an insertion
+		//remove the report and then the insertion to satisfy constraints
 		removeReport(repId);
 		try {
 			InsertionDao.ban(id);
@@ -60,6 +64,7 @@ public class ReportController {
 	}
 	
 	public void removeReport(Integer id) {
+		//Method to remove the report from the system
 		try {
 			ReportDao.removeReport(id);
 		} catch (Exception e) {

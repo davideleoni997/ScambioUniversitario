@@ -24,11 +24,10 @@ public class ReportDao {
       }
 	
 	public static List<Report> getReports() throws ClassNotFoundException, SQLException {
+		//Method to get the reports in the system
 		List<Report> reports = new LinkedList<>();
-		
-		
-	    ResultSet rs = null;
-	    
+				
+	    ResultSet rs = null;	    
 	    
 	    Class.forName(CONNECTOR);
 	    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
@@ -41,7 +40,6 @@ public class ReportDao {
         if (!rs.first()) // rs not empty
             return reports;
 
-        // riposizionamento del cursore
         rs.first();
       
         reports.add(getInfo(rs));
@@ -51,17 +49,16 @@ public class ReportDao {
            reports.add(getInfo(rs));
             
         }
-        // STEP 6: Clean-up dell'ambiente
+
         rs.close();
         stmt.close();
-        conn.close();
+        conn.close();		
 		
-		
-		return reports;
-		
+		return reports;		
 	}
 	
 	private static Report getInfo(ResultSet rs) throws SQLException {
+		//return a report from a ResultSet
 		Integer id = rs.getInt("id");
         Integer idInsertion = rs.getInt("insId");
         String desc = rs.getString("description");
@@ -70,12 +67,7 @@ public class ReportDao {
 	}
 	
 	public static boolean newReport(Integer insReported,String desc,Integer reporter) throws SQLException, ClassNotFoundException {
-		
-		
-    	
-       
-        
-            // STEP 2: loading dinamico del driver mysql
+			//Method to create a new report
             Class.forName(CONNECTOR);          
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             PreparedStatement pst = conn.prepareStatement("INSERT into reports(insId,description,reportFrom) values(?,?,?)");
@@ -86,29 +78,23 @@ public class ReportDao {
             
             pst.executeUpdate();
             pst.close();
-            conn.close();
-       
+            conn.close();       
     	
     	return true;
 		
 	}
 
 	public static void removeReport(Integer id) throws ClassNotFoundException, SQLException {
-		
-			
-	            // STEP 2: loading dinamico del driver mysql
+				//method tor emove a report from the DB
 	            Class.forName(CONNECTOR);
 	            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	            PreparedStatement pst = conn.prepareStatement("DELETE from reports where id = ?");
 	            
-	            pst.setInt(1, id);
-	            
+	            pst.setInt(1, id);            
 	            
 	            pst.executeUpdate();
 	            pst.close();
-	            conn.close();
-	            
-		
+	            conn.close();	
 		
 	}
 }

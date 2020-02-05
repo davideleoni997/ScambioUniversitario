@@ -10,7 +10,7 @@ import dao.OrderDao;
 import logic.Order;
 
 public class OrderController {
-	
+	//Singleton controller with responsability over the entity Order
 	private static OrderController instance;
 
     public static OrderController getInstance() {
@@ -24,6 +24,7 @@ public class OrderController {
 	}
 	
 	public void payOrder(Integer id) {
+		//Method used to pay an order with a corresponding id
 		try {
 			OrderDao.payOrder(id);
 		} catch (Exception e) {
@@ -35,7 +36,7 @@ public class OrderController {
 	
 	public List<Order> getOrdersInfo(String user) {
 			
-			
+			//Get a list of orders using a username
 			try {
 				return OrderDao.orderListFromDB(user);
 			} catch (Exception e) {
@@ -55,6 +56,7 @@ public class OrderController {
 	
 	
 	public static Order getOrderDetail(Integer id) {
+		//Get an order object using its id
 			Order order = null;
 			try {
 				order = OrderDao.getOrderInfo(id);
@@ -67,7 +69,7 @@ public class OrderController {
 		}
 		
 		public static boolean newOrder(int buyer,int seller,String oggetto,Integer inserzione, int prezzo) {
-			
+			//method to create a newOrder in the DB
 			return OrderDao.buyBook(buyer, seller,inserzione, oggetto, prezzo);
 		}
 }

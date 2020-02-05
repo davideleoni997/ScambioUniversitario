@@ -21,6 +21,8 @@ import logic.Report;
 import util.Property;
 
 public class ViewController {
+	//Controller for the graphic of the local JAVAFX controllers
+	
 	private static final String ERROR_CLASS = "ViewController:";
 	private static final String CSSPATH = "application.css";
 	private static ViewController vc = null;

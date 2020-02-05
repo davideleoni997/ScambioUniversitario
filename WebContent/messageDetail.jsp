@@ -6,7 +6,7 @@
     import="java.util.List"%>
     <%MessageController mc = MessageController.getInstance();
     UserBean ub = (UserBean) request.getSession().getAttribute("currentUser");
-    List<Message> messages = mc.getConversation(Integer.parseInt(request.getParameter("Id")));%>
+    List<Message> messages = mc.getConversation(Integer.parseInt(request.getParameter("Id")),ub.getId());%>
 <!DOCTYPE html>
 <html>
 <head>
