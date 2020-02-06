@@ -3,7 +3,12 @@
          pageEncoding="ISO-8859-1" 
          import = "bean.InsertionBean"
          import = "java.util.List"
-         import = "bean.UserBean"%>
+         import = "bean.UserBean"
+         import = "java.io.File"
+         import = "java.awt.image.BufferedImage"
+         import = "javafx.embed.swing.SwingFXUtils"
+         import = "javax.imageio.ImageIO"
+         import = "java.io.IOException"%>
          
          <%InsertionController ic =InsertionController.getInstance();  
          InsertionBean inser = ic.getDetail(Integer.parseInt(request.getParameter("Id")));
@@ -12,7 +17,17 @@
         	 <jsp:forward page="login.jsp"></jsp:forward>
         <%}
          else{
+        	
          	UserBean ub = (UserBean) request.getSession().getAttribute("currentUser");
+         	if(inser.getImages().size()!=0){
+         	File outputFile = new File(application.getRealPath("/")+"/WEB-INF/main.png");
+            BufferedImage bImage = SwingFXUtils.fromFXImage(inser.getImages().get(0), null);
+            try {
+              ImageIO.write(bImage, "png", outputFile);
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+         	}
          %>
 <!DOCTYPE html>
 <html>
@@ -32,7 +47,10 @@
 <p>Description : <%=inser.getBasic().getDesc() %> 
 <p>Sold : <%= inser.getSold()%> Subject : <%= inser.getFilter().getSubject()%> City : <%=inser.getFilter().getCity() %>
 <p>University : <%=inser.getFilter().getUniversity()%> Book : <%=inser.getFilter().getBook() %> Notes : <%=inser.getFilter().getNotes() %>
-<!-- Trovare modo di convertire imgs -->
+</p>
+<%if(inser.getImages().size()!=0){ %>
+<img src="<%=application.getRealPath("/") %>/WEB-INF/main.png" width = "200" height = "200">
+<%} %>
 <form action ="InsertionDetailServlet" method = "POST" name = "myform">
 <input type = "hidden" name ="buyer" value ="<%= ub.getId()%>">
 <input type = "hidden" name ="seller" value ="<%=inser.getSellerId() %>">

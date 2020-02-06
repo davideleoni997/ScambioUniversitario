@@ -170,11 +170,11 @@ public class InsertionDao {
             	Image img = new Image(rs.getBlob(COLUMN_IMAGE1).getBinaryStream());
             	images.add(img);
             }
-            if(rs.getBlob(COLUMN_IMAGE1)!=null) {
+            if(rs.getBlob(COLUMN_IMAGE2)!=null) {
             	Image img = new Image(rs.getBlob(COLUMN_IMAGE2).getBinaryStream());
             	images.add(img);
             }
-            if(rs.getBlob(COLUMN_IMAGE1)!=null) {
+            if(rs.getBlob(COLUMN_IMAGE3)!=null) {
             	Image img = new Image(rs.getBlob(COLUMN_IMAGE3).getBinaryStream());
             	images.add(img);
             }
