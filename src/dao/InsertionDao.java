@@ -15,6 +15,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import bean.InsertionBean;
 import javafx.scene.image.Image;
@@ -61,7 +63,7 @@ public class InsertionDao {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
           
             Statement stmt = conn.createStatement();
-
+            try {
            
           
             
@@ -96,6 +98,20 @@ public class InsertionDao {
             conn.close();
         
             return ins;
+    		}
+    		catch(Exception e) {
+    			Logger.getGlobal().log(Level.WARNING, "getResearch",e);
+    			return ins;
+    		}
+    		finally {
+    				if(rs!=null)
+    					rs.close();
+    				if(stmt!=null)
+    					stmt.close();
+    				if(conn!=null)
+    					conn.close();
+    				
+    				}
     	}
     
     
@@ -144,14 +160,14 @@ public class InsertionDao {
 
 	public static InsertionBean getDetail(Integer id) throws SQLException, ClassNotFoundException {
 			//method to get a specific insertion using the id
-    		InsertionBean ins;
+    		InsertionBean ins = null;
    
     		ResultSet rs = null;
                  
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = conn.createStatement();
-            
+            try {
             String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold, university, city, subject, book, notes FROM insertions where id = '"+ id +"';";
             rs = stmt.executeQuery(sql); //Execute
 
@@ -195,6 +211,20 @@ public class InsertionDao {
             conn.close();
     	
         return ins;
+            }
+            catch(Exception e) {
+    			Logger.getGlobal().log(Level.WARNING, "getResearch",e);
+    			return ins;
+    		}
+    		finally {
+    				if(rs!=null)
+    					rs.close();
+    				if(stmt!=null)
+    					stmt.close();
+    				if(conn!=null)
+    					conn.close();
+    				
+    				}
 		}
     
     
@@ -203,7 +233,7 @@ public class InsertionDao {
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             PreparedStatement pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller,university,city,subject,book,notes) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            
+            try {
             //Set-up the statement parameters
             pst.setString(1, basic.getTitle());
             pst.setString(2, basic.getDesc());
@@ -242,6 +272,17 @@ public class InsertionDao {
         
     	
     	return true;
+            }
+            catch(Exception e) {
+    			Logger.getGlobal().log(Level.WARNING, "getResearch",e);
+    			return false;
+    		}
+    		finally {
+    				if(pst!=null)
+    					pst.close();
+    				if(conn!=null)
+    					conn.close();  				
+    				}
     	}
     
 
@@ -255,12 +296,23 @@ public class InsertionDao {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             pst = conn.prepareStatement("DELETE from insertions where id = ?");            
-           
+           try {
             pst.setInt(1, id);                       
             pst.executeUpdate();
                 
             pst.close();
             conn.close();
+           }
+           catch(Exception e) {
+   			Logger.getGlobal().log(Level.WARNING, "getResearch",e);
+   		}
+   		finally {
+   				if(pst!=null)
+   					pst.close();
+   				if(conn!=null)
+   					conn.close();
+   				
+   				}
         
 	}
 
@@ -275,7 +327,7 @@ public class InsertionDao {
             
             String sql = "SELECT title, descr, price, data, id, image1, image2, image3, sold, university, city, subject,seller, book, notes FROM insertions where seller =?";
             PreparedStatement pst = conn.prepareStatement(sql);
-            
+            try {
            	pst.setInt(1, user);
            	rs = pst.executeQuery();
      
@@ -296,6 +348,20 @@ public class InsertionDao {
             conn.close();
         
             return ins;
+            }
+            catch(Exception e) {
+    			Logger.getGlobal().log(Level.WARNING, "getResearch",e);
+    			return ins;
+    		}
+    		finally {
+    				if(rs!=null)
+    					rs.close();
+    				if(pst!=null)
+    					pst.close();
+    				if(conn!=null)
+    					conn.close();
+    				
+    				}
 	}
 
 	public static void update(InsertionBean ib) throws SQLException, ClassNotFoundException {
@@ -307,7 +373,7 @@ public class InsertionDao {
         
         String sql = "UPDATE insertions SET title =?, descr =?, price =?, data =?, university=?, city =?, subject = ?, book =?, notes =? where id = ?";
         PreparedStatement pst = conn.prepareStatement(sql);
-        
+        try {
        	pst.setString(1,ib.getBasic().getTitle());
        	pst.setString(2, ib.getBasic().getDesc());
        	pst.setInt(3, ib.getBasic().getPrice());
@@ -324,7 +390,19 @@ public class InsertionDao {
         rs.close();
         pst.close();
         conn.close();
-		
+        }
+        catch(Exception e) {
+			Logger.getGlobal().log(Level.WARNING, "getResearch",e);
+		}
+		finally {
+				if(rs!=null)
+					rs.close();
+				if(pst!=null)
+					pst.close();
+				if(conn!=null)
+					conn.close();
+				
+				}
 	}
     
     
