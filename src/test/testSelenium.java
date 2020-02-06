@@ -31,11 +31,11 @@ public class TestSelenium {
 		
 		driver.findElement(By.xpath("/html/body/form[3]/button")).click(); //click button to login
 		//login page
-		driver.findElement(By.xpath("//*[@id=\"username\"]")).sendKeys("kew");
+		driver.findElement(By.xpath("//*[@id=\"username\"]")).sendKeys("dav");
 		driver.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys("pass");
 		driver.findElement(By.xpath("//*[@id=\"login\"]")).click();
 		//profile page
-		driver.findElement(By.xpath("/html/body/a[5]")).click();
+		driver.findElement(By.xpath("/html/body/a[6]")).click();
 		//back to main page
 		driver.findElement(By.xpath("/html/body/form[5]/button")).click();
 		//new Insertion Page
@@ -59,7 +59,7 @@ public class TestSelenium {
 		//Insertion detail page
 		WebElement txtBoxContent = driver.findElement(By.xpath("/html/body/p[1]"));
 		
-		Logger.getGlobal().log(Level.INFO, txtBoxContent.getText());
+		Logger.getGlobal().log(Level.INFO, txtBoxContent.getText()); //Data should match the one inserted
 		
 		driver.close();
 		

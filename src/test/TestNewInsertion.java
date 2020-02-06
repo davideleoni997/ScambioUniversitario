@@ -9,17 +9,24 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import controller.InsertionController;
+import controller.LoginController;
+import controller.RegistrationController;
 import logic.BasicInformations;
 import logic.Filters;
 
 class TestNewInsertion {
 	//Test for the creation of a new insertion in the DB
-	//Check if after creating the insertion it something pops up in the list
-	//After researching for it
+	//Check if, after creating the insertion, the length of the list of the user's insertions increases
 	//Creator : Davide Leoni
 
+	private static final String USERNAME = "dav";
+	
 	@Test
 	void testgetResult() {
+		
+		RegistrationController rc = RegistrationController.getInstance();
+		rc.registraUtente("Davide", "Leoni", USERNAME, "pass", false, "X12345"); //Create a new user, if it fails the user exists
+		LoginController lc = LoginController.getInstance();
 		InsertionController ic = InsertionController.getInstance();
 		BasicInformations basic = new BasicInformations();
 		basic.setTitle("TestTitle");
@@ -29,10 +36,11 @@ class TestNewInsertion {
 		filter.setUniversity("test Uni");
 		filter.setSubject("Test subj");
 		List<File> images = new LinkedList<>();
-		ic.newInsertion(basic, images, 5, filter); 
+		Integer size = ic.myInsertions(lc.getIdFromUsername(USERNAME)).size();
+		ic.newInsertion(basic, images, lc.getIdFromUsername(USERNAME), filter); //Will fail if there is no seller with id 6
 		
 		
-		assertTrue(!ic.getResearchResults("TestTitle", filter).isEmpty());
+		assertTrue(size < ic.myInsertions(lc.getIdFromUsername(USERNAME)).size());
 	}
 
 }
