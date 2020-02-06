@@ -30,18 +30,19 @@ public class RegisterServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RegistrationController rc = RegistrationController.getInstance();
-		
-		if(request.getParameter("type").equals("student"))
-			rc.registraUtente(request.getParameter("name"), request.getParameter("surname"), request.getParameter("username"), request.getParameter("newpsw"), false, request.getParameter("enroll"));
-		else {
-			File f;
-			
-			if(!request.getParameter("logo").isEmpty())
-				f = new File(request.getParameter("logo"));
-			else
-				f = null;
-			
-			rc.registraSocieta(request.getParameter("name"), request.getParameter("username"), request.getParameter("newpsw"), true, f);
+		if(request.getParameter("type") != null) {
+			if(request.getParameter("type").equals("student"))
+				rc.registraUtente(request.getParameter("name"), request.getParameter("surname"), request.getParameter("username"), request.getParameter("newpsw"), false, request.getParameter("enroll"));
+			else {
+				File f;
+				
+				if(!request.getParameter("logo").isEmpty())
+					f = new File(request.getParameter("logo"));
+				else
+					f = null;
+				
+				rc.registraSocieta(request.getParameter("name"), request.getParameter("username"), request.getParameter("newpsw"), true, f);
+			}
 		}
 		RequestDispatcher disp;
 		

@@ -2,9 +2,11 @@ package test;
 
 
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,7 +14,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 
 public class TestSelenium {
-	public static void main(String[] args) {
+	
+		private static final String PASS = "pass";
+
+		@Test
+		void testSelenium(){
 		
 		//Simple test to check the new Insertion menu
 		//First you log in and go back to main page
@@ -26,13 +32,23 @@ public class TestSelenium {
 		
 		driver.get("http://localhost:8080/Dynamic_Scambio/index.jsp");
 		
-		
-		
+		//register
+		driver.findElement(By.xpath("/html/body/form[2]/button")).click();
+		//Register page
+		driver.findElement(By.xpath("//*[@id=\"type\"]")).click();
+		driver.findElement(By.xpath("//*[@id=\"enroll\"]")).sendKeys("A1234");
+		driver.findElement(By.xpath("//*[@id=\"name\"]")).sendKeys("Davide");
+		driver.findElement(By.xpath("//*[@id=\"surname\"]")).sendKeys("Leoni");
+		driver.findElement(By.xpath("//*[@id=\"username\"]")).sendKeys("dav");
+		driver.findElement(By.xpath("//*[@id=\"newpsw\"]")).sendKeys(PASS);
+		driver.findElement(By.xpath("//*[@id=\"checkpsw\"]")).sendKeys(PASS);
+		driver.findElement(By.xpath("/html/body/form/p[9]/input")).click();
+		//Back to index
 		
 		driver.findElement(By.xpath("/html/body/form[3]/button")).click(); //click button to login
 		//login page
 		driver.findElement(By.xpath("//*[@id=\"username\"]")).sendKeys("dav");
-		driver.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys("pass");
+		driver.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys(PASS);
 		driver.findElement(By.xpath("//*[@id=\"login\"]")).click();
 		//profile page
 		driver.findElement(By.xpath("/html/body/a[6]")).click();
@@ -59,7 +75,7 @@ public class TestSelenium {
 		//Insertion detail page
 		WebElement txtBoxContent = driver.findElement(By.xpath("/html/body/p[1]"));
 		
-		Logger.getGlobal().log(Level.INFO, txtBoxContent.getText()); //Data should match the one inserted
+		assertEquals(txtBoxContent.getText(),"Title : Test Insertion Price : 23 Seller : Data : "+ LocalDate.now().toString());
 		
 		driver.close();
 		

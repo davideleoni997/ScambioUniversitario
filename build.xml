@@ -5,7 +5,7 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="Dynamic_Scambio">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../../../eclipse/java-2019-09/eclipse/"/>
+    <property name="ECLIPSE_HOME" value="E:/eclipse/java-2019-09/eclipse/"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
@@ -16,54 +16,52 @@
     </path>
     <path id="EAR Libraries.libraryclasspath"/>
     <path id="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath">
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/annotations-api.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/catalina-ant.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/catalina-ha.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/catalina-ssi.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/catalina-storeconfig.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/catalina-tribes.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/catalina.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/ecj-4.13.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/el-api.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/jasper-el.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/jasper.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/jaspic-api.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/jsp-api.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/servlet-api.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-api.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-coyote.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-dbcp.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-i18n-cs.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-i18n-de.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-i18n-es.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-i18n-fr.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-i18n-ja.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-i18n-ko.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-i18n-pt-BR.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-i18n-ru.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-i18n-zh-CN.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-jdbc.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-jni.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-util-scan.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-util.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/tomcat-websocket.jar"/>
-        <pathelement location="../../../../../../apache-tomcat-9.0.30/lib/websocket-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/annotations-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina-ant.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina-ha.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina-storeconfig.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina-tribes.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/catalina.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/ecj-4.9.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/el-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/jasper-el.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/jasper.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/jaspic-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/jsp-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/servlet-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-api.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-coyote.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-dbcp.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-de.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-es.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-fr.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-ja.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-ko.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-pt-BR.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-ru.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-i18n-zh-CN.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-jdbc.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-jni.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-util-scan.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-util.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/tomcat-websocket.jar"/>
+        <pathelement location="E:/Apache Software Foundation/Tomcat 9.0/lib/websocket-api.jar"/>
     </path>
     <path id="JUnit 5.libraryclasspath">
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.jupiter.api_5.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.jupiter.engine_5.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.jupiter.migrationsupport_5.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.jupiter.params_5.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.platform.commons_1.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.platform.engine_1.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.platform.launcher_1.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.platform.runner_1.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.platform.suite.api_1.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit.vintage.engine_5.5.1.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.opentest4j_1.2.0.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.apiguardian_1.1.0.v20190826-0900.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
-        <pathelement location="../../../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.jupiter.api_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.jupiter.engine_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.jupiter.migrationsupport_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.jupiter.params_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.platform.commons_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.platform.engine_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.platform.launcher_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.platform.runner_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.platform.suite.api_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit.vintage.engine_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.opentest4j_1.2.0.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.apiguardian_1.1.0.v20190826-0900.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="../../../../../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
     </path>
     <path id="Dynamic_Scambio.classpath">
         <pathelement location="build/classes"/>
@@ -82,6 +80,8 @@
         <mkdir dir="build/classes"/>
         <copy includeemptydirs="false" todir="build/classes">
             <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.xtend"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -113,16 +113,42 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="AllTests">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.AllTests" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </junit>
+    </target>
     <target name="Main (2)">
         <java classname="graphic.Main" failonerror="true" fork="yes">
             <classpath refid="Dynamic_Scambio.classpath"/>
         </java>
+    </target>
+    <target name="test">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </junit>
     </target>
     <target name="TestCreateOrder">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <test name="test.TestCreateOrder" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </junit>
+    </target>
+    <target name="TestInsertionBean">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TestInsertionBean" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="Dynamic_Scambio.classpath"/>
         </junit>
@@ -136,16 +162,52 @@
             <classpath refid="Dynamic_Scambio.classpath"/>
         </junit>
     </target>
-    <target name="TestSelenium">
-        <java classname="test.TestSelenium" failonerror="true" fork="yes">
+    <target name="TestOrderBean (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TestOrderBean" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
             <classpath refid="Dynamic_Scambio.classpath"/>
-        </java>
+        </junit>
     </target>
     <target name="TestSendMessage">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <test name="test.TestSendMessage" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </junit>
+    </target>
+    <target name="testUserBean">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.testUserBean" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </junit>
+    </target>
+    <target name="TestUtente (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TestUtente" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </junit>
+    </target>
+    <target name="TestSelenium">
+        <java classname="test.TestSelenium" failonerror="true" fork="yes">
+            <classpath refid="Dynamic_Scambio.classpath"/>
+        </java>
+    </target>
+    <target name="TestSelenium (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TestSelenium" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="Dynamic_Scambio.classpath"/>
         </junit>
