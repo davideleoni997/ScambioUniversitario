@@ -162,6 +162,7 @@ public class ModifyInsertionDetailController implements Initializable{
 		ib.setFilter(filter);
 		if(modTxtPrice.getText().matches("[0-9]+")) {
 			ic.modify(ib);
+			vc.goBack();
 			vc.goBack();}
 		else
 			modTxtPrice.setText("Insert a proper number");

@@ -15,8 +15,6 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import bean.InsertionBean;
 import javafx.scene.image.Image;
@@ -146,7 +144,7 @@ public class InsertionDao {
 
 	public static InsertionBean getDetail(Integer id) throws SQLException, ClassNotFoundException {
 			//method to get a specific insertion using the id
-    		InsertionBean ins = null;
+    		InsertionBean ins;
    
     		ResultSet rs = null;
                  
@@ -157,73 +155,55 @@ public class InsertionDao {
             String sql = "SELECT title, descr, price, data, id, image1, image2, image3, seller, sold, university, city, subject, book, notes FROM insertions where id = '"+ id +"';";
             rs = stmt.executeQuery(sql); //Execute
 
-            try {
-	            if (!rs.first()) // rs not empty
-	                return null;  
-	
-	            rs.first();
-	
-	            // read columns "by name"
-	            String title = rs.getString(COLUMN_TITLE);
-	            String desc = rs.getString(COLUMN_DESCR);
-	            String price = rs.getString(COLUMN_PRICE);
-	            Date date = rs.getDate(COLUMN_DATA);
-	            List<Image> images = new LinkedList<>();
-	            if(rs.getBlob(COLUMN_IMAGE1)!=null) {
-	            	Image img = new Image(rs.getBlob(COLUMN_IMAGE1).getBinaryStream());
-	            	images.add(img);
-	            }
-	            if(rs.getBlob(COLUMN_IMAGE2)!=null) {
-	            	Image img = new Image(rs.getBlob(COLUMN_IMAGE2).getBinaryStream());
-	            	images.add(img);
-	            }
-	            if(rs.getBlob(COLUMN_IMAGE3)!=null) {
-	            	Image img = new Image(rs.getBlob(COLUMN_IMAGE3).getBinaryStream());
-	            	images.add(img);
-	            }
-	            Integer seller = rs.getInt(COLUMN_SELLER);
-	            Boolean sold = rs.getBoolean(COLUMN_SOLD);
-	           
-	            BasicInformations basic = new BasicInformations(title,desc,date,Integer.parseInt(price));
-	            Filters filter = new Filters();
-	            filter.setUniversity(rs.getString(UNIVERSITY));
-	            filter.setCity(rs.getString(CITY));
-	            filter.setSubject(rs.getString(SUBJECT));
-	            filter.setBook(rs.getBoolean(BOOK));
-	            filter.setNotes(rs.getBoolean(NOTES));
-	            ins = new InsertionBean(basic,id,images,UtenteDao.getUsernameById(id),seller,sold,filter);
-	            
-	            rs.close();
-	            stmt.close();
-	            conn.close();
-	    	
-	            return ins;
+            if (!rs.first()) // rs not empty
+                return null;  
+
+            rs.first();
+
+            // read columns "by name"
+            String title = rs.getString(COLUMN_TITLE);
+            String desc = rs.getString(COLUMN_DESCR);
+            String price = rs.getString(COLUMN_PRICE);
+            Date date = rs.getDate(COLUMN_DATA);
+            List<Image> images = new LinkedList<>();
+            if(rs.getBlob(COLUMN_IMAGE1)!=null) {
+            	Image img = new Image(rs.getBlob(COLUMN_IMAGE1).getBinaryStream());
+            	images.add(img);
             }
-            catch(Exception e) {
-            	return ins;
+            if(rs.getBlob(COLUMN_IMAGE2)!=null) {
+            	Image img = new Image(rs.getBlob(COLUMN_IMAGE2).getBinaryStream());
+            	images.add(img);
             }
-            finally{
-            	close(rs,stmt,conn);
+            if(rs.getBlob(COLUMN_IMAGE3)!=null) {
+            	Image img = new Image(rs.getBlob(COLUMN_IMAGE3).getBinaryStream());
+            	images.add(img);
             }
+            Integer seller = rs.getInt(COLUMN_SELLER);
+            Boolean sold = rs.getBoolean(COLUMN_SOLD);
+           
+            BasicInformations basic = new BasicInformations(title,desc,date,Integer.parseInt(price));
+            Filters filter = new Filters();
+            filter.setUniversity(rs.getString(UNIVERSITY));
+            filter.setCity(rs.getString(CITY));
+            filter.setSubject(rs.getString(SUBJECT));
+            filter.setBook(rs.getBoolean(BOOK));
+            filter.setNotes(rs.getBoolean(NOTES));
+            ins = new InsertionBean(basic,id,images,UtenteDao.getUsernameById(id),seller,sold,filter);
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+    	
+        return ins;
 		}
     
     
-    private static void close(ResultSet rs, Statement stmt, Connection conn) throws SQLException {
-		if(rs!=null)
-			rs.close();
-		if(stmt!=null)
-			stmt.close();
-		if(conn!=null)
-			conn.close();
-		
-	}
-
-	public static Boolean newInsertion(BasicInformations basic, List<File> pics,Integer seller,Filters filter) throws SQLException, ClassNotFoundException, IOException {
+    public static Boolean newInsertion(BasicInformations basic, List<File> pics,Integer seller,Filters filter) throws SQLException, ClassNotFoundException, IOException {
     		//Method to create a new insertion
             Class.forName(CONNECTOR);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             PreparedStatement pst = conn.prepareStatement("INSERT into insertions(title,descr,data,price,image1,image2,image3,seller,university,city,subject,book,notes) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            try {
+            
             //Set-up the statement parameters
             pst.setString(1, basic.getTitle());
             pst.setString(2, basic.getDesc());
@@ -262,13 +242,6 @@ public class InsertionDao {
         
     	
     	return true;
-            }
-            catch(Exception e) {
-            	return false;
-            }
-            finally {
-            	close(null,pst,conn);
-            }
     	}
     
 
@@ -282,19 +255,13 @@ public class InsertionDao {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             pst = conn.prepareStatement("DELETE from insertions where id = ?");            
-            try {
+           
             pst.setInt(1, id);                       
             pst.executeUpdate();
                 
             pst.close();
             conn.close();
-            }
-            catch(Exception e) {
-            	Logger.getGlobal().log(Level.WARNING, "ban",e);
-            }
-            finally {
-            	close(null,pst,conn);
-            }
+        
 	}
 
 	public static List<InsertionBean> getMyInsertions(Integer user) throws SQLException, ClassNotFoundException {
@@ -308,7 +275,7 @@ public class InsertionDao {
             
             String sql = "SELECT title, descr, price, data, id, image1, image2, image3, sold, university, city, subject,seller, book, notes FROM insertions where seller =?";
             PreparedStatement pst = conn.prepareStatement(sql);
-            try {
+            
            	pst.setInt(1, user);
            	rs = pst.executeQuery();
      
@@ -329,13 +296,6 @@ public class InsertionDao {
             conn.close();
         
             return ins;
-            }
-            catch(Exception e) {
-            	return ins;
-            }
-            finally {
-            	close(rs,pst,conn);
-            }
 	}
 
 	public static void update(InsertionBean ib) throws SQLException, ClassNotFoundException {
@@ -347,7 +307,7 @@ public class InsertionDao {
         
         String sql = "UPDATE insertions SET title =?, descr =?, price =?, data =?, university=?, city =?, subject = ?, book =?, notes =? where id = ?";
         PreparedStatement pst = conn.prepareStatement(sql);
-        try {
+        
        	pst.setString(1,ib.getBasic().getTitle());
        	pst.setString(2, ib.getBasic().getDesc());
        	pst.setInt(3, ib.getBasic().getPrice());
@@ -364,13 +324,7 @@ public class InsertionDao {
         rs.close();
         pst.close();
         conn.close();
-        }
-        catch(Exception e) {
-        	Logger.getGlobal().log(Level.WARNING, "update",e);
-        }
-        finally {
-        	close(rs,pst,conn);
-        }
+		
 	}
     
     
